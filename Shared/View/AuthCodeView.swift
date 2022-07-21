@@ -45,8 +45,12 @@ struct AuthCodeView: View {
                         .fontWeight(.bold)
                         .font(.title)
                         .frame(width: 30)
+                        #if os(iOS)
                         .background(Color.background)
-                        .cornerRadius(AuthCodeView.cornerRadius)
+                        #elseif os(macOS)
+                        .background(Color.background.opacity(0.5))
+                        #endif
+                        .cornerRadius(8)
                     if index != 5 {
                         Spacer()
                     }
@@ -54,7 +58,11 @@ struct AuthCodeView: View {
             }
         }
         .padding()
+        #if os(iOS)
         .background(Color.darkGrey)
+        #elseif os(macOS)
+        .background(Color.darkGrey.opacity(0.5))
+        #endif
         .frame(maxWidth: 400)
         .cornerRadius(AuthCodeView.cornerRadius)
     }

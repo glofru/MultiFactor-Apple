@@ -38,9 +38,22 @@ struct MultiFactorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ZStack {
+                #if os(iOS)
+                Color.background
+                    .ignoresSafeArea(.all)
+                #elseif os(macOS)
+                VisualEffectView()
+                    .edgesIgnoringSafeArea(.all)
+                #endif
+
+                ContentView()
+            }
+            .preferredColorScheme(.dark)
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        #if os(macOS)
         .windowStyle(.hiddenTitleBar)
+        #endif
     }
 }

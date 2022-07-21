@@ -18,7 +18,6 @@ struct ContentView: View {
 
     var body: some View {
         HomeView()
-            .background(VisualEffect())
     }
 
     private func addItem() {

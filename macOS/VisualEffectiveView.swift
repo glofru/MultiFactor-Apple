@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-struct VisualEffect: NSViewRepresentable {
+struct VisualEffectView: NSViewRepresentable {
     func makeNSView(context: Self.Context) -> NSView {
         return NSVisualEffectView()
     }
