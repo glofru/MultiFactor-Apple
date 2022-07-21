@@ -12,7 +12,7 @@ import FirebaseCore
 #if os(iOS)
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
-               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
 
         return true
@@ -33,7 +33,7 @@ struct MultiFactorApp: App {
 #elseif os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 #endif
-    
+
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -41,5 +41,6 @@ struct MultiFactorApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        .windowStyle(.hiddenTitleBar)
     }
 }

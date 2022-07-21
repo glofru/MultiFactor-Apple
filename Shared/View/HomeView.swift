@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @State private var searched = ""
-    
+
     var body: some View {
         VStack {
             AuthCodeView()
@@ -19,8 +19,7 @@ struct HomeView: View {
             Spacer()
         }
         .padding()
-        .searchable(text: $searched)
-        .background(Color.background)
+//        .searchable(text: $searched)
     }
 }
 

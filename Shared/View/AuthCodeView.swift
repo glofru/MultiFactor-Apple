@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AuthCodeView: View {
     static private let cornerRadius = 12.0
-    
+
     @State private var code = AuthCode(issuer: "Google", account: "gianluca.lofrumento@gmail.com")
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
@@ -22,7 +22,7 @@ struct AuthCodeView: View {
                     .background(.red)
                     .cornerRadius(AuthCodeView.cornerRadius)
                     .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
-                
+
                 VStack(alignment: .leading) {
                     Text(code.issuer)
                         .font(.title2)
@@ -31,23 +31,23 @@ struct AuthCodeView: View {
                         .font(.caption2)
                 }
                 .foregroundColor(.white)
-                
+
                 Spacer()
-                
+
                 LoadingSpinner()
                     .frame(width: 35, height: 35)
             }.frame(height: 40)
-            
+
             HStack {
-                ForEach(0..<6) { i in
-                    Text(String(code.code[i].rawValue))
+                ForEach(0..<6) { index in
+                    Text(String(code.code[index].rawValue))
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                         .font(.title)
                         .frame(width: 30)
                         .background(Color.background)
                         .cornerRadius(AuthCodeView.cornerRadius)
-                    if i != 5 {
+                    if index != 5 {
                         Spacer()
                     }
                 }
@@ -62,9 +62,9 @@ struct AuthCodeView: View {
 
 struct LoadingSpinner: View {
     private let loadingTime = 30.0
-    
+
     @State private var loaded = 1.0
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -87,11 +87,10 @@ struct LoadingSpinner: View {
 struct AuthCode {
     let issuer: String
     let account: String
-    
-    
+
     let logo = "google"
     let code = [Number.one, .two, .three, .four, .five, .six]
-    
+
     enum Number: Int {
         case one = 1, two, three, four, five, six, seven, eight, nine, ten
     }

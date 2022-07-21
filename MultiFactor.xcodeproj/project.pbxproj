@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		372CDB9028884FB70029A89D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 372CDB8F28884FB70029A89D /* FirebaseAuth */; };
-		372CDB9228884FB70029A89D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 372CDB9128884FB70029A89D /* FirebaseFirestore */; };
-		372CDB9528884FD80029A89D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 372CDB9428884FD80029A89D /* FirebaseAuth */; };
-		372CDB9728884FD80029A89D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 372CDB9628884FD80029A89D /* FirebaseFirestore */; };
 		3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
 		3737A6912888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
-		37C0C20828862CC000553B73 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C20728862CC000553B73 /* Tests_iOS.swift */; };
-		37C0C20A28862CC000553B73 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C20928862CC000553B73 /* Tests_iOSLaunchTests.swift */; };
-		37C0C21428862CC000553B73 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C21328862CC000553B73 /* Tests_macOS.swift */; };
-		37C0C21628862CC000553B73 /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C21528862CC000553B73 /* Tests_macOSLaunchTests.swift */; };
+		378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */; };
+		378D9F262889DE87007BDFB6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 378D9F252889DE87007BDFB6 /* FirebaseAuth */; };
+		378D9F282889DE87007BDFB6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 378D9F272889DE87007BDFB6 /* FirebaseFirestore */; };
+		378D9F2B2889DF27007BDFB6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 378D9F2A2889DF27007BDFB6 /* FirebaseAuth */; };
+		378D9F2D2889DF27007BDFB6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 378D9F2C2889DF27007BDFB6 /* FirebaseFirestore */; };
+		37C0C20828862CC000553B73 /* TestsiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C20728862CC000553B73 /* TestsiOS.swift */; };
+		37C0C20A28862CC000553B73 /* TestsiOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C20928862CC000553B73 /* TestsiOSLaunchTests.swift */; };
+		37C0C21428862CC000553B73 /* TestsMacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C21328862CC000553B73 /* TestsMacOS.swift */; };
+		37C0C21628862CC000553B73 /* TestsMacOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C21528862CC000553B73 /* TestsMacOSLaunchTests.swift */; };
 		37C0C21728862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C1EC28862CBD00553B73 /* MultiFactor.xcdatamodeld */; };
 		37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C1EC28862CBD00553B73 /* MultiFactor.xcdatamodeld */; };
 		37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C0C1EE28862CBD00553B73 /* MultiFactorApp.swift */; };
@@ -53,6 +54,8 @@
 /* Begin PBXFileReference section */
 		3737A68B2888C9CF007F8DFD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
+		378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectiveView.swift; sourceTree = "<group>"; };
+		378D9F292889DF1C007BDFB6 /* MultiFactor--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MultiFactor--macOS--Info.plist"; sourceTree = "<group>"; };
 		37C0C1ED28862CBD00553B73 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		37C0C1EE28862CBD00553B73 /* MultiFactorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiFactorApp.swift; sourceTree = "<group>"; };
 		37C0C1EF28862CBD00553B73 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,11 +65,11 @@
 		37C0C1FC28862CBF00553B73 /* MultiFactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiFactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37C0C1FE28862CBF00553B73 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		37C0C20328862CC000553B73 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		37C0C20728862CC000553B73 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
-		37C0C20928862CC000553B73 /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		37C0C20728862CC000553B73 /* TestsiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsiOS.swift; sourceTree = "<group>"; };
+		37C0C20928862CC000553B73 /* TestsiOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsiOSLaunchTests.swift; sourceTree = "<group>"; };
 		37C0C20F28862CC000553B73 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		37C0C21328862CC000553B73 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
-		37C0C21528862CC000553B73 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		37C0C21328862CC000553B73 /* TestsMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsMacOS.swift; sourceTree = "<group>"; };
+		37C0C21528862CC000553B73 /* TestsMacOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsMacOSLaunchTests.swift; sourceTree = "<group>"; };
 		37C0C22F2886352800553B73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,8 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				372CDB9028884FB70029A89D /* FirebaseAuth in Frameworks */,
-				372CDB9228884FB70029A89D /* FirebaseFirestore in Frameworks */,
+				378D9F262889DE87007BDFB6 /* FirebaseAuth in Frameworks */,
+				378D9F282889DE87007BDFB6 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,8 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				372CDB9528884FD80029A89D /* FirebaseAuth in Frameworks */,
-				372CDB9728884FD80029A89D /* FirebaseFirestore in Frameworks */,
+				378D9F2B2889DF27007BDFB6 /* FirebaseAuth in Frameworks */,
+				378D9F2D2889DF27007BDFB6 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +121,7 @@
 		37C0C1E628862CBD00553B73 = {
 			isa = PBXGroup;
 			children = (
+				378D9F292889DF1C007BDFB6 /* MultiFactor--macOS--Info.plist */,
 				37C0C1EB28862CBD00553B73 /* Shared */,
 				37C0C1FD28862CBF00553B73 /* macOS */,
 				37C0C20628862CC000553B73 /* Tests iOS */,
@@ -155,6 +159,7 @@
 		37C0C1FD28862CBF00553B73 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */,
 				37C0C1FE28862CBF00553B73 /* macOS.entitlements */,
 			);
 			path = macOS;
@@ -163,8 +168,8 @@
 		37C0C20628862CC000553B73 /* Tests iOS */ = {
 			isa = PBXGroup;
 			children = (
-				37C0C20728862CC000553B73 /* Tests_iOS.swift */,
-				37C0C20928862CC000553B73 /* Tests_iOSLaunchTests.swift */,
+				37C0C20728862CC000553B73 /* TestsiOS.swift */,
+				37C0C20928862CC000553B73 /* TestsiOSLaunchTests.swift */,
 			);
 			path = "Tests iOS";
 			sourceTree = "<group>";
@@ -172,8 +177,8 @@
 		37C0C21228862CC000553B73 /* Tests macOS */ = {
 			isa = PBXGroup;
 			children = (
-				37C0C21328862CC000553B73 /* Tests_macOS.swift */,
-				37C0C21528862CC000553B73 /* Tests_macOSLaunchTests.swift */,
+				37C0C21328862CC000553B73 /* TestsMacOS.swift */,
+				37C0C21528862CC000553B73 /* TestsMacOSLaunchTests.swift */,
 			);
 			path = "Tests macOS";
 			sourceTree = "<group>";
@@ -202,8 +207,8 @@
 			);
 			name = "MultiFactor (iOS)";
 			packageProductDependencies = (
-				372CDB8F28884FB70029A89D /* FirebaseAuth */,
-				372CDB9128884FB70029A89D /* FirebaseFirestore */,
+				378D9F252889DE87007BDFB6 /* FirebaseAuth */,
+				378D9F272889DE87007BDFB6 /* FirebaseFirestore */,
 			);
 			productName = "MultiFactor (iOS)";
 			productReference = 37C0C1F628862CBF00553B73 /* MultiFactor.app */;
@@ -216,6 +221,7 @@
 				37C0C1F828862CBF00553B73 /* Sources */,
 				37C0C1F928862CBF00553B73 /* Frameworks */,
 				37C0C1FA28862CBF00553B73 /* Resources */,
+				370587222889F4B900E6048C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -223,8 +229,8 @@
 			);
 			name = "MultiFactor (macOS)";
 			packageProductDependencies = (
-				372CDB9428884FD80029A89D /* FirebaseAuth */,
-				372CDB9628884FD80029A89D /* FirebaseFirestore */,
+				378D9F2A2889DF27007BDFB6 /* FirebaseAuth */,
+				378D9F2C2889DF27007BDFB6 /* FirebaseFirestore */,
 			);
 			productName = "MultiFactor (macOS)";
 			productReference = 37C0C1FC28862CBF00553B73 /* MultiFactor.app */;
@@ -302,8 +308,7 @@
 			);
 			mainGroup = 37C0C1E628862CBD00553B73;
 			packageReferences = (
-				372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				372CDB9328884FD80029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 37C0C1F728862CBF00553B73 /* Products */;
 			projectDirPath = "";
@@ -352,6 +357,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		370587222889F4B900E6048C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		37C0C1F228862CBF00553B73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -373,6 +398,7 @@
 				37C0C21A28862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				37C0C21E28862CC000553B73 /* Persistence.swift in Sources */,
 				37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
+				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,
 				3737A6912888CA0F007F8DFD /* AuthCodeView.swift in Sources */,
@@ -383,8 +409,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37C0C20A28862CC000553B73 /* Tests_iOSLaunchTests.swift in Sources */,
-				37C0C20828862CC000553B73 /* Tests_iOS.swift in Sources */,
+				37C0C20A28862CC000553B73 /* TestsiOSLaunchTests.swift in Sources */,
+				37C0C20828862CC000553B73 /* TestsiOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,8 +418,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37C0C21628862CC000553B73 /* Tests_macOSLaunchTests.swift in Sources */,
-				37C0C21428862CC000553B73 /* Tests_macOS.swift in Sources */,
+				37C0C21628862CC000553B73 /* TestsMacOSLaunchTests.swift in Sources */,
+				37C0C21428862CC000553B73 /* TestsMacOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +622,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MultiFactor--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -624,6 +651,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MultiFactor--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -769,15 +797,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		372CDB9328884FD80029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -788,24 +808,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		372CDB8F28884FB70029A89D /* FirebaseAuth */ = {
+		378D9F252889DE87007BDFB6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		372CDB9128884FB70029A89D /* FirebaseFirestore */ = {
+		378D9F272889DE87007BDFB6 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		372CDB9428884FD80029A89D /* FirebaseAuth */ = {
+		378D9F2A2889DF27007BDFB6 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		372CDB9628884FD80029A89D /* FirebaseFirestore */ = {
+		378D9F2C2889DF27007BDFB6 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 372CDB8E28884FB70029A89D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */

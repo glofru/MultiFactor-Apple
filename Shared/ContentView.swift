@@ -18,6 +18,7 @@ struct ContentView: View {
 
     var body: some View {
         HomeView()
+            .background(VisualEffect())
     }
 
     private func addItem() {
@@ -62,8 +63,12 @@ private let itemFormatter: DateFormatter = {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView().previewDevice("iPhone 13").environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            ContentView().previewDevice("iPhone 13").environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            ContentView()
+                .previewDevice("iPhone 13")
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            ContentView()
+                .previewDevice("iPhone 13")
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }
 }
