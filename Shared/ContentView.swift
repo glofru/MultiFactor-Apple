@@ -16,8 +16,17 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
+    @StateObject var authenticationViewModel = AuthenticationViewModel()
+
     var body: some View {
-        HomeView()
+        switch authenticationViewModel.state {
+        case .signedIn:
+            HomeView()
+        case .signedOut:
+            LoginView(authenticationViewModel: authenticationViewModel)
+        case .unknown:
+            ProgressView()
+        }
     }
 
     private func addItem() {

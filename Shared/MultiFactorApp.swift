@@ -7,25 +7,6 @@
 
 import SwiftUI
 
-import FirebaseCore
-
-#if os(iOS)
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-
-        return true
-    }
-}
-#elseif os(macOS)
-class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        FirebaseApp.configure()
-    }
-}
-#endif
-
 @main
 struct MultiFactorApp: App {
 #if os(iOS)
@@ -39,6 +20,7 @@ struct MultiFactorApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
+                // Background
                 #if os(iOS)
                 Color.background
                     .ignoresSafeArea(.all)
@@ -47,8 +29,12 @@ struct MultiFactorApp: App {
                     .edgesIgnoringSafeArea(.all)
                 #endif
 
+                // Actual content
                 ContentView()
             }
+            #if os(macOS)
+                .buttonStyle(.plain)
+            #endif
             .preferredColorScheme(.dark)
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

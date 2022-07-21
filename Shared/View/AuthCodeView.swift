@@ -13,58 +13,62 @@ struct AuthCodeView: View {
     @State private var code = AuthCode(issuer: "Google", account: "gianluca.lofrumento@gmail.com")
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Image("google")
-                    .resizable()
-                    .frame(width: 30, height: 30, alignment: .center)
-                    .frame(width: 40, height: 40)
-                    .background(.red)
-                    .cornerRadius(AuthCodeView.cornerRadius)
-                    .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
+        Button(action: {
 
-                VStack(alignment: .leading) {
-                    Text(code.issuer)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    Text(code.account)
-                        .font(.caption2)
-                }
-                .foregroundColor(.white)
+        }, label: {
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Image("google")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                        .frame(width: 40, height: 40)
+                        .background(.red)
+                        .cornerRadius(AuthCodeView.cornerRadius)
+                        .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
 
-                Spacer()
+                    VStack(alignment: .leading) {
+                        Text(code.issuer)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text(code.account)
+                            .font(.caption2)
+                    }
+                    .foregroundColor(.white)
 
-                LoadingSpinner()
-                    .frame(width: 35, height: 35)
-            }.frame(height: 40)
+                    Spacer()
 
-            HStack {
-                ForEach(0..<6) { index in
-                    Text(String(code.code[index].rawValue))
-                        .foregroundColor(.white)
-                        .fontWeight(.bold)
-                        .font(.title)
-                        .frame(width: 30)
-                        #if os(iOS)
-                        .background(Color.background)
-                        #elseif os(macOS)
-                        .background(Color.background.opacity(0.5))
-                        #endif
-                        .cornerRadius(8)
-                    if index != 5 {
-                        Spacer()
+                    LoadingSpinner()
+                        .frame(width: 35, height: 35)
+                }.frame(height: 40)
+
+                HStack {
+                    ForEach(0..<6) { index in
+                        Text(String(code.code[index].rawValue))
+                            .foregroundColor(.white)
+                            .fontWeight(.bold)
+                            .font(.title)
+                            .frame(width: 30)
+                            #if os(iOS)
+                            .background(Color.background)
+                            #elseif os(macOS)
+                            .background(Color.background.opacity(0.6))
+                            #endif
+                            .cornerRadius(8)
+                        if index != 5 {
+                            Spacer()
+                        }
                     }
                 }
             }
-        }
-        .padding()
-        #if os(iOS)
-        .background(Color.darkGrey)
-        #elseif os(macOS)
-        .background(Color.darkGrey.opacity(0.5))
-        #endif
-        .frame(maxWidth: 400)
+            .padding()
+            #if os(iOS)
+            .background(Color.darkGrey)
+            #elseif os(macOS)
+            .background(Color.darkGrey.opacity(0.5))
+            #endif
+            .frame(maxWidth: 400)
         .cornerRadius(AuthCodeView.cornerRadius)
+        })
     }
 }
 

@@ -9,14 +9,16 @@ import SwiftUI
 
 struct HomeView: View {
 
-    @State private var searched = ""
+//    @State private var searched = ""
 
     var body: some View {
-        VStack {
-            AuthCodeView()
-            AuthCodeView()
-            AuthCodeView()
-            Spacer()
+        ScrollView {
+            LazyVStack {
+                AuthCodeView()
+                AuthCodeView()
+                AuthCodeView()
+                Spacer()
+            }
         }
         .padding()
 //        .searchable(text: $searched)
