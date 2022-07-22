@@ -16,7 +16,7 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
-    @StateObject var authenticationViewModel = AuthenticationViewModel()
+    @StateObject var authenticationViewModel = FirebaseAuthenticationViewModel()
 
     var body: some View {
         switch authenticationViewModel.state {

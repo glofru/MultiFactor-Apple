@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @ObservedObject var authenticationViewModel: AuthenticationViewModel
-    
+struct LoginView<ViewModel>: View where ViewModel: AuthenticationViewModel {
+
+    @ObservedObject var authenticationViewModel: ViewModel
+
     @State private var email = ""
     @State private var password = ""
 
@@ -35,6 +36,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(authenticationViewModel: AuthenticationViewModel())
+        LoginView(authenticationViewModel: FirebaseAuthenticationViewModel())
     }
 }
