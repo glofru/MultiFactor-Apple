@@ -17,6 +17,10 @@
 		37058734288A05AF00E6048C /* FirebaseAuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058732288A05AF00E6048C /* FirebaseAuthenticationViewModel.swift */; };
 		3705873A288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
 		3705873B288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
+		373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */; };
+		373408A6288C9BDE00ABB9C4 /* View+GlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */; };
+		373408A8288C9FDE00ABB9C4 /* Color+MFColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */; };
+		373408A9288CA02500ABB9C4 /* Color+MFColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */; };
 		3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
@@ -63,6 +67,8 @@
 		37058723288A023100E6048C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37058732288A05AF00E6048C /* FirebaseAuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthenticationViewModel.swift; sourceTree = "<group>"; };
 		37058739288A0E7B00E6048C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassBackground.swift"; sourceTree = "<group>"; };
+		373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+MFColors.swift"; sourceTree = "<group>"; };
 		3737A68B2888C9CF007F8DFD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
 		377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -130,6 +136,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		373408A3288C986800ABB9C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */,
+				373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		3737A68E2888CA04007F8DFD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +178,7 @@
 		37C0C1EB28862CBD00553B73 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				373408A3288C986800ABB9C4 /* Extensions */,
 				377B9D63288A337C00090D84 /* Firebase */,
 				37058735288A097C00E6048C /* Login */,
 				3737A68E2888CA04007F8DFD /* View */,
@@ -253,7 +269,6 @@
 				37C0C1F828862CBF00553B73 /* Sources */,
 				37C0C1F928862CBF00553B73 /* Frameworks */,
 				37C0C1FA28862CBF00553B73 /* Resources */,
-				370587222889F4B900E6048C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -389,26 +404,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		370587222889F4B900E6048C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		37C0C1F228862CBF00553B73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -419,8 +414,10 @@
 				37C0C21728862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
 				3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */,
+				373408A8288C9FDE00ABB9C4 /* Color+MFColors.swift in Sources */,
 				37058733288A05AF00E6048C /* FirebaseAuthenticationViewModel.swift in Sources */,
 				37058724288A023100E6048C /* AppDelegate.swift in Sources */,
+				373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */,
 				37C0C21B28862CC000553B73 /* ContentView.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
 				3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */,
@@ -431,6 +428,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				373408A9288CA02500ABB9C4 /* Color+MFColors.swift in Sources */,
+				373408A6288C9BDE00ABB9C4 /* View+GlassBackground.swift in Sources */,
 				377B9D62288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */,
 				37058725288A023100E6048C /* AppDelegate.swift in Sources */,
 				37C0C21A28862CC000553B73 /* MultiFactorApp.swift in Sources */,

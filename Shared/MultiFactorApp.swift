@@ -33,9 +33,9 @@ struct MultiFactorApp: App {
                 ContentView()
             }
             #if os(macOS)
+                .frame(width: 400)
                 .buttonStyle(.plain)
             #endif
-            .preferredColorScheme(.dark)
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         #if os(macOS)

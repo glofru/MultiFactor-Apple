@@ -21,7 +21,7 @@ struct ContentView: View {
     var body: some View {
         switch authenticationViewModel.state {
         case .signedIn:
-            HomeView()
+            HomeView(authenticationViewModel: authenticationViewModel)
         case .signedOut:
             LoginView(authenticationViewModel: authenticationViewModel)
         case .unknown:

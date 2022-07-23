@@ -21,6 +21,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 #elseif os(macOS)
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSWindow.allowsAutomaticWindowTabbing = false
+
         FirebaseApp.configure()
     }
 }

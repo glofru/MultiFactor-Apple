@@ -33,7 +33,6 @@ struct AuthCodeView: View {
                         Text(code.account)
                             .font(.caption2)
                     }
-                    .foregroundColor(.white)
 
                     Spacer()
 
@@ -44,15 +43,10 @@ struct AuthCodeView: View {
                 HStack {
                     ForEach(0..<6) { index in
                         Text(String(code.code[index].rawValue))
-                            .foregroundColor(.white)
                             .fontWeight(.bold)
                             .font(.title)
                             .frame(width: 30)
-                            #if os(iOS)
-                            .background(Color.background)
-                            #elseif os(macOS)
-                            .background(Color.background.opacity(0.6))
-                            #endif
+                            .glassBackground()
                             .cornerRadius(8)
                         if index != 5 {
                             Spacer()
@@ -61,11 +55,7 @@ struct AuthCodeView: View {
                 }
             }
             .padding()
-            #if os(iOS)
-            .background(Color.darkGrey)
-            #elseif os(macOS)
-            .background(Color.darkGrey.opacity(0.5))
-            #endif
+            .glassBackground(.element, intensity: .strong)
             .frame(maxWidth: 400)
         .cornerRadius(AuthCodeView.cornerRadius)
         })
@@ -112,9 +102,4 @@ struct AuthCodeView_Previews: PreviewProvider {
     static var previews: some View {
         AuthCodeView()
     }
-}
-
-extension Color {
-    static let background = Color("background")
-    static let darkGrey = Color("darkGrey")
 }

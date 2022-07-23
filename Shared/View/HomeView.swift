@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct HomeView<ViewModel>: View where ViewModel: AuthenticationViewModel {
 
 //    @State private var searched = ""
+    @ObservedObject var authenticationViewModel: ViewModel
 
     var body: some View {
         ScrollView {
+            HStack {
+                Button(action: {
+                    authenticationViewModel.signOut()
+                }, label: {
+                    Text("Sign out")
+                })
+            }
             LazyVStack {
                 AuthCodeView()
                 AuthCodeView()
@@ -27,6 +35,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(authenticationViewModel: FirebaseAuthenticationViewModel())
     }
 }
