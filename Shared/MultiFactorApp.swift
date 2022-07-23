@@ -22,10 +22,7 @@ struct MultiFactorApp: App {
         WindowGroup {
             ZStack {
                 // Background
-                #if os(iOS)
-                Color.background
-                    .ignoresSafeArea(.all)
-                #elseif os(macOS)
+                #if os(macOS)
                 VisualEffectView()
                     .edgesIgnoringSafeArea(.all)
                 #endif

@@ -27,10 +27,6 @@ struct GlassBackground: ViewModifier {
 }
 
 extension View {
-    func glassBackground(intensity: GlassBackground.Intensity = .weak) -> some View {
-        glassBackground(.background, intensity: intensity)
-    }
-    
     func glassBackground(_ color: Color, intensity: GlassBackground.Intensity = .weak) -> some View {
         modifier(GlassBackground(color: color, intensity: intensity))
     }

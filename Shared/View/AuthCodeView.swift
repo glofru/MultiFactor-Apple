@@ -46,7 +46,7 @@ struct AuthCodeView: View {
                             .fontWeight(.bold)
                             .font(.title)
                             .frame(width: 30)
-                            .glassBackground()
+                            .glassBackground(.background)
                             .cornerRadius(8)
                         if index != 5 {
                             Spacer()

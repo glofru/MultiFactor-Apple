@@ -7,16 +7,36 @@
 
 import SwiftUI
 
-struct HomeView<ViewModel>: View where ViewModel: AuthenticationViewModel {
+struct HomeView: View {
 
 //    @State private var searched = ""
-    @ObservedObject var authenticationViewModel: ViewModel
+    @ObservedObject var authenticationViewModel: AuthenticationViewModel
 
+    var body: some View {
+        #if os(iOS)
+        TabView {
+            CodeView()
+                .tabItem {
+                    Label("Codes", systemImage: "lock")
+                }
+
+            AccountView()
+                .tabItem {
+                    Label("Account", systemImage: "person.crop.circle")
+                }
+        }
+        #elseif os(macOS)
+        CodeView()
+        #endif
+    }
+}
+
+struct CodeView: View {
     var body: some View {
         ScrollView {
             HStack {
                 Button(action: {
-                    authenticationViewModel.signOut()
+//                    authenticationViewModel.signOut()
                 }, label: {
                     Text("Sign out")
                 })
@@ -29,7 +49,20 @@ struct HomeView<ViewModel>: View where ViewModel: AuthenticationViewModel {
             }
         }
         .padding()
-//        .searchable(text: $searched)
+    }
+}
+
+struct AccountView: View {
+    var body: some View {
+        Form {
+            Section(header: Text("ABOUT")) {
+                HStack {
+                    Text("Version")
+                    Spacer()
+                    Text("\(Bundle.main.releaseVersionNumber ?? "...")")
+                }
+            }
+        }
     }
 }
 

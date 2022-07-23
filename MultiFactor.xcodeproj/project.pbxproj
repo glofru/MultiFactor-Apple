@@ -23,6 +23,8 @@
 		373408A9288CA02500ABB9C4 /* Color+MFColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */; };
 		373408AC288CA85200ABB9C4 /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AB288CA85200ABB9C4 /* CloudProvider.swift */; };
 		373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AB288CA85200ABB9C4 /* CloudProvider.swift */; };
+		373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */; };
+		373408B0288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */; };
 		3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
@@ -72,6 +74,7 @@
 		373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassBackground.swift"; sourceTree = "<group>"; };
 		373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+MFColors.swift"; sourceTree = "<group>"; };
 		373408AB288CA85200ABB9C4 /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
+		373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+VersionNumber.swift"; sourceTree = "<group>"; };
 		3737A68B2888C9CF007F8DFD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
 		377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -142,8 +145,9 @@
 		373408A3288C986800ABB9C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */,
+				373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */,
 				373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */,
+				373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -432,6 +436,7 @@
 				37058724288A023100E6048C /* AppDelegate.swift in Sources */,
 				373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */,
 				37C0C21B28862CC000553B73 /* ContentView.swift in Sources */,
+				373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
 				3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */,
 			);
@@ -452,6 +457,7 @@
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */,
+				373408B0288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				3705873B288A0E7B00E6048C /* LoginView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,
 				3737A6912888CA0F007F8DFD /* AuthCodeView.swift in Sources */,

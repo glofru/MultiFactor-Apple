@@ -13,9 +13,10 @@ protocol MFCloudProvider {
 
     func initialize()
 
+    //MARK: Authentication
     func signIn(method: AuthenticationMethod) async throws
     func signOut() throws
-    
+
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void)
 }
 
