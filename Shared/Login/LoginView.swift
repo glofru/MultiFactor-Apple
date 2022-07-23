@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct LoginView<ViewModel>: View where ViewModel: AuthenticationViewModel {
+struct LoginView: View {
 
-    @ObservedObject var authenticationViewModel: ViewModel
+    @ObservedObject var authenticationViewModel: AuthenticationViewModel
 
     @State private var email = ""
     @State private var password = ""
@@ -77,6 +77,6 @@ private struct MFRoundedRectangleButtonStyle: ButtonStyle {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(authenticationViewModel: FirebaseAuthenticationViewModel())
+        LoginView(authenticationViewModel: AuthenticationViewModel())
     }
 }

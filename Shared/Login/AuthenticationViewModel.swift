@@ -7,13 +7,55 @@
 
 import SwiftUI
 
-protocol AuthenticationViewModel: ObservableObject {
-    var user: MFUser? { get }
-    var state: AuthenticationState { get }
-    var error: String? { get }
+class AuthenticationViewModel: ObservableObject {
 
-    func signIn(method: AuthenticationMethod) async
-    func signOut()
+    @Published private(set) var user: MFUser?
+
+    @Published private(set) var state = AuthenticationState.unknown
+
+    @Published private(set) var error: String?
+
+    init() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            CloudProvider.shared.addUserDidChangeListener({ user in
+                withAnimation {
+                    if user != nil {
+                        self.state = .signedIn
+                    } else {
+                        self.state = .signedOut
+                    }
+                    self.user = user
+                }
+            })
+        }
+    }
+
+    func signIn(method: AuthenticationMethod) async {
+        do {
+            try await CloudProvider.shared.signIn(method: method)
+        } catch {
+            await MainActor.run {
+                withAnimation {
+                    self.state = .signedOut
+                    self.error = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    func signOut() {
+        do {
+            defer {
+                withAnimation {
+                    state = .signedOut
+                }
+            }
+
+            try CloudProvider.shared.signOut()
+        } catch {
+            print("[Auth] Failed signed out: \(error)")
+        }
+    }
 }
 
 struct MFUser {

@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct MultiFactorApp: App {
+
 #if os(iOS)
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 #elseif os(macOS)
@@ -33,10 +34,11 @@ struct MultiFactorApp: App {
                 ContentView()
             }
             #if os(macOS)
-                .frame(width: 400)
+                .frame(minWidth: 400, idealWidth: 400)
                 .buttonStyle(.plain)
             #endif
-            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                
         }
         #if os(macOS)
         .windowStyle(.hiddenTitleBar)

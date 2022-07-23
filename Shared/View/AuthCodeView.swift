@@ -57,7 +57,10 @@ struct AuthCodeView: View {
             .padding()
             .glassBackground(.element, intensity: .strong)
             .frame(maxWidth: 400)
-        .cornerRadius(AuthCodeView.cornerRadius)
+            .cornerRadius(AuthCodeView.cornerRadius)
+            #if os(iOS)
+            .foregroundColor(Color(uiColor: .label))
+            #endif
         })
     }
 }

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import FirebaseCore
-
 #if os(iOS)
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -23,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSWindow.allowsAutomaticWindowTabbing = false
 
-        FirebaseApp.configure()
+        CloudProvider.shared.initialize()
     }
 }
 #endif

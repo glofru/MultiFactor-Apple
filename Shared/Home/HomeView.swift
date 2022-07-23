@@ -35,6 +35,6 @@ struct HomeView<ViewModel>: View where ViewModel: AuthenticationViewModel {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(authenticationViewModel: FirebaseAuthenticationViewModel())
+        HomeView(authenticationViewModel: AuthenticationViewModel())
     }
 }
