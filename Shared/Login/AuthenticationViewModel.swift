@@ -9,10 +9,12 @@ import SwiftUI
 
 class AuthenticationViewModel: ObservableObject {
 
-    @Published private(set) var user: MFUser?
-
+    @Published private(set) var user: MFUser? = nil {
+        didSet {
+            PersistenceController.shared.user = user
+        }
+    }
     @Published private(set) var state = AuthenticationState.unknown
-
     @Published private(set) var error: String?
 
     init() {
@@ -52,9 +54,7 @@ class AuthenticationViewModel: ObservableObject {
             }
 
             try CloudProvider.shared.signOut()
-        } catch {
-            print("[Auth] Failed signed out: \(error)")
-        }
+        } catch { }
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
 
 //    @State private var searched = ""
-    @ObservedObject var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
     var body: some View {
         #if os(iOS)
@@ -34,13 +34,6 @@ struct HomeView: View {
 struct CodeView: View {
     var body: some View {
         ScrollView {
-            HStack {
-                Button(action: {
-//                    authenticationViewModel.signOut()
-                }, label: {
-                    Text("Sign out")
-                })
-            }
             LazyVStack {
                 AuthCodeView()
                 AuthCodeView()
@@ -52,22 +45,52 @@ struct CodeView: View {
     }
 }
 
+#if os(iOS)
 struct AccountView: View {
+
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    
+    @State private var showSignOut = false
+
     var body: some View {
-        Form {
-            Section(header: Text("ABOUT")) {
-                HStack {
-                    Text("Version")
-                    Spacer()
-                    Text("\(Bundle.main.releaseVersionNumber ?? "...")")
+        NavigationView {
+            Form {
+                Section(header: Text("PROFILE")) {
+                    Text("\(PersistenceController.shared.user?.email ?? "ALOA")")
+                }
+
+                Section(header: Text("ABOUT")) {
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text("\(Bundle.main.releaseVersionNumber ?? "...")")
+                    }
+                }
+
+                Section {
+                    Button("Sign out", role: .destructive) {
+                        showSignOut.toggle()
+                    }
+                    .confirmationDialog("Do you want to sign out?", isPresented: $showSignOut, titleVisibility: .visible) {
+                        Button("Sign out", role: .destructive) {
+                            authenticationViewModel.signOut()
+                        }
+
+                        Button("Cancel", role: .cancel) {
+                            showSignOut = false
+                        }
+                    }
                 }
             }
+            .navigationTitle("Account")
         }
     }
 }
+#endif
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(authenticationViewModel: AuthenticationViewModel())
+        HomeView()
+            .environmentObject(AuthenticationViewModel())
     }
 }

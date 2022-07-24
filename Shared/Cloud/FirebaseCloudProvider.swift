@@ -37,14 +37,14 @@ final class FirebaseCloudProvider: MFCloudProvider {
         }
         
         self.handle = Auth.auth().addStateDidChangeListener({ _, user in
-            listener(MFUser(user: user))
+            listener(MFUser(firebaseUser: user))
         })
     }
 }
 
 extension MFUser {
-    init?(user: User?) {
-        guard let user = user else {
+    init?(firebaseUser: User?) {
+        guard let user = firebaseUser else {
             return nil
         }
         

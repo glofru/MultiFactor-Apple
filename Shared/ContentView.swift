@@ -19,14 +19,17 @@ struct ContentView: View {
     @StateObject var authenticationViewModel = AuthenticationViewModel()
 
     var body: some View {
-        switch authenticationViewModel.state {
-        case .signedIn:
-            HomeView(authenticationViewModel: authenticationViewModel)
-        case .signedOut:
-            LoginView(authenticationViewModel: authenticationViewModel)
-        case .unknown:
-            ProgressView()
+        Group {
+            switch authenticationViewModel.state {
+            case .signedIn:
+                HomeView()
+            case .signedOut:
+                LoginView()
+            case .unknown:
+                ProgressView()
+            }
         }
+        .environmentObject(authenticationViewModel)
     }
 
     private func addItem() {
@@ -70,13 +73,6 @@ private let itemFormatter: DateFormatter = {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-                .previewDevice("iPhone 13")
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            ContentView()
-                .previewDevice("iPhone 13")
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-        }
+        ContentView()
     }
 }

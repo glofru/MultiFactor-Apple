@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @ObservedObject var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
     @State private var email = ""
     @State private var password = ""
@@ -77,6 +77,7 @@ private struct MFRoundedRectangleButtonStyle: ButtonStyle {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(authenticationViewModel: AuthenticationViewModel())
+        LoginView()
+            .environmentObject(AuthenticationViewModel())
     }
 }
