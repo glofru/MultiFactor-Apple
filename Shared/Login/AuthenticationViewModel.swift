@@ -33,28 +33,24 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     func signIn(method: AuthenticationMethod) async {
-        do {
-            try await CloudProvider.shared.signIn(method: method)
-        } catch {
+        switch await CloudProvider.shared.signIn(method: method) {
+        case .success: break
+        case .failure(let localizedError):
             await MainActor.run {
                 withAnimation {
                     self.state = .signedOut
-                    self.error = error.localizedDescription
+                    self.error = localizedError
                 }
             }
         }
     }
 
     func signOut() {
-        do {
-            defer {
-                withAnimation {
-                    state = .signedOut
-                }
-            }
+        CloudProvider.shared.signOut()
 
-            try CloudProvider.shared.signOut()
-        } catch { }
+        withAnimation {
+            state = .signedOut
+        }
     }
 }
 
@@ -69,4 +65,8 @@ enum AuthenticationMethod {
 
 enum AuthenticationState {
     case signedIn, signedOut, unknown
+}
+
+enum AuthenticationResponse {
+    case success, failure(String)
 }

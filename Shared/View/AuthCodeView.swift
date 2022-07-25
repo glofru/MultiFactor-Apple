@@ -62,6 +62,25 @@ struct AuthCodeView: View {
             .foregroundColor(Color(uiColor: .label))
             #endif
         })
+        .contextMenu {
+            Button(action: {
+                print("Copy")
+            }, label: {
+                Label("Copy", systemImage: "doc.on.doc")
+            })
+            
+            Button(action: {
+                print("Share")
+            }, label: {
+                Label("Share", systemImage: "square.and.arrow.up")
+            })
+
+            Button(role: .destructive, action: {
+                print("Delete")
+            }, label: {
+                Label("Delete", systemImage: "trash")
+            })
+        }
     }
 }
 

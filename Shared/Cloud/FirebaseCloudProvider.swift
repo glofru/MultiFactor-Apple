@@ -20,15 +20,20 @@ final class FirebaseCloudProvider: MFCloudProvider {
 
     private var handle: AuthStateDidChangeListenerHandle?
 
-    func signIn(method: AuthenticationMethod) async throws {
+    func signIn(method: AuthenticationMethod) async -> AuthenticationResponse {
         switch method {
         case .email(let email, let password):
-            try await Auth.auth().signIn(withEmail: email, password: password)
+            do {
+                try await Auth.auth().signIn(withEmail: email, password: password)
+                return .success
+            } catch {
+                return .failure(error.localizedDescription)
+            }
         }
     }
     
-    func signOut() throws {
-        try Auth.auth().signOut()
+    func signOut() {
+        try? Auth.auth().signOut()
     }
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void) {

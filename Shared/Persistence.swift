@@ -57,16 +57,14 @@ extension PersistenceController {
             request.fetchLimit = 1
             if let oldUser = try? context.fetch(request).first {
                 if let newValue = newValue {
-                    oldUser.id = newValue.id
-                    oldUser.email = newValue.email
+                    oldUser.copy(newValue)
                 } else {
                     context.delete(oldUser)
                 }
             } else {
                 if let newValue = newValue {
                     let newUser = MFUserEntity(context: context)
-                    newUser.id = newValue.id
-                    newUser.email = newValue.email
+                    newUser.copy(newValue)
                 }
             }
 
@@ -76,6 +74,7 @@ extension PersistenceController {
             let request = MFUserEntity.fetchRequest()
             request.fetchLimit = 1
             let user = try? context.fetch(request).first
+
             return MFUser(entity: user)
         }
     }
@@ -92,6 +91,14 @@ extension MFUser {
     }
 }
 
+extension MFUserEntity {
+    func copy(_ user: MFUser) {
+        self.id = user.id
+        self.email = user.email
+    }
+}
+
+//MARK: SwiftUI Preview
 #if DEBUG
 extension PersistenceController {
     static var preview: PersistenceController = {
