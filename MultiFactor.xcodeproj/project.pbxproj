@@ -17,6 +17,8 @@
 		37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058732288A05AF00E6048C /* FirebaseCloudProvider.swift */; };
 		3705873A288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
 		3705873B288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
+		372B2EB9288F4D0100043D4F /* OTPCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B2EB8288F4D0100043D4F /* OTPCode.swift */; };
+		372B2EBA288F4D0100043D4F /* OTPCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B2EB8288F4D0100043D4F /* OTPCode.swift */; };
 		373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */; };
 		373408A6288C9BDE00ABB9C4 /* View+GlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */; };
 		373408A8288C9FDE00ABB9C4 /* Color+MFColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */; };
@@ -32,8 +34,8 @@
 		3736B218288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */; };
 		3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
-		3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
-		3737A6912888CA0F007F8DFD /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */; };
+		3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
+		3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
 		377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		377B9D62288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */; };
@@ -76,6 +78,7 @@
 		37058723288A023100E6048C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37058732288A05AF00E6048C /* FirebaseCloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudProvider.swift; sourceTree = "<group>"; };
 		37058739288A0E7B00E6048C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		372B2EB8288F4D0100043D4F /* OTPCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPCode.swift; sourceTree = "<group>"; };
 		373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassBackground.swift"; sourceTree = "<group>"; };
 		373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+MFColors.swift"; sourceTree = "<group>"; };
 		373408AB288CA85200ABB9C4 /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
@@ -83,7 +86,7 @@
 		3736B213288DA26800C7AEAF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPViewModel.swift; sourceTree = "<group>"; };
 		3737A68B2888C9CF007F8DFD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
+		3737A68F2888CA0F007F8DFD /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectiveView.swift; sourceTree = "<group>"; };
 		378D9F292889DF1C007BDFB6 /* MultiFactor--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MultiFactor--macOS--Info.plist"; sourceTree = "<group>"; };
@@ -150,6 +153,16 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		372B2EB7288F4CAC00043D4F /* OTP */ = {
+			isa = PBXGroup;
+			children = (
+				372B2EB8288F4D0100043D4F /* OTPCode.swift */,
+				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
+				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
+			);
+			path = OTP;
+			sourceTree = "<group>";
+		};
 		373408A3288C986800ABB9C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,7 +178,6 @@
 			children = (
 				3737A68B2888C9CF007F8DFD /* HomeView.swift */,
 				3736B213288DA26800C7AEAF /* HomeViewModel.swift */,
-				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -173,7 +185,6 @@
 		3737A68E2888CA04007F8DFD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3737A68F2888CA0F007F8DFD /* AuthCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -205,6 +216,7 @@
 			children = (
 				373408A3288C986800ABB9C4 /* Extensions */,
 				377B9D63288A337C00090D84 /* Cloud */,
+				372B2EB7288F4CAC00043D4F /* OTP */,
 				37058735288A097C00E6048C /* Login */,
 				373408AA288CA6F800ABB9C4 /* Home */,
 				3737A68E2888CA04007F8DFD /* View */,
@@ -438,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */,
+				372B2EB9288F4D0100043D4F /* OTPCode.swift in Sources */,
 				3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				37C0C21D28862CC000553B73 /* Persistence.swift in Sources */,
 				37C0C21728862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
@@ -452,7 +465,7 @@
 				373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
-				3737A6902888CA0F007F8DFD /* AuthCodeView.swift in Sources */,
+				3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +489,8 @@
 				373408B0288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				3705873B288A0E7B00E6048C /* LoginView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,
-				3737A6912888CA0F007F8DFD /* AuthCodeView.swift in Sources */,
+				372B2EBA288F4D0100043D4F /* OTPCode.swift in Sources */,
+				3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,8 @@ import SwiftUI
 
 import FirebaseAuth
 import FirebaseCore
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 final class FirebaseCloudProvider: MFCloudProvider {
     private init() { }
@@ -18,8 +20,10 @@ final class FirebaseCloudProvider: MFCloudProvider {
         FirebaseApp.configure()
     }
 
+    private var firebaseUser: User?
     private var handle: AuthStateDidChangeListenerHandle?
 
+    //MARK: Authentication
     func signIn(method: AuthenticationMethod) async -> AuthenticationResponse {
         switch method {
         case .email(let email, let password):
@@ -31,7 +35,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
             }
         }
     }
-    
+
     func signOut() {
         try? Auth.auth().signOut()
     }
@@ -42,8 +46,27 @@ final class FirebaseCloudProvider: MFCloudProvider {
         }
         
         self.handle = Auth.auth().addStateDidChangeListener({ _, user in
+            self.firebaseUser = user
             listener(MFUser(firebaseUser: user))
         })
+    }
+
+    func addOTP(_ otp: OTPCode) async -> Result<OTPCodeID, CloudError> {
+        guard let user = firebaseUser else {
+            return .failure(.userNotLogged)
+        }
+
+        do {
+            let docRef = try Firestore.firestore()
+                .collection("otp")
+                .document(user.uid)
+                .collection("list")
+                .addDocument(from: otp)
+
+            return .success(docRef.documentID)
+        } catch {
+            return .failure(.otpAddingFail(error.localizedDescription))
+        }
     }
 }
 

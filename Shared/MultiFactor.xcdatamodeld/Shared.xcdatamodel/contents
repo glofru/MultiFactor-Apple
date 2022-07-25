@@ -12,12 +12,13 @@
         <attribute name="digits" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="issuer" optional="YES" attributeType="String"/>
+        <attribute name="label" optional="YES" attributeType="String"/>
         <attribute name="period" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="secret" attributeType="String"/>
     </entity>
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
         <element name="MFUserEntity" positionX="-63" positionY="-9" width="128" height="59"/>
-        <element name="TOTPEntity" positionX="-63" positionY="0" width="128" height="119"/>
+        <element name="TOTPEntity" positionX="-63" positionY="0" width="128" height="134"/>
     </elements>
 </model>

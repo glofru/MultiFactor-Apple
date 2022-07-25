@@ -18,6 +18,14 @@ protocol MFCloudProvider {
     func signOut()
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void)
+
+    //MARK: Database stuff
+    func addOTP(_ otp: OTPCode) async -> Result<OTPCodeID, CloudError>
+}
+
+enum CloudError: Error {
+    case userNotLogged
+    case otpAddingFail(String)
 }
 
 class CloudProvider {

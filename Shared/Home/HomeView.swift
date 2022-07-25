@@ -11,33 +11,46 @@ struct HomeView: View {
 
 //    @State private var searched = ""
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    @StateObject var homeViewModel = HomeViewModel()
 
     var body: some View {
-        #if os(iOS)
-        TabView {
-            CodeView()
-                .tabItem {
-                    Label("Codes", systemImage: "lock")
-                }
+        Group {
+            #if os(iOS)
+            TabView {
+                CodeView()
+                    .tabItem {
+                        Label("Codes", systemImage: "lock")
+                    }
 
-            AccountView()
-                .tabItem {
-                    Label("Account", systemImage: "person.crop.circle")
-                }
+                AccountView()
+                    .tabItem {
+                        Label("Account", systemImage: "person.crop.circle")
+                    }
+            }
+            #elseif os(macOS)
+            CodeView()
+            #endif
         }
-        #elseif os(macOS)
-        CodeView()
-        #endif
+        .environmentObject(homeViewModel)
     }
 }
 
 struct CodeView: View {
+    @EnvironmentObject var homeViewModel: HomeViewModel
+
     var body: some View {
         ScrollView {
+            Button(action: {
+                Task {
+                    await homeViewModel.addOTP()
+                }
+            }, label: {
+                Label("Add", systemImage: "plus")
+            })
             LazyVStack {
-                AuthCodeView()
-                AuthCodeView()
-                AuthCodeView()
+                OTPView()
+                OTPView()
+                OTPView()
                 Spacer()
             }
         }

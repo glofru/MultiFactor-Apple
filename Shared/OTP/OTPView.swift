@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct AuthCodeView: View {
+struct OTPView: View {
     static private let cornerRadius = 12.0
 
-    @State private var code = AuthCode(issuer: "Google", account: "gianluca.lofrumento@gmail.com")
+    @State private var code = OTPCode(secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30)
 
     var body: some View {
         Button(action: {
@@ -23,14 +23,14 @@ struct AuthCodeView: View {
                         .frame(width: 30, height: 30, alignment: .center)
                         .frame(width: 40, height: 40)
                         .background(.red)
-                        .cornerRadius(AuthCodeView.cornerRadius)
+                        .cornerRadius(OTPView.cornerRadius)
                         .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
 
                     VStack(alignment: .leading) {
-                        Text(code.issuer)
+                        Text(code.issuer ?? "No issuer")
                             .font(.title2)
                             .fontWeight(.bold)
-                        Text(code.account)
+                        Text(code.label ?? "No label")
                             .font(.caption2)
                     }
 
@@ -42,7 +42,7 @@ struct AuthCodeView: View {
 
                 HStack {
                     ForEach(0..<6) { index in
-                        Text(String(code.code[index].rawValue))
+                        Text(String(index+1))
                             .fontWeight(.bold)
                             .font(.title)
                             .frame(width: 30)
@@ -57,7 +57,7 @@ struct AuthCodeView: View {
             .padding()
             .glassBackground(.element, intensity: .strong)
             .frame(maxWidth: 400)
-            .cornerRadius(AuthCodeView.cornerRadius)
+            .cornerRadius(OTPView.cornerRadius)
             #if os(iOS)
             .foregroundColor(Color(uiColor: .label))
             #endif
@@ -68,7 +68,7 @@ struct AuthCodeView: View {
             }, label: {
                 Label("Copy", systemImage: "doc.on.doc")
             })
-            
+
             Button(action: {
                 print("Share")
             }, label: {
@@ -108,20 +108,8 @@ struct LoadingSpinner: View {
     }
 }
 
-struct AuthCode {
-    let issuer: String
-    let account: String
-
-    let logo = "google"
-    let code = [Number.one, .two, .three, .four, .five, .six]
-
-    enum Number: Int {
-        case one = 1, two, three, four, five, six, seven, eight, nine, ten
-    }
-}
-
-struct AuthCodeView_Previews: PreviewProvider {
+struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthCodeView()
+        OTPView()
     }
 }
