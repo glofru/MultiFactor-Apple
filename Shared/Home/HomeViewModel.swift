@@ -9,10 +9,17 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
 
-    @Published var otps = [TOTPViewModel]()
+//    @Published var otps = [TOTPViewModel]()
+    @Published var otps = [OTPCode]()
+
+    init() {
+        try? CloudProvider.shared.addOTPChangeListener({ [weak self] otps in
+            self?.otps = otps
+        })
+    }
 
     func addOTP() async {
-        let id = await CloudProvider.shared.addOTP(OTPCode(secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30))
-        print("ID added: \(id)")
+        try? await CloudProvider.shared.addOTP(OTPCode(id: UUID().uuidString, secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30))
+        
     }
 }

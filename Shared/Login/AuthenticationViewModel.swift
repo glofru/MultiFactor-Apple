@@ -35,11 +35,11 @@ class AuthenticationViewModel: ObservableObject {
     func signIn(method: AuthenticationMethod) async {
         switch await CloudProvider.shared.signIn(method: method) {
         case .success: break
-        case .failure(let localizedError):
+        case .failure(let error):
             await MainActor.run {
                 withAnimation {
                     self.state = .signedOut
-                    self.error = localizedError
+                    self.error = error.localizedDescription
                 }
             }
         }

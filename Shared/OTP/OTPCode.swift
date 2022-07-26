@@ -8,7 +8,7 @@
 typealias OTPCodeID = String
 
 struct OTPCode: Codable, Identifiable {
-    var id: OTPCodeID?
+    var id: OTPCodeID
     let secret: String
     let issuer: String?
     let label: String?
@@ -16,7 +16,8 @@ struct OTPCode: Codable, Identifiable {
     let digits: Digits?
     let period: UInt8?
 
-    init(secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: UInt8 = 30) {
+    init(id: OTPCodeID, secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: UInt8 = 30) {
+        self.id = id
         self.secret = secret
         self.issuer = issuer
         self.label = label

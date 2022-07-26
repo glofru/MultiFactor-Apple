@@ -47,11 +47,15 @@ struct CodeView: View {
             }, label: {
                 Label("Add", systemImage: "plus")
             })
-            LazyVStack {
-                OTPView()
-                OTPView()
-                OTPView()
-                Spacer()
+
+            if homeViewModel.otps.isEmpty {
+                Text("No otps")
+            } else {
+                LazyVStack {
+                    ForEach(homeViewModel.otps, id: \.id) { otp in
+                        OTPView(code: otp)
+                    }
+                }
             }
         }
         .padding()

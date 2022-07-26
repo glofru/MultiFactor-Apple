@@ -10,7 +10,7 @@ import SwiftUI
 struct OTPView: View {
     static private let cornerRadius = 12.0
 
-    @State private var code = OTPCode(secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30)
+    let code: OTPCode
 
     var body: some View {
         Button(action: {
@@ -110,6 +110,6 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        OTPView()
+        OTPView(code: OTPCode(id: UUID().uuidString, secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30))
     }
 }

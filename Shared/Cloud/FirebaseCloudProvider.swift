@@ -21,17 +21,20 @@ final class FirebaseCloudProvider: MFCloudProvider {
     }
 
     private var firebaseUser: User?
+
     private var handle: AuthStateDidChangeListenerHandle?
+    private var otpListenerRegistration: ListenerRegistration?
 
     //MARK: Authentication
-    func signIn(method: AuthenticationMethod) async -> AuthenticationResponse {
+    func signIn(method: AuthenticationMethod) async -> Result<MFUser, CloudError> {
         switch method {
         case .email(let email, let password):
             do {
-                try await Auth.auth().signIn(withEmail: email, password: password)
-                return .success
+                let result = try await Auth.auth().signIn(withEmail: email, password: password)
+                return .success(MFUser(firebaseUser: result.user)!)
             } catch {
-                return .failure(error.localizedDescription)
+                // TODO: handle all Firebase Exceptions
+                return .failure(.authenticationFail(error.localizedDescription))
             }
         }
     }
@@ -51,22 +54,54 @@ final class FirebaseCloudProvider: MFCloudProvider {
         })
     }
 
-    func addOTP(_ otp: OTPCode) async -> Result<OTPCodeID, CloudError> {
+    //MARK: OTP
+    func addOTP(_ otp: OTPCode) async throws {
         guard let user = firebaseUser else {
-            return .failure(.userNotLogged)
+            throw CloudError.userNotLogged
         }
 
         do {
-            let docRef = try Firestore.firestore()
+            try Firestore.firestore()
                 .collection("otp")
                 .document(user.uid)
                 .collection("list")
-                .addDocument(from: otp)
-
-            return .success(docRef.documentID)
+                .document(otp.id)
+                .setData(from: otp)
         } catch {
-            return .failure(.otpAddingFail(error.localizedDescription))
+            throw CloudError.otpAddingFail(error.localizedDescription)
         }
+    }
+
+    func addOTPChangeListener(_ listener: @escaping ([OTPCode]) -> Void) throws {
+        guard let user = firebaseUser else {
+            throw CloudError.userNotLogged
+        }
+
+        otpListenerRegistration?.remove()
+
+        otpListenerRegistration = Firestore.firestore()
+            .collection("otp")
+            .document(user.uid)
+            .collection("list")
+            .addSnapshotListener({ query, error in
+                guard let query = query else {
+                    return
+                }
+                let otps: [OTPCode] = query.documents.compactMap({ document in
+                    let result = Result {
+                        try document.data(as: OTPCode.self)
+                    }
+
+                    switch result {
+                    case .success(let otp):
+                        return otp
+                    case .failure(let error):
+                        print("[Firebase] Failure parsing otp: \(error.localizedDescription)")
+                        return nil
+                    }
+                })
+                listener(otps)
+            })
     }
 }
 
