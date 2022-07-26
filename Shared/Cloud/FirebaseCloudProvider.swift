@@ -15,7 +15,7 @@ import FirebaseFirestoreSwift
 final class FirebaseCloudProvider: MFCloudProvider {
     private init() { }
     static var shared = FirebaseCloudProvider()
-    
+
     func initialize() {
         FirebaseApp.configure()
     }
@@ -26,20 +26,22 @@ final class FirebaseCloudProvider: MFCloudProvider {
     private var otpListenerRegistration: ListenerRegistration?
 
     //MARK: Authentication
-    func signIn(method: AuthenticationMethod) async -> Result<MFUser, CloudError> {
+    func signIn(method: AuthenticationMethod) async -> Result<MFUser, AuthenticationError> {
         switch method {
-        case .email(let email, let password):
+        case .username(let username, let password):
             do {
-                let result = try await Auth.auth().signIn(withEmail: email, password: password)
+                let result = try await Auth.auth().signIn(withEmail: username, password: password)
                 return .success(MFUser(firebaseUser: result.user)!)
+            } catch let error as AuthErrorCode {
+                return handleAuthErrorCode(error)
             } catch {
-                // TODO: handle all Firebase Exceptions
-                return .failure(.authenticationFail(error.localizedDescription))
+                return .failure(.unknown(error.localizedDescription))
             }
         }
     }
 
     func signOut() {
+        Firestore.firestore().clearPersistence()
         try? Auth.auth().signOut()
     }
 
@@ -47,7 +49,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
         if let handle = handle {
             Auth.auth().removeStateDidChangeListener(handle)
         }
-        
+
         self.handle = Auth.auth().addStateDidChangeListener({ _, user in
             self.firebaseUser = user
             listener(MFUser(firebaseUser: user))
@@ -68,7 +70,24 @@ final class FirebaseCloudProvider: MFCloudProvider {
                 .document(otp.id)
                 .setData(from: otp)
         } catch {
-            throw CloudError.otpAddingFail(error.localizedDescription)
+            throw CloudError.otpFail(error.localizedDescription)
+        }
+    }
+    
+    func deleteOTP(_ otp: OTPCode) async throws {
+        guard let user = firebaseUser else {
+            throw CloudError.userNotLogged
+        }
+
+        do {
+            try await Firestore.firestore()
+                .collection("otp")
+                .document(user.uid)
+                .collection("list")
+                .document(otp.id)
+                .delete()
+        } catch {
+            throw CloudError.otpFail(error.localizedDescription)
         }
     }
 
@@ -78,7 +97,6 @@ final class FirebaseCloudProvider: MFCloudProvider {
         }
 
         otpListenerRegistration?.remove()
-
         otpListenerRegistration = Firestore.firestore()
             .collection("otp")
             .document(user.uid)
@@ -105,6 +123,25 @@ final class FirebaseCloudProvider: MFCloudProvider {
     }
 }
 
+extension FirebaseCloudProvider {
+    fileprivate func handleAuthErrorCode(_ error: AuthErrorCode) -> Result<MFUser, AuthenticationError> {
+        let code = error.code
+        if code == .invalidEmail {
+            return .failure(.usernameInvalid)
+        } else if code == .userNotFound {
+            return .failure(.usernameNotFound)
+        } else if code == .weakPassword {
+            return .failure(.passwordInvalid)
+        } else if code == .wrongPassword {
+            return .failure(.passwordIncorrect)
+        } else if code == .userDisabled {
+            return .failure(.userDisabled)
+        } else {
+            return .failure(.unknown(error.localizedDescription))
+        }
+    }
+}
+
 extension MFUser {
     init?(firebaseUser: User?) {
         guard let user = firebaseUser else {
@@ -112,6 +149,6 @@ extension MFUser {
         }
         
         self.id = user.uid
-        self.email = user.email ?? ""
+        self.username = user.email ?? ""
     }
 }

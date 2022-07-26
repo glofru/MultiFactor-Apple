@@ -14,7 +14,11 @@ class AuthenticationViewModel: ObservableObject {
             PersistenceController.shared.user = user
         }
     }
-    @Published private(set) var state = AuthenticationState.unknown
+    @Published private(set) var state = AuthenticationState.unknown {
+        didSet {
+            error = nil
+        }
+    }
     @Published private(set) var error: String?
 
     init() {
@@ -32,9 +36,26 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func signIn(method: AuthenticationMethod) async {
+    func signIn(method: AuthenticationMethod) async -> AuthenticationError? {
+        // Input validation
+        switch method {
+        case .username(let username, let password):
+            if username.trimmingCharacters(in: .whitespaces).isEmpty {
+                withAnimation {
+                    error = "Provided username is empty"
+                }
+                return .usernameEmpty
+            } else if password.isEmpty {
+                withAnimation {
+                    error = "Provided password is empty"
+                }
+                return .passwordEmpty
+            }
+        }
+
+        // Actual sign in
         switch await CloudProvider.shared.signIn(method: method) {
-        case .success: break
+        case .success: return nil
         case .failure(let error):
             await MainActor.run {
                 withAnimation {
@@ -42,6 +63,7 @@ class AuthenticationViewModel: ObservableObject {
                     self.error = error.localizedDescription
                 }
             }
+            return error
         }
     }
 
@@ -54,19 +76,56 @@ class AuthenticationViewModel: ObservableObject {
     }
 }
 
+extension AuthenticationViewModel {
+    enum FocusedField {
+        case username, password
+    }
+}
+
 struct MFUser {
     let id: String
-    let email: String
+    let username: String
 }
 
 enum AuthenticationMethod {
-    case email(String, String) // Email, password
+    case username(String, String) // Username, password
 }
 
 enum AuthenticationState {
     case signedIn, signedOut, unknown
 }
 
-enum AuthenticationResponse {
-    case success, failure(String)
+enum AuthenticationError: LocalizedError {
+    case usernameEmpty
+    case passwordEmpty
+
+    case usernameInvalid
+    case usernameNotFound
+
+    case passwordInvalid
+    case passwordIncorrect
+
+    case userDisabled
+    case unknown(String)
+
+    var localizedDescription: String {
+        switch self {
+        case .usernameEmpty:
+            return "Username empty"
+        case .passwordEmpty:
+            return "Password empty"
+        case .usernameInvalid:
+            return "Username invalid"
+        case .usernameNotFound:
+            return "User not found"
+        case .passwordInvalid:
+            return "Password invalid"
+        case .passwordIncorrect:
+            return "Password incorrect"
+        case .userDisabled:
+            return "User disabled"
+        case .unknown(let message):
+            return message
+        }
+    }
 }

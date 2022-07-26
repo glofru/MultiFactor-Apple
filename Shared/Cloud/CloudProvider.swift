@@ -14,20 +14,21 @@ protocol MFCloudProvider {
     func initialize()
 
     //MARK: Authentication
-    func signIn(method: AuthenticationMethod) async -> Result<MFUser, CloudError>
+    func signIn(method: AuthenticationMethod) async -> Result<MFUser, AuthenticationError>
     func signOut()
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void)
 
     //MARK: OTP
     func addOTP(_ otp: OTPCode) async throws
+    func deleteOTP(_ otp: OTPCode) async throws
     func addOTPChangeListener(_ listener: @escaping ([OTPCode]) -> Void) throws
 }
 
 enum CloudError: Error {
     case userNotLogged
     case authenticationFail(String)
-    case otpAddingFail(String)
+    case otpFail(String)
 }
 
 class CloudProvider {

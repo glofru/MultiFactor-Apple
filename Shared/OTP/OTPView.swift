@@ -12,6 +12,8 @@ struct OTPView: View {
 
     @Namespace private var namespace
 
+    @EnvironmentObject var homeViewModel: HomeViewModel
+
     let code: OTPCode
 
     var body: some View {
@@ -79,7 +81,10 @@ struct OTPView: View {
             })
 
             Button(role: .destructive, action: {
-                print("Delete")
+                Task {
+                    try? await Task.sleep(nanoseconds: 400_000)
+                    await homeViewModel.deleteOTP(code)
+                }
             }, label: {
                 Label("Delete", systemImage: "trash")
             })

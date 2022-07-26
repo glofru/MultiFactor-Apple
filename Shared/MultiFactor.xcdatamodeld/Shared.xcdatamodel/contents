@@ -4,8 +4,8 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="MFUserEntity" representedClassName="MFUserEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="email" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="username" attributeType="String"/>
     </entity>
     <entity name="TOTPEntity" representedClassName="TOTPEntity" syncable="YES" codeGenerationType="class">
         <attribute name="algorithm" optional="YES" attributeType="String"/>

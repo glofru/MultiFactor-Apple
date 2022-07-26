@@ -29,6 +29,7 @@ struct HomeView: View {
             }
             #elseif os(macOS)
             CodeView()
+            AccountView()
             #endif
         }
         .environmentObject(homeViewModel)
@@ -62,7 +63,7 @@ struct CodeView: View {
     }
 }
 
-#if os(iOS)
+//#if os(iOS)
 struct AccountView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
@@ -73,7 +74,7 @@ struct AccountView: View {
         NavigationView {
             Form {
                 Section(header: Text("PROFILE")) {
-                    Text("\(PersistenceController.shared.user?.email ?? "ALOA")")
+                    Text("\(PersistenceController.shared.user?.username ?? "ALOA")")
                 }
 
                 Section(header: Text("ABOUT")) {
@@ -103,7 +104,7 @@ struct AccountView: View {
         }
     }
 }
-#endif
+//#endif
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

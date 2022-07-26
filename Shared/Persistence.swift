@@ -84,7 +84,7 @@ extension MFUser {
     init?(entity: MFUserEntity?) {
         if let entity = entity {
             self.id = entity.id!
-            self.email = entity.email!
+            self.username = entity.username!
         } else {
             return nil
         }
@@ -94,7 +94,7 @@ extension MFUser {
 extension MFUserEntity {
     func copy(_ user: MFUser) {
         self.id = user.id
-        self.email = user.email
+        self.username = user.username
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct GlassBackground: ViewModifier {
     let color: Color
     let intensity: Intensity
-    
+
     func body(content: Content) -> some View {
         content
             #if os(iOS)
@@ -19,7 +19,7 @@ struct GlassBackground: ViewModifier {
             .background(color.opacity(intensity.rawValue))
             #endif
     }
-    
+
     enum Intensity: Double {
         case weak = 0.4
         case strong = 0.7

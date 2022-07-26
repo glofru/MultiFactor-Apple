@@ -11,8 +11,11 @@ struct LoginView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
-    @State private var email = ""
+    @State private var username = ""
     @State private var password = ""
+    @State private var isSigningIn = false
+
+    @FocusState private var focusedField: FocusedField?
 
     var body: some View {
         VStack(alignment: .center) {
@@ -20,32 +23,71 @@ struct LoginView: View {
                 .font(.title)
                 .padding()
 
-            TextField("Email", text: $email)
+            TextField("Username", text: $username)
+                .submitLabel(.next)
+                .focused($focusedField, equals: .username)
+                .textFieldStyle(MFLoginTextFieldStyle())
+                .onSubmit {
+                    focusedField = .password
+                }
             #if os(iOS)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
+                .textInputAutocapitalization(.never)
             #endif
-                .textFieldStyle(MFLoginTextFieldStyle())
 
             SecureField("Password", text: $password)
                 .textContentType(.password)
+                .submitLabel(.done)
+                .focused($focusedField, equals: .password)
                 .textFieldStyle(MFLoginTextFieldStyle())
+                .onSubmit {
+                    focusedField = nil
+                    signIn()
+                }
 
             if let error = authenticationViewModel.error {
                 Text(error)
                     .foregroundColor(.red)
             }
 
-            Button(action: {
-                Task.init {
-                    await authenticationViewModel.signIn(method: .email(email, password))
+            Button(action: signIn, label: {
+                if isSigningIn {
+                    ProgressView()
+                } else {
+                    Text("SignIn")
                 }
-            }, label: {
-                Text("SignIn")
             })
             .buttonStyle(MFRoundedRectangleButtonStyle())
         }
         .padding()
+        .disabled(isSigningIn)
+    }
+
+    private func signIn() {
+        isSigningIn = true
+        Task {
+            if let error = await authenticationViewModel.signIn(method:.username(username, password)) {
+                switch error {
+                case .usernameEmpty: fallthrough
+                case .usernameNotFound: fallthrough
+                case .userDisabled: fallthrough
+                case .usernameInvalid:
+                    focusedField = .username
+                case .passwordEmpty: fallthrough
+                case .passwordInvalid: fallthrough
+                case .passwordIncorrect:
+                    focusedField = .password
+                case .unknown(_):
+                    focusedField = nil
+                }
+            }
+            isSigningIn = false
+        }
+    }
+
+    private enum FocusedField {
+        case username, password
     }
 }
 
