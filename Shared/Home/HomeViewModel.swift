@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
 
@@ -14,7 +15,9 @@ class HomeViewModel: ObservableObject {
 
     init() {
         try? CloudProvider.shared.addOTPChangeListener({ [weak self] otps in
-            self?.otps = otps
+            withAnimation {
+                self?.otps = otps
+            }
         })
     }
 

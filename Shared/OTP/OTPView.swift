@@ -10,6 +10,8 @@ import SwiftUI
 struct OTPView: View {
     static private let cornerRadius = 12.0
 
+    @Namespace private var namespace
+
     let code: OTPCode
 
     var body: some View {
@@ -62,6 +64,7 @@ struct OTPView: View {
             .foregroundColor(Color(uiColor: .label))
             #endif
         })
+        .matchedGeometryEffect(id: code.id, in: namespace)
         .contextMenu {
             Button(action: {
                 print("Copy")
