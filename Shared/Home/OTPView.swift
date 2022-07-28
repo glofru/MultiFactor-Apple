@@ -16,7 +16,7 @@ struct OTPView: View {
     @StateObject private var totpViewModel: TOTPViewModel
 
     init(encryptedOTP: EncryptedOTP) {
-        _totpViewModel = StateObject(wrappedValue: TOTPViewModel(encryptedOTP: encryptedOTP))
+        _totpViewModel = StateObject(wrappedValue: TOTPViewModel.getInstance(otp: encryptedOTP))
     }
 
     var body: some View {
@@ -55,6 +55,9 @@ struct OTPView: View {
                             .frame(width: 30)
                             .glassBackground(.background)
                             .cornerRadius(8)
+                            .onReceive(MFClock.shared.$time) { time in
+                                totpViewModel.generateCode(for: time)
+                            }
                         if index != 5 {
                             Spacer()
                         }

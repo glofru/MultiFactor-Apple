@@ -68,11 +68,13 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     func signOut() {
-        CloudProvider.shared.signOut()
-        PersistenceController.shared.deleteAll()
-
         withAnimation {
             state = .signedOut
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            TOTPViewModel.reset()
+            PersistenceController.shared.deleteAll()
+            CloudProvider.shared.signOut()
         }
     }
 }

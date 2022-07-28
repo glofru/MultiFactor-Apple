@@ -34,9 +34,6 @@ struct HomeView: View {
             #endif
         }
         .environmentObject(homeViewModel)
-        .onReceive(MFClock.shared.$time) { time in
-//            homeViewModel.updateGenerateCodes(for: time)
-        }
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .background:
