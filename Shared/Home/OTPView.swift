@@ -12,8 +12,12 @@ struct OTPView: View {
 
     @Namespace private var namespace
 
-    @EnvironmentObject var homeViewModel: HomeViewModel
-    @ObservedObject var totpViewModel: TOTPViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @StateObject private var totpViewModel: TOTPViewModel
+
+    init(encryptedOTP: EncryptedOTP) {
+        _totpViewModel = StateObject(wrappedValue: TOTPViewModel(encryptedOTP: encryptedOTP))
+    }
 
     var body: some View {
         Button(action: {
@@ -30,10 +34,10 @@ struct OTPView: View {
                         .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
 
                     VStack(alignment: .leading) {
-                        Text(totpViewModel.decryptedOTP.issuer ?? "No issuer")
+                        Text(totpViewModel.issuer ?? "No issuer")
                             .font(.title2)
                             .fontWeight(.bold)
-                        Text(totpViewModel.decryptedOTP.label ?? "No label")
+                        Text(totpViewModel.label ?? "No label")
                             .font(.caption2)
                     }
 
@@ -120,6 +124,6 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        OTPView(totpViewModel: TOTPViewModel(encryptedOTP: EncryptedOTP(id: UUID().uuidString, secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: .thirty)))
+        OTPView(encryptedOTP: EncryptedOTP(entity: .init(), insertInto: .none))
     }
 }

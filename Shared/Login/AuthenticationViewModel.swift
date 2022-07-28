@@ -69,6 +69,7 @@ class AuthenticationViewModel: ObservableObject {
 
     func signOut() {
         CloudProvider.shared.signOut()
+        PersistenceController.shared.deleteAll()
 
         withAnimation {
             state = .signedOut

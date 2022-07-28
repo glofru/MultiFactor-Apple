@@ -35,7 +35,7 @@ struct HomeView: View {
         }
         .environmentObject(homeViewModel)
         .onReceive(MFClock.shared.$time) { time in
-            homeViewModel.updateGenerateCodes(for: time)
+//            homeViewModel.updateGenerateCodes(for: time)
         }
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
@@ -55,6 +55,11 @@ struct HomeView: View {
 struct CodeView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
 
+    @FetchRequest(sortDescriptors: [
+        SortDescriptor(\EncryptedOTP.label)
+    ])
+    private var encryptedOTPs: FetchedResults<EncryptedOTP>
+
     var body: some View {
         ScrollView {
             Button(action: {
@@ -65,12 +70,12 @@ struct CodeView: View {
                 Label("Add", systemImage: "plus")
             })
 
-            if homeViewModel.totps.isEmpty {
+            if encryptedOTPs.isEmpty {
                 Text("No otps")
             } else {
                 LazyVStack {
-                    ForEach(homeViewModel.totps, id: \.id) { totp in
-                        OTPView(totpViewModel: totp)
+                    ForEach(encryptedOTPs, id: \.id) { otp in
+                        OTPView(encryptedOTP: otp)
                     }
                 }
             }

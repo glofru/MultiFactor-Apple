@@ -40,6 +40,37 @@ class PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
+    func save(cloudEncryptedOTPs: [CloudEncryptedOTP]) {
+        cloudEncryptedOTPs.forEach { cloudEncryptedOTP in
+            let request = EncryptedOTP.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", cloudEncryptedOTP.id)
+            guard let items = try? context.fetch(request) else {
+                return
+            }
+            if items.isEmpty {
+                let newOTP = EncryptedOTP(context: context)
+                newOTP.copy(cloudEncryptedOTP)
+            } else {
+                let otp = items.first!
+                otp.copy(cloudEncryptedOTP)
+            }
+        }
+        save()
+    }
+
+    func deleteAll() {
+        let fetchRequest = EncryptedOTP.fetchRequest()
+        fetchRequest.includesPropertyValues = false
+
+        if let items = try? context.fetch(fetchRequest) {
+            for item in items {
+                context.delete(item)
+            }
+        }
+
+        save()
+    }
+
     fileprivate func save() {
         if context.hasChanges {
             do {
@@ -80,6 +111,7 @@ extension PersistenceController {
     }
 }
 
+//MARK: MFUser extensions
 extension MFUser {
     init?(entity: MFUserEntity?) {
         if let entity = entity {
@@ -98,26 +130,15 @@ extension MFUserEntity {
     }
 }
 
-//MARK: SwiftUI Preview
-#if DEBUG
-extension PersistenceController {
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate.
-            // You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
+//MARK: EncryptedOTP extension
+extension EncryptedOTP {
+    func copy(_ cloudEncryptedOTP: CloudEncryptedOTP) {
+        self.id = cloudEncryptedOTP.id
+        self.issuer = cloudEncryptedOTP.issuer
+        self.label = cloudEncryptedOTP.label
+        self.secret = cloudEncryptedOTP.secret
+        self.algorithm = cloudEncryptedOTP.algorithm.rawValue
+        self.digits = Int16(cloudEncryptedOTP.digits.rawValue)
+        self.period = Int16(cloudEncryptedOTP.period.rawValue)
+    }
 }
-#endif

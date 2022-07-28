@@ -11,38 +11,28 @@ import SwiftOTP
 class TOTPViewModel: ObservableObject, Identifiable {
 
     let id: OTPIdentifier
-    let decryptedOTP: DecryptedOTP
+    let issuer: String?
+    let label: String?
 
-    private let totp: TOTP
+//    private let totp: TOTP
 
     @Published var code: String = "******"
 
     init(encryptedOTP: EncryptedOTP) {
-        self.id = encryptedOTP.id
-        self.decryptedOTP = DecryptedOTP(issuer: encryptedOTP.issuer, label: encryptedOTP.label, algorithm: encryptedOTP.algorithm, digits: encryptedOTP.digits, period: encryptedOTP.period)
-
-        let data = base32DecodeToData(encryptedOTP.secret)!
-        self.totp = TOTP(secret: data, digits: encryptedOTP.digits.rawValue, timeInterval: encryptedOTP.period.rawValue, algorithm: .sha1)!
+        self.id = UUID().uuidString
+        self.issuer = ""
+        self.label = ""
+//        let decryptedOTP = DecryptedOTP(id: encryptedOTP.id!, issuer: encryptedOTP.issuer, label: encryptedOTP.label, algorithm: DecryptedOTP.Algorithm(rawValue: encryptedOTP.algorithm ?? "")!, digits: DecryptedOTP.Digits(rawValue: Int(encryptedOTP.digits))!, period: DecryptedOTP.Period(rawValue: Int(encryptedOTP.period))!)
+//
+//        self.id = decryptedOTP.id
+//        self.issuer = decryptedOTP.issuer
+//        self.label = decryptedOTP.label
+//        self.totp = TOTP(secret: base32DecodeToData(encryptedOTP.secret!)!, digits: decryptedOTP.digits.rawValue, timeInterval: decryptedOTP.period.rawValue, algorithm: .sha1)!
     }
 
     func generateCode(for date: Date) {
-        self.code = self.totp.generate(time: date) ?? ""
+        self.code = "123456"
+//        self.code = self.totp.generate(time: date) ?? ""
     }
 
-}
-
-struct DecryptedOTP {
-    let issuer: String?
-    let label: String?
-    let algorithm: EncryptedOTP.Algorithm
-    let digits: EncryptedOTP.Digits
-    let period: EncryptedOTP.Period
-
-    init(issuer: String? = nil, label: String? = nil, algorithm: EncryptedOTP.Algorithm = .sha256, digits: EncryptedOTP.Digits = .six, period: EncryptedOTP.Period = .thirty) {
-        self.issuer = issuer
-        self.label = label
-        self.algorithm = algorithm
-        self.digits = digits
-        self.period = period
-    }
 }

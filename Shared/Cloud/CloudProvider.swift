@@ -20,9 +20,9 @@ protocol MFCloudProvider {
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void)
 
     //MARK: OTP
-    func addOTP(_ otp: EncryptedOTP) async throws
+    func addOTP(_ otp: CloudEncryptedOTP) async throws
     func deleteOTP(_ otp: OTPIdentifier) async throws
-    func addOTPChangeListener(_ listener: @escaping ([EncryptedOTP]) -> Void) throws
+    func addOTPChangeListener(_ listener: @escaping ([CloudEncryptedOTP]) -> Void) throws
 }
 
 enum CloudError: Error {

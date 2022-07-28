@@ -1,24 +1,22 @@
 //
-//  OTPCode.swift
+//  DecryptedOTP.swift
 //  MultiFactor
 //
-//  Created by g.lofrumento on 26/07/22.
+//  Created by g.lofrumento on 28/07/22.
 //
 
 typealias OTPIdentifier = String
 
-struct EncryptedOTP: Codable, Identifiable {
+struct DecryptedOTP: Codable, Identifiable {
     var id: OTPIdentifier
-    let secret: String
     let issuer: String?
     let label: String?
     let algorithm: Algorithm
     let digits: Digits
     let period: Period
 
-    init(id: OTPIdentifier, secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
+    init(id: OTPIdentifier, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
         self.id = id
-        self.secret = secret
         self.issuer = issuer
         self.label = label
         self.algorithm = algorithm

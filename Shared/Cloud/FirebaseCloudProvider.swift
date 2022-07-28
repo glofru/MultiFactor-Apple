@@ -57,7 +57,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
     }
 
     //MARK: OTP
-    func addOTP(_ otp: EncryptedOTP) async throws {
+    func addOTP(_ otp: CloudEncryptedOTP) async throws {
         guard let user = firebaseUser else {
             throw CloudError.userNotLogged
         }
@@ -91,7 +91,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
         }
     }
 
-    func addOTPChangeListener(_ listener: @escaping ([EncryptedOTP]) -> Void) throws {
+    func addOTPChangeListener(_ listener: @escaping ([CloudEncryptedOTP]) -> Void) throws {
         guard let user = firebaseUser else {
             throw CloudError.userNotLogged
         }
@@ -105,9 +105,9 @@ final class FirebaseCloudProvider: MFCloudProvider {
                 guard let query = query else {
                     return
                 }
-                let otps: [EncryptedOTP] = query.documents.compactMap({ document in
+                let otps: [CloudEncryptedOTP] = query.documents.compactMap({ document in
                     let result = Result {
-                        try document.data(as: EncryptedOTP.self)
+                        try document.data(as: CloudEncryptedOTP.self)
                     }
 
                     switch result {
