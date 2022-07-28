@@ -28,7 +28,8 @@ class HomeViewModel: ObservableObject {
 
             totpsKeys = newTOTPsKeys
             totps = totpsKeys.values.map { $0 }
-            MFClock.shared.time = .now
+
+            MFClock.shared.update()
         }
     }
 

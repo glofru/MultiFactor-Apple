@@ -17,9 +17,7 @@ class MFClock: ObservableObject {
     @Published var time: Date = Date()
 
     private init() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         self.start()
-//        }
     }
 
     func start() {
@@ -36,8 +34,8 @@ class MFClock: ObservableObject {
         }
     }
 
-    private func update() {
-        self.time = Date()
+    func update() {
+        time = Date()
     }
 
     // Thanks: https://stackoverflow.com/a/45683502
