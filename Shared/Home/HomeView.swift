@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.scenePhase) var scenePhase
 
-//    @State private var searched = ""
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+
     @StateObject var homeViewModel = HomeViewModel()
 
     var body: some View {
@@ -33,6 +34,21 @@ struct HomeView: View {
             #endif
         }
         .environmentObject(homeViewModel)
+        .onReceive(MFClock.shared.$time) { time in
+            homeViewModel.updateGenerateCodes(for: time)
+        }
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .background:
+                MFClock.shared.stop()
+            case .inactive:
+                return
+            case .active:
+                MFClock.shared.start()
+            @unknown default:
+                return
+            }
+        }
     }
 }
 
@@ -49,12 +65,12 @@ struct CodeView: View {
                 Label("Add", systemImage: "plus")
             })
 
-            if homeViewModel.otps.isEmpty {
+            if homeViewModel.totps.isEmpty {
                 Text("No otps")
             } else {
                 LazyVStack {
-                    ForEach(homeViewModel.otps, id: \.id) { otp in
-                        OTPView(code: otp)
+                    ForEach(homeViewModel.totps, id: \.id) { totp in
+                        OTPView(totpViewModel: totp)
                     }
                 }
             }

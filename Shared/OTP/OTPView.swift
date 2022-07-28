@@ -13,8 +13,7 @@ struct OTPView: View {
     @Namespace private var namespace
 
     @EnvironmentObject var homeViewModel: HomeViewModel
-
-    let code: OTPCode
+    @ObservedObject var totpViewModel: TOTPViewModel
 
     var body: some View {
         Button(action: {
@@ -31,10 +30,10 @@ struct OTPView: View {
                         .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
 
                     VStack(alignment: .leading) {
-                        Text(code.issuer ?? "No issuer")
+                        Text(totpViewModel.decryptedOTP.issuer ?? "No issuer")
                             .font(.title2)
                             .fontWeight(.bold)
-                        Text(code.label ?? "No label")
+                        Text(totpViewModel.decryptedOTP.label ?? "No label")
                             .font(.caption2)
                     }
 
@@ -46,7 +45,7 @@ struct OTPView: View {
 
                 HStack {
                     ForEach(0..<6) { index in
-                        Text(String(index+1))
+                        Text(totpViewModel.code[index])
                             .fontWeight(.bold)
                             .font(.title)
                             .frame(width: 30)
@@ -66,7 +65,7 @@ struct OTPView: View {
             .foregroundColor(Color(uiColor: .label))
             #endif
         })
-        .matchedGeometryEffect(id: code.id, in: namespace)
+        .matchedGeometryEffect(id: totpViewModel.id, in: namespace)
         .contextMenu {
             Button(action: {
                 print("Copy")
@@ -83,7 +82,7 @@ struct OTPView: View {
             Button(role: .destructive, action: {
                 Task {
                     try? await Task.sleep(nanoseconds: 400_000)
-                    await homeViewModel.deleteOTP(code)
+                    await homeViewModel.deleteOTP(totpViewModel.id)
                 }
             }, label: {
                 Label("Delete", systemImage: "trash")
@@ -93,9 +92,8 @@ struct OTPView: View {
 }
 
 struct LoadingSpinner: View {
-    private let loadingTime = 30.0
 
-    @State private var loaded = 1.0
+    @State private var loaded = 1.0 //TODO: color
 
     var body: some View {
         ZStack {
@@ -107,8 +105,12 @@ struct LoadingSpinner: View {
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .rotation(.degrees(-90))
                 .foregroundColor(loaded > 0.8 ? Color.green : Color.red)
-                .onAppear {
-                    withAnimation(.easeIn(duration: loadingTime).repeatForever(autoreverses: false)) {
+                .onReceive(MFClock.shared.$time) { time in
+                    let seconds = Double(Calendar.current.component(.second, from: time))
+                    let toLoad = 30.0 - seconds.truncatingRemainder(dividingBy: 30)
+                    loaded = toLoad / 30
+
+                    withAnimation(.linear(duration: toLoad)) {
                         loaded = 0
                     }
                 }
@@ -118,6 +120,6 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        OTPView(code: OTPCode(id: UUID().uuidString, secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: 30))
+        OTPView(totpViewModel: TOTPViewModel(encryptedOTP: EncryptedOTP(id: UUID().uuidString, secret: "pinco pallo", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: .thirty)))
     }
 }

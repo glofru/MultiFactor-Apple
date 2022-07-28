@@ -5,18 +5,18 @@
 //  Created by g.lofrumento on 26/07/22.
 //
 
-typealias OTPCodeID = String
+typealias OTPIdentifier = String
 
-struct OTPCode: Codable, Identifiable {
-    var id: OTPCodeID
+struct EncryptedOTP: Codable, Identifiable {
+    var id: OTPIdentifier
     let secret: String
     let issuer: String?
     let label: String?
-    let algorithm: Algorithm?
-    let digits: Digits?
-    let period: UInt8?
+    let algorithm: Algorithm
+    let digits: Digits
+    let period: Period
 
-    init(id: OTPCodeID, secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: UInt8 = 30) {
+    init(id: OTPIdentifier, secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
         self.id = id
         self.secret = secret
         self.issuer = issuer
@@ -26,12 +26,6 @@ struct OTPCode: Codable, Identifiable {
         self.period = period
     }
 
-//    var code = [Number.one, .two, .three, .four, .five, .six]
-//
-//    enum Number: Int {
-//        case one = 1, two, three, four, five, six, seven, eight, nine, ten
-//    }
-    
     enum Algorithm: String, Codable {
         case sha1
         case sha256
@@ -41,5 +35,10 @@ struct OTPCode: Codable, Identifiable {
     enum Digits: Int, Codable {
         case six = 6
         case eight = 8
+    }
+
+    enum Period: Int, Codable {
+        case thirty = 30
+//        case sixty = 60
     }
 }
