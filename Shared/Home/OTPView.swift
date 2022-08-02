@@ -34,7 +34,7 @@ struct OTPView: View {
                         .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
 
                     VStack(alignment: .leading) {
-                        Text(totpViewModel.issuer ?? "No issuer")
+                        Text("\(totpViewModel.issuer ?? "No issuer") – \(totpViewModel.id)")
                             .font(.title2)
                             .fontWeight(.bold)
                         Text(totpViewModel.label ?? "No label")

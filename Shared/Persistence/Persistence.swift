@@ -38,9 +38,11 @@ class PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+        deleteAll()
     }
 
     func save(cloudEncryptedOTPs: [CloudEncryptedOTP]) {
+        deleteAll(save: false)
         cloudEncryptedOTPs.forEach { cloudEncryptedOTP in
             let request = EncryptedOTP.fetchRequest()
             request.predicate = NSPredicate(format: "id == %@", cloudEncryptedOTP.id)
@@ -58,7 +60,7 @@ class PersistenceController {
         save()
     }
 
-    func deleteAll() {
+    func deleteAll(save: Bool = true) {
         let fetchRequest = EncryptedOTP.fetchRequest()
         fetchRequest.includesPropertyValues = false
 
@@ -68,7 +70,9 @@ class PersistenceController {
             }
         }
 
-        save()
+        if save {
+            self.save()
+        }
     }
 
     fileprivate func save() {

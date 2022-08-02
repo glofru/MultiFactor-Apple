@@ -13,11 +13,12 @@ class HomeViewModel: ObservableObject {
     init() {
         try? CloudProvider.shared.addOTPChangeListener { otps in
             PersistenceController.shared.save(cloudEncryptedOTPs: otps)
+            MFClock.shared.update()
         }
     }
 
     func addOTP() async {
-//        try? await CloudProvider.shared.addOTP(EncryptedOTP(id: UUID().uuidString, secret: "I65VU7K5ZQL7WB4E", issuer: "Google", label: "gianluca.lofrumento@gmail.com", algorithm: .sha256, digits: .six, period: .thirty))
+        try? await CloudProvider.shared.addOTP(CloudEncryptedOTP(id: UUID().uuidString, secret: "I65VU7K5ZQL7WB4E", issuer: "Dropbox", label: "gianluca", algorithm: .sha256, digits: .six, period: .thirty))
     }
 
     func deleteOTP(_ otp: OTPIdentifier) async {

@@ -53,7 +53,7 @@ struct CodeView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
 
     @FetchRequest(sortDescriptors: [
-        SortDescriptor(\EncryptedOTP.label)
+        SortDescriptor(\EncryptedOTP.label),
     ])
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 

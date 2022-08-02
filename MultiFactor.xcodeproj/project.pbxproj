@@ -195,8 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				3737A68B2888C9CF007F8DFD /* HomeView.swift */,
-				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 				3736B213288DA26800C7AEAF /* HomeViewModel.swift */,
+				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
