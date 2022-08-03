@@ -13,7 +13,6 @@ class HomeViewModel: ObservableObject {
     init() {
         try? CloudProvider.shared.addOTPChangeListener { otps in
             PersistenceController.shared.save(cloudEncryptedOTPs: otps)
-            MFClock.shared.update()
         }
     }
 

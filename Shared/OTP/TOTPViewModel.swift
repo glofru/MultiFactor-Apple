@@ -26,6 +26,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
     let id: OTPIdentifier
     let issuer: String?
     let label: String?
+    let period: DecryptedOTP.Period
 
     private let totp: TOTP
 
@@ -37,6 +38,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
         self.id = decryptedOTP.id
         self.issuer = decryptedOTP.issuer
         self.label = decryptedOTP.label
+        self.period = decryptedOTP.period
         self.totp = TOTP(secret: base32DecodeToData(encryptedOTP.secret!)!, digits: decryptedOTP.digits.rawValue, timeInterval: decryptedOTP.period.rawValue, algorithm: .sha1)!
     }
 

@@ -43,7 +43,7 @@ struct OTPView: View {
 
                     Spacer()
 
-                    LoadingSpinner()
+                    LoadingSpinner(period: totpViewModel.period)
                         .frame(width: 35, height: 35)
                 }.frame(height: 40)
 
@@ -100,7 +100,13 @@ struct OTPView: View {
 
 struct LoadingSpinner: View {
 
-    @State private var loaded = 1.0 //TODO: color
+    private let period: Double
+
+    @ObservedObject private var clock = MFClock.shared
+
+    init(period: DecryptedOTP.Period) {
+        self.period = Double(period.rawValue)
+    }
 
     var body: some View {
         ZStack {
@@ -108,19 +114,11 @@ struct LoadingSpinner: View {
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .foregroundColor(Color.gray.opacity(0.1))
             Circle()
-                .trim(from: 0, to: loaded)
+                .trim(from: 0, to: clock.loaded)
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .rotation(.degrees(-90))
-                .foregroundColor(loaded > 0.8 ? Color.green : Color.red)
-                .onReceive(MFClock.shared.$time) { time in
-                    let seconds = Double(Calendar.current.component(.second, from: time))
-                    let toLoad = 30.0 - seconds.truncatingRemainder(dividingBy: 30)
-                    loaded = toLoad / 30
-
-                    withAnimation(.linear(duration: toLoad)) {
-                        loaded = 0
-                    }
-                }
+                .foregroundColor(clock.loaded > 0.3 ? Color.green : clock.loaded > 0.1 ? Color.yellow : Color.red)
+                .animation(.linear(duration: 1), value: clock.loaded)
         }
     }
 }

@@ -14,45 +14,44 @@ class MFClock: ObservableObject {
     private var timer: Timer!
 
     private(set) var state: State = .paused
-    @Published var time: Date = Date()
+
+    private let loadedIncrement: Double
+    @Published var time = Date()
+    @Published var loaded = 1.0
 
     private init() {
+        self.loadedIncrement = 1/self.period
         self.start()
     }
 
     func start() {
         if state == .paused {
+            let delta = period - (Date().timeIntervalSince1970).truncatingRemainder(dividingBy: period) - 1
+            loaded = delta / period
+
             state = .working
-            syncTimerToMinute()
+            startTimer()
         }
     }
 
     func stop() {
         if state == .working {
             state = .paused
-            timer?.invalidate()
+            timer.invalidate()
         }
     }
 
-    func update() {
-        time = Date()
-    }
-
-    // Thanks: https://stackoverflow.com/a/45683502
-    private func syncTimerToMinute() {
-        update()
-
-        let wait = period - (Date().timeIntervalSince1970).truncatingRemainder(dividingBy: period) + 0.5
-        timer = Timer.scheduledTimer(withTimeInterval: wait, repeats: false) { [weak self] _ in
-            self?.startTimer()
+    private func increment() {
+        if self.loaded < self.loadedIncrement {
+            loaded = 1
+            time = Date()
         }
+        self.loaded -= self.loadedIncrement
     }
 
     private func startTimer() {
-        update()
-
-        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.update()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            self?.increment()
         }
     }
 
