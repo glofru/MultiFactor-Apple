@@ -42,25 +42,32 @@ class PersistenceController {
     }
 
     func save(cloudEncryptedOTPs: [CloudEncryptedOTP]) {
-        deleteAll(save: false)
-        cloudEncryptedOTPs.forEach { cloudEncryptedOTP in
-            let request = EncryptedOTP.fetchRequest()
-            request.predicate = NSPredicate(format: "id == %@", cloudEncryptedOTP.id)
-            guard let items = try? context.fetch(request) else {
-                return
-            }
-            if items.isEmpty {
-                let newOTP = EncryptedOTP(context: context)
-                newOTP.copy(cloudEncryptedOTP)
-            } else {
-                let otp = items.first!
-                otp.copy(cloudEncryptedOTP)
+        var otpIDs = cloudEncryptedOTPs.enumerated().reduce(into: [String: CloudEncryptedOTP]()) {
+            $0[$1.element.id] = $1.element
+        }
+
+        let fetchRequest = EncryptedOTP.fetchRequest()
+        fetchRequest.includesPropertyValues = false
+
+        if let otps = try? context.fetch(fetchRequest) {
+            for otp in otps {
+                if let updatedItem = otpIDs.removeValue(forKey: otp.id!) {
+                    otp.copy(updatedItem)
+                } else {
+                    context.delete(otp)
+                }
             }
         }
+
+        for (_, otp) in otpIDs {
+            let newOTP = EncryptedOTP(context: context)
+            newOTP.copy(otp)
+        }
+
         save()
     }
 
-    func deleteAll(save: Bool = true) {
+    func deleteAll() {
         let fetchRequest = EncryptedOTP.fetchRequest()
         fetchRequest.includesPropertyValues = false
 
@@ -70,9 +77,7 @@ class PersistenceController {
             }
         }
 
-        if save {
-            self.save()
-        }
+        self.save()
     }
 
     fileprivate func save() {

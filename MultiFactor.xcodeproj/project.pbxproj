@@ -40,6 +40,7 @@
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
 		3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
+		373E7930289A72080067B226 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 373E792F289A72080067B226 /* SwiftOTP */; };
 		377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		377B9D62288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */; };
@@ -132,6 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3705872B288A032000E6048C /* FirebaseAuthCombine-Community in Frameworks */,
+				373E7930289A72080067B226 /* SwiftOTP in Frameworks */,
 				3705872D288A032000E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +339,7 @@
 			packageProductDependencies = (
 				3705872A288A032000E6048C /* FirebaseAuthCombine-Community */,
 				3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */,
+				373E792F289A72080067B226 /* SwiftOTP */,
 			);
 			productName = "MultiFactor (macOS)";
 			productReference = 37C0C1FC28862CBF00553B73 /* MultiFactor.app */;
@@ -952,6 +955,11 @@
 			productName = "FirebaseFirestoreCombine-Community";
 		};
 		3736B211288DA16500C7AEAF /* SwiftOTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			productName = SwiftOTP;
+		};
+		373E792F289A72080067B226 /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;

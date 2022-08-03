@@ -30,7 +30,7 @@ struct HomeView: View {
             }
             #elseif os(macOS)
             CodeView()
-            AccountView()
+//            AccountView()
             #endif
         }
         .environmentObject(homeViewModel)
@@ -53,7 +53,7 @@ struct CodeView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
 
     @FetchRequest(sortDescriptors: [
-        SortDescriptor(\EncryptedOTP.label),
+        SortDescriptor(\EncryptedOTP.label)
     ])
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 
@@ -72,12 +72,16 @@ struct CodeView: View {
             } else {
                 LazyVStack {
                     ForEach(encryptedOTPs, id: \.id) { otp in
-                        OTPView(encryptedOTP: otp)
+                        if otp.id != nil {
+                            OTPView(encryptedOTP: otp)
+                        } else {
+                            EmptyView()
+                        }
                     }
                 }
             }
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
