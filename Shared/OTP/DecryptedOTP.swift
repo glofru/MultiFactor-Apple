@@ -9,14 +9,16 @@ typealias OTPIdentifier = String
 
 struct DecryptedOTP: Codable, Identifiable {
     var id: OTPIdentifier
-    let issuer: String?
-    let label: String?
+    let secret: String
+    let issuer: String
+    let label: String
     let algorithm: Algorithm
     let digits: Digits
     let period: Period
 
-    init(id: OTPIdentifier, issuer: String? = nil, label: String? = nil, algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
+    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
         self.id = id
+        self.secret = secret
         self.issuer = issuer
         self.label = label
         self.algorithm = algorithm

@@ -17,7 +17,10 @@ class HomeViewModel: ObservableObject {
     }
 
     func addOTP() async {
-        try? await CloudProvider.shared.addOTP(CloudEncryptedOTP(id: UUID().uuidString, secret: "I65VU7K5ZQL7WB4E", issuer: "Dropbox", label: "gianluca", algorithm: .sha256, digits: .six, period: .thirty))
+        let decrypted = DecryptedOTP(id: UUID().uuidString, secret: "I65VU7K5ZQL7WB4E", issuer: "Dropbox", label: "gianluca", algorithm: .sha256, digits: .six, period: .thirty)
+        if let encrypted = MFCipher.encrypt(decrypted) {
+            try? await CloudProvider.shared.addOTP(encrypted)
+        }
     }
 
     func deleteOTP(_ otp: OTPIdentifier) async {

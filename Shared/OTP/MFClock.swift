@@ -26,7 +26,7 @@ class MFClock: ObservableObject {
 
     func start() {
         if state == .paused {
-            let delta = period - (Date().timeIntervalSince1970).truncatingRemainder(dividingBy: period) - 1
+            let delta = period - (Date().timeIntervalSince1970).truncatingRemainder(dividingBy: period)
             loaded = delta / period
 
             state = .working

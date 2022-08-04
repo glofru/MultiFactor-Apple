@@ -17,6 +17,8 @@ class AuthenticationViewModel: ObservableObject {
     @Published private(set) var state = AuthenticationState.unknown {
         didSet {
             error = nil
+            //TODO
+            MFCipher.setKey(MFCipher.hash("ciaociao"))
         }
     }
     @Published private(set) var error: String?
