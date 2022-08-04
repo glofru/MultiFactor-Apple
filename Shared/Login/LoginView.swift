@@ -102,7 +102,9 @@ struct MasterLoginView: View {
                 .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(signIn)
                 .onAppear {
-                    focusPassword = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        focusPassword = true
+                    }
                 }
 
             if let error = authenticationViewModel.error {

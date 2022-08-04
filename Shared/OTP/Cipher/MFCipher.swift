@@ -11,8 +11,12 @@ import CryptoKit
 class MFCipher {
     static private var key: SymmetricKey!
 
-    static func setKey(_ key: String) {
-        MFCipher.key = SymmetricKey(data: Data(hex: key))
+    static func setKeyFrom(password: String) {
+        MFCipher.key = SymmetricKey(data: Data(hex: MFCipher.hash(password)))
+    }
+
+    static func setKeyFrom(string: String) {
+        MFCipher.key = SymmetricKey(data: string.data(using: .utf8)!)
     }
 
     static func reset() {
@@ -20,14 +24,14 @@ class MFCipher {
     }
 
     static func encrypt(_ decryptedOTP: DecryptedOTP) -> CloudEncryptedOTP? {
-        guard let secret = encrypt(data: decryptedOTP.secret) else {
+        guard let secret = encrypt(decryptedOTP.secret) else {
             return nil
         }
         return CloudEncryptedOTP(
             id: decryptedOTP.id,
             secret: secret,
-            issuer: encrypt(data: decryptedOTP.issuer) ?? "",
-            label: encrypt(data: decryptedOTP.label) ?? "",
+            issuer: encrypt(decryptedOTP.issuer) ?? "",
+            label: encrypt(decryptedOTP.label) ?? "",
             algorithm: decryptedOTP.algorithm,
             digits: decryptedOTP.digits,
             period: decryptedOTP.period
@@ -49,16 +53,16 @@ class MFCipher {
         )
     }
 
-    static func encrypt(data: String) -> String? {
+    static func encrypt(_ data: String) -> String? {
         guard !data.isEmpty else {
             return nil
         }
 
-        let plainData = data.data(using: .utf8)
-        guard let sealedData = try? AES.GCM.seal(plainData!, using: key, nonce: AES.GCM.Nonce()).combined else {
+        guard let plainData = data.data(using: .utf8),
+              let sealedData = try? AES.GCM.seal(plainData, using: key, nonce: AES.GCM.Nonce()).combined?.base64EncodedString() else {
             return nil
         }
-        return sealedData.base64EncodedString()
+        return sealedData
     }
 
     static func decrypt(base64 encodedData: String) -> String? {

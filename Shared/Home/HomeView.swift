@@ -33,17 +33,13 @@ struct HomeView: View {
 //            AccountView()
             #endif
         }
+        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
         .onChange(of: scenePhase) { newPhase in
-            switch newPhase {
-            case .background:
+            if newPhase == .background {
                 MFClock.shared.stop()
-            case .inactive:
-                return
-            case .active:
-                MFClock.shared.start()
-            @unknown default:
-                return
+                TOTPViewModel.reset()
+                authenticationViewModel.background()
             }
         }
     }

@@ -17,8 +17,6 @@ class AuthenticationViewModel: ObservableObject {
     @Published private(set) var state = AuthenticationState.unknown {
         didSet {
             error = nil
-            //TODO
-            MFCipher.setKey(MFCipher.hash("ciaociao"))
         }
     }
     @Published private(set) var error: String?
@@ -81,13 +79,12 @@ class AuthenticationViewModel: ObservableObject {
 
         do {
             let cloudKey = try await CloudProvider.shared.key
-            let hash = MFCipher.hash(password)
-            MFCipher.setKey(hash)
+            MFCipher.setKeyFrom(password: password)
             guard let decryptedKey = MFCipher.decrypt(base64: cloudKey) else {
                 MFCipher.reset()
                 throw CloudError.keyIncorrect
             }
-            MFCipher.setKey(decryptedKey)
+            MFCipher.setKeyFrom(string: decryptedKey)
 
             await MainActor.run {
                 withAnimation {
@@ -101,6 +98,10 @@ class AuthenticationViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    func background() {
+        state = .signedInCloud
     }
 
     func signOut() {
