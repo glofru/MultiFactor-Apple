@@ -77,7 +77,9 @@ struct CodeView: View {
 struct AccountView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
-    
+
+    @AppStorage("biometricUnlock") private var biometricUnlock: Bool = false
+
     @State private var showSignOut = false
 
     var body: some View {
@@ -85,6 +87,8 @@ struct AccountView: View {
             Form {
                 Section(header: Text("PROFILE")) {
                     Text("\(PersistenceController.shared.user?.username ?? "ALOA")")
+
+                    Toggle("Unlock Face/Touch ID", isOn: $biometricUnlock)
                 }
 
                 Section(header: Text("ABOUT")) {

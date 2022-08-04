@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 struct LoginView: View {
 
@@ -84,6 +85,8 @@ struct MasterLoginView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
+    @AppStorage("biometricUnlock") private var biometricUnlock: Bool = false
+
     @State private var isSigningIn = false
     @State private var password = ""
 
@@ -101,11 +104,20 @@ struct MasterLoginView: View {
                 .focused($focusPassword, equals: true)
                 .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(signIn)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        focusPassword = true
-                    }
+
+            Button(action: {
+                Task(priority: .userInitiated) {
+                    await signInBiometric()
                 }
+            }, label: {
+                Label("Unlock with Face ID", systemImage: "faceid")
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 15).foregroundColor(.white))
+            })
+
+            if isSigningIn {
+                ProgressView()
+            }
 
             if let error = authenticationViewModel.error {
                 Text(error)
@@ -114,6 +126,14 @@ struct MasterLoginView: View {
         }
         .padding()
         .disabled(isSigningIn)
+        .navigationViewStyle(StackNavigationViewStyle())
+//        .task(id: "mpwd", priority: .userInitiated) {
+//            if biometricUnlock {
+//                await signInBiometric()
+//            } else {
+//                focusPassword = true
+//            }
+//        }
     }
 
     private func signIn() {
@@ -124,6 +144,32 @@ struct MasterLoginView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 focusPassword = true
             }
+        }
+    }
+
+    private func signInBiometric() async {
+        guard biometricUnlock else {
+            return
+        }
+
+        let context = LAContext()
+        var error: NSError?
+
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "We need to unlock your data."
+
+            let success = try? await context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason)
+            if success == true {
+                withAnimation {
+                    isSigningIn = true
+                }
+                Task {
+                    await authenticationViewModel.signInMaster(password: "master")
+                    isSigningIn = false
+                }
+            }
+        } else {
+            isSigningIn = false
         }
     }
 }
