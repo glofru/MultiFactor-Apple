@@ -189,6 +189,7 @@
 				37E337DF28931C0000094293 /* DecryptedOTP.swift */,
 				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
 				370A64ED2891FC1900D529E1 /* MFClock.swift */,
+				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 			);
 			path = OTP;
 			sourceTree = "<group>";
@@ -210,7 +211,6 @@
 			children = (
 				3737A68B2888C9CF007F8DFD /* HomeView.swift */,
 				3736B213288DA26800C7AEAF /* HomeViewModel.swift */,
-				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -221,13 +221,6 @@
 				37369116289B1C880093336E /* MFCipher.swift */,
 			);
 			path = Cipher;
-			sourceTree = "<group>";
-		};
-		3737A68E2888CA04007F8DFD /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		377B9D63288A337C00090D84 /* Cloud */ = {
@@ -262,7 +255,6 @@
 				372B2EB7288F4CAC00043D4F /* OTP */,
 				37058735288A097C00E6048C /* Login */,
 				373408AA288CA6F800ABB9C4 /* Home */,
-				3737A68E2888CA04007F8DFD /* View */,
 				37058723288A023100E6048C /* AppDelegate.swift */,
 				37C0C1EE28862CBD00553B73 /* MultiFactorApp.swift */,
 				37C0C1EF28862CBD00553B73 /* ContentView.swift */,

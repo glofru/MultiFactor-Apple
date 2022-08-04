@@ -25,17 +25,27 @@ struct OTPView: View {
         }, label: {
             VStack(alignment: .leading, spacing: 20) {
                 HStack {
-                    Image("google")
-                        .resizable()
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .frame(width: 40, height: 40)
-                        .background(.red)
-                        .cornerRadius(OTPView.cornerRadius)
-                        .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
-                        .privacySensitive()
+                    if let knownProvider = KnowProviders(rawValue: (totpViewModel.issuer ?? "").lowercased()) {
+                        Image(knownProvider.rawValue)
+                            .resizable()
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .frame(width: 40, height: 40)
+                            .background(knownProvider.color)
+                            .cornerRadius(OTPView.cornerRadius)
+                            .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
+                            .privacySensitive()
+                    } else {
+                        Text(String(totpViewModel.label?.first ?? totpViewModel.issuer?.first ?? " "))
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .frame(width: 40, height: 40)
+                            .background(.white) //TODO: random
+                            .cornerRadius(OTPView.cornerRadius)
+                            .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
+                            .privacySensitive()
+                    }
 
                     VStack(alignment: .leading) {
-                        Text("\(totpViewModel.issuer ?? "No issuer") – \(totpViewModel.id)")
+                        Text(totpViewModel.issuer ?? "No issuer")
                             .font(.title2)
                             .fontWeight(.bold)
                         Text(totpViewModel.label ?? "No label")
@@ -132,5 +142,49 @@ struct LoadingSpinner: View {
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
         OTPView(encryptedOTP: EncryptedOTP(entity: .init(), insertInto: .none))
+    }
+}
+
+enum KnowProviders: String {
+    case amazon
+    case autodesk
+    case binance
+    case dropbox
+    case facebook
+    case github
+    case google
+    case instagram
+    case jetbrains
+    case netflix
+    case paypal
+    case twitter
+
+    var color: Color {
+        switch self {
+        case .amazon:
+            return .white
+        case .autodesk:
+            return .white
+        case .binance:
+            return Color(.sRGB, red: 34/255, green: 34/255, blue: 34/255)
+        case .dropbox:
+            return Color(.sRGB, red: 13/255, green: 35/255, blue: 129/255)
+        case .facebook:
+            return Color(.sRGB, red: 26/255, green: 119/255, blue: 242/255)
+        case .github:
+            return .white
+        case .google:
+            return .red
+        case .instagram:
+            return .white
+        case .jetbrains:
+            return .white
+        case .netflix:
+            return .black
+        case .paypal:
+            return .white
+        case .twitter:
+            return Color(.sRGB, red: 30/255, green: 161/255, blue: 241/255)
+        }
     }
 }
