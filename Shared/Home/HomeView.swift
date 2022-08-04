@@ -74,21 +74,33 @@ struct CodeView: View {
 }
 
 //#if os(iOS)
+import LocalAuthentication
+
 struct AccountView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
-    @AppStorage("biometricUnlock") private var biometricUnlock: Bool = false
+    @AppStorage("biometryUnlock") private var biometryUnlock: Bool = false
+    @AppStorage("biometryType") private var biometryType: BiometryType?
 
     @State private var showSignOut = false
+
+    init() {
+        if biometryType == nil {
+            let context = LAContext()
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
+                biometryType = BiometryType(from: context.biometryType)
+            }
+        }
+    }
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("PROFILE")) {
-                    Text("\(PersistenceController.shared.user?.username ?? "ALOA")")
+                    Text(PersistenceController.shared.user?.username ?? "")
 
-                    Toggle("Unlock Face/Touch ID", isOn: $biometricUnlock)
+                    Toggle("Unlock with \(biometryType!.name)", isOn: $biometryUnlock)
                 }
 
                 Section(header: Text("ABOUT")) {

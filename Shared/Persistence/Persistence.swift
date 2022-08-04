@@ -68,6 +68,7 @@ class PersistenceController {
     }
 
     func deleteAll() {
+        // Clean CoreData
         let fetchRequest = EncryptedOTP.fetchRequest()
         fetchRequest.includesPropertyValues = false
 
@@ -78,6 +79,11 @@ class PersistenceController {
         }
 
         self.save()
+
+        // Clean AppStorage
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
     }
 
     fileprivate func save() {
