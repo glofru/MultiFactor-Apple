@@ -29,7 +29,7 @@ struct HomeView: View {
             }
             #elseif os(macOS)
             CodeView()
-//            AccountView()
+            AccountView()
             #endif
         }
         .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
@@ -60,7 +60,7 @@ struct CodeView: View {
             } else {
                 LazyVStack {
                     ForEach(encryptedOTPs, id: \.id) { otp in
-                        if otp.id != nil {
+                        if otp.isValid {
                             OTPView(encryptedOTP: otp)
                         } else {
                             EmptyView()

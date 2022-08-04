@@ -38,7 +38,6 @@ class PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
-        deleteAll()
     }
 
     func save(cloudEncryptedOTPs: [CloudEncryptedOTP]) {
@@ -155,5 +154,9 @@ extension EncryptedOTP {
         self.algorithm = cloudEncryptedOTP.algorithm.rawValue
         self.digits = Int16(cloudEncryptedOTP.digits.rawValue)
         self.period = Int16(cloudEncryptedOTP.period.rawValue)
+    }
+
+    var isValid: Bool {
+        self.id?.isEmpty == false && self.secret?.isEmpty == false
     }
 }

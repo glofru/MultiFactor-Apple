@@ -32,6 +32,7 @@ struct OTPView: View {
                         .background(.red)
                         .cornerRadius(OTPView.cornerRadius)
                         .shadow(color: .red.opacity(0.4), radius: 3, y: 2)
+                        .privacySensitive()
 
                     VStack(alignment: .leading) {
                         Text("\(totpViewModel.issuer ?? "No issuer") – \(totpViewModel.id)")
@@ -40,6 +41,7 @@ struct OTPView: View {
                         Text(totpViewModel.label ?? "No label")
                             .font(.caption2)
                     }
+                    .privacySensitive()
 
                     Spacer()
 
@@ -66,6 +68,7 @@ struct OTPView: View {
                         }
                     }
                 }
+                .privacySensitive()
             }
             .padding()
             .glassBackground(.element, intensity: .strong)

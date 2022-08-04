@@ -85,8 +85,8 @@ struct MasterLoginView: View {
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
-    @AppStorage("biometryUnlock") private var biometryUnlock: Bool = false
-    @AppStorage("biometryType") private var biometryType: BiometryType!
+    @AppStorage("biometryUnlock") private var biometryUnlock: Bool?
+    @AppStorage("biometryType") private var biometryType: BiometryType?
 
     @State private var isSigningIn = false
     @State private var password = ""
@@ -106,7 +106,7 @@ struct MasterLoginView: View {
                 .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(signIn)
 
-            if biometryUnlock {
+            if biometryUnlock == true, let biometryType = biometryType {
                 Button(action: {
                     Task(priority: .userInitiated) {
                         await signInBiometric()

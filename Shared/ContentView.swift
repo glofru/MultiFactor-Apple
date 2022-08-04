@@ -28,7 +28,6 @@ struct ContentView: View {
                 ProgressView()
             }
         }
-        .privacySensitive()
         .environmentObject(authenticationViewModel)
         .environment(\.managedObjectContext, PersistenceController.shared.context)
         .onChange(of: scenePhase) { newPhase in
