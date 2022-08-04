@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(\.scenePhase) var scenePhase
 
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
 
@@ -35,13 +34,6 @@ struct HomeView: View {
         }
         .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
-        .onChange(of: scenePhase) { newPhase in
-            if newPhase == .background {
-                MFClock.shared.stop()
-                TOTPViewModel.reset()
-                authenticationViewModel.background()
-            }
-        }
     }
 }
 

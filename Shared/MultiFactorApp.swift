@@ -34,7 +34,6 @@ struct MultiFactorApp: App {
                 .frame(minWidth: 400, idealWidth: 400)
                 .buttonStyle(.plain)
             #endif
-//                .environment(\.managedObjectContext, persistenceController.context)
                 
         }
         #if os(macOS)

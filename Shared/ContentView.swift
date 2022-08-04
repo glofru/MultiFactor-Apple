@@ -11,6 +11,8 @@ import CoreData
 
 struct ContentView: View {
 
+    @Environment(\.scenePhase) var scenePhase
+
     @StateObject var authenticationViewModel = AuthenticationViewModel()
 
     var body: some View {
@@ -26,9 +28,23 @@ struct ContentView: View {
                 ProgressView()
             }
         }
-        .environmentObject(authenticationViewModel)
         .privacySensitive()
+        .environmentObject(authenticationViewModel)
         .environment(\.managedObjectContext, PersistenceController.shared.context)
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .background:
+                MFClock.shared.stop()
+                TOTPViewModel.reset()
+                authenticationViewModel.background()
+            case .inactive:
+                return
+            case .active:
+                MFClock.shared.start()
+            @unknown default:
+                return
+            }
+        }
     }
 }
 

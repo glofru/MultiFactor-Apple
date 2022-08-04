@@ -58,6 +58,9 @@ struct OTPView: View {
                             .onReceive(MFClock.shared.$time) { time in
                                 totpViewModel.generateCode(for: time)
                             }
+                            .onAppear {
+                                totpViewModel.generateCode(for: .now)
+                            }
                         if index != 5 {
                             Spacer()
                         }
