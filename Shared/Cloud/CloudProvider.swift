@@ -23,12 +23,34 @@ protocol MFCloudProvider {
     func addOTP(_ otp: CloudEncryptedOTP) async throws
     func deleteOTP(_ otp: OTPIdentifier) async throws
     func addOTPChangeListener(_ listener: @escaping ([CloudEncryptedOTP]) -> Void) throws
+
+    var key: String { get async throws }
 }
 
-enum CloudError: Error {
+enum CloudError: Error, LocalizedError {
     case userNotLogged
     case authenticationFail(String)
     case otpFail(String)
+    case keyNotFound
+    case keyIncorrect
+    case keyFail(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .userNotLogged:
+            return "User not logged"
+        case .authenticationFail(let string):
+            return "Authentication failed: \(string)"
+        case .otpFail(let string):
+            return "OTP failed: \(string)"
+        case .keyNotFound:
+            return "Key not found"
+        case .keyIncorrect:
+            return "Key incorrect"
+        case .keyFail(let string):
+            return "Key fail: \(string)"
+        }
+    }
 }
 
 class CloudProvider {

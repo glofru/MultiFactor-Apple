@@ -41,33 +41,22 @@ struct LoginView: View {
                 .submitLabel(.done)
                 .focused($focusedField, equals: .password)
                 .textFieldStyle(MFLoginTextFieldStyle())
-                .onSubmit {
-                    focusedField = nil
-                    signIn()
-                }
+                .onSubmit(signIn)
 
             if let error = authenticationViewModel.error {
                 Text(error)
                     .foregroundColor(.red)
             }
-
-            Button(action: signIn, label: {
-                if isSigningIn {
-                    ProgressView()
-                } else {
-                    Text("SignIn")
-                }
-            })
-            .buttonStyle(MFRoundedRectangleButtonStyle())
         }
         .padding()
         .disabled(isSigningIn)
     }
 
     private func signIn() {
+        focusedField = nil
         isSigningIn = true
         Task {
-            if let error = await authenticationViewModel.signIn(method:.username(username, password)) {
+            if let error = await authenticationViewModel.signInCloud(method: .username(username, password)) {
                 switch error {
                 case .usernameEmpty: fallthrough
                 case .usernameNotFound: fallthrough
@@ -91,6 +80,52 @@ struct LoginView: View {
     }
 }
 
+struct MasterLoginView: View {
+
+    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+
+    @State private var isSigningIn = false
+    @State private var password = ""
+
+    @FocusState private var focusPassword: Bool?
+
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Master login")
+                .font(.title)
+                .padding()
+
+            SecureField("Master password", text: $password)
+                .textContentType(.password)
+                .submitLabel(.done)
+                .focused($focusPassword, equals: true)
+                .textFieldStyle(MFLoginTextFieldStyle())
+                .onSubmit(signIn)
+                .onAppear {
+                    focusPassword = true
+                }
+
+            if let error = authenticationViewModel.error {
+                Text(error)
+                    .foregroundColor(.red)
+            }
+        }
+        .padding()
+        .disabled(isSigningIn)
+    }
+
+    private func signIn() {
+        isSigningIn = true
+        Task {
+            await authenticationViewModel.signInMaster(password: password)
+            isSigningIn = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                focusPassword = true
+            }
+        }
+    }
+}
+
 private struct MFLoginTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
@@ -100,20 +135,6 @@ private struct MFLoginTextFieldStyle: TextFieldStyle {
         #if os(macOS)
             .textFieldStyle(.plain)
         #endif
-    }
-}
-
-private struct MFRoundedRectangleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            Spacer()
-            configuration.label
-            Spacer()
-        }
-        .padding()
-        .glassBackground(.accentColor, intensity: .strong)
-        .cornerRadius(8)
-        .scaleEffect(configuration.isPressed ? 0.95 : 1)
     }
 }
 

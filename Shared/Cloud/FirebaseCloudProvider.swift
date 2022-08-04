@@ -121,6 +121,30 @@ final class FirebaseCloudProvider: MFCloudProvider {
                 listener(otps)
             })
     }
+
+    var key: String {
+        get async throws {
+            guard let user = firebaseUser else {
+                throw CloudError.userNotLogged
+            }
+
+            var document: DocumentSnapshot?
+            do {
+                document = try await Firestore.firestore()
+                    .collection("otp")
+                    .document(user.uid)
+                    .getDocument()
+            } catch {
+                throw CloudError.keyFail(error.localizedDescription)
+            }
+
+            guard let key = document?.data()?["key"] as? String else {
+                throw CloudError.keyNotFound
+            }
+
+            return key
+        }
+    }
 }
 
 extension FirebaseCloudProvider {

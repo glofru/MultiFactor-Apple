@@ -15,6 +15,10 @@ class MFCipher {
         MFCipher.key = SymmetricKey(data: Data(hex: key))
     }
 
+    static func reset() {
+        key = nil
+    }
+
     static func encrypt(_ decryptedOTP: DecryptedOTP) -> CloudEncryptedOTP? {
         guard let secret = encrypt(data: decryptedOTP.secret) else {
             return nil
@@ -45,7 +49,7 @@ class MFCipher {
         )
     }
 
-    static private func encrypt(data: String) -> String? {
+    static func encrypt(data: String) -> String? {
         guard !data.isEmpty else {
             return nil
         }
@@ -57,7 +61,7 @@ class MFCipher {
         return sealedData.base64EncodedString()
     }
 
-    static private func decrypt(base64 encodedData: String) -> String? {
+    static func decrypt(base64 encodedData: String) -> String? {
         guard !encodedData.isEmpty else {
             return nil
         }

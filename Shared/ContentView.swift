@@ -16,7 +16,9 @@ struct ContentView: View {
     var body: some View {
         Group {
             switch authenticationViewModel.state {
-            case .signedIn:
+            case .signedInCloud:
+                MasterLoginView()
+            case .signedInMaster:
                 HomeView()
             case .signedOut:
                 LoginView()

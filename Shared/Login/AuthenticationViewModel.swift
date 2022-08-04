@@ -28,7 +28,9 @@ class AuthenticationViewModel: ObservableObject {
             CloudProvider.shared.addUserDidChangeListener({ user in
                 withAnimation {
                     if user != nil {
-                        self.state = .signedIn
+                        if self.state == .unknown || self.state == .signedOut {
+                            self.state = .signedInCloud
+                        }
                     } else {
                         self.state = .signedOut
                     }
@@ -38,7 +40,7 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func signIn(method: AuthenticationMethod) async -> AuthenticationError? {
+    func signInCloud(method: AuthenticationMethod) async -> AuthenticationError? {
         // Input validation
         switch method {
         case .username(let username, let password):
@@ -66,6 +68,38 @@ class AuthenticationViewModel: ObservableObject {
                 }
             }
             return error
+        }
+    }
+
+    func signInMaster(password: String) async {
+        guard !password.isEmpty else {
+            withAnimation {
+                error = "Provided password is empty"
+            }
+            return
+        }
+
+        do {
+            let cloudKey = try await CloudProvider.shared.key
+            let hash = MFCipher.hash(password)
+            MFCipher.setKey(hash)
+            guard let decryptedKey = MFCipher.decrypt(base64: cloudKey) else {
+                MFCipher.reset()
+                throw CloudError.keyIncorrect
+            }
+            MFCipher.setKey(decryptedKey)
+
+            await MainActor.run {
+                withAnimation {
+                    self.state = .signedInMaster
+                }
+            }
+        } catch {
+            await MainActor.run {
+                withAnimation {
+                    self.error = error.localizedDescription
+                }
+            }
         }
     }
 
@@ -97,7 +131,7 @@ enum AuthenticationMethod {
 }
 
 enum AuthenticationState {
-    case signedIn, signedOut, unknown
+    case signedInCloud, signedInMaster, signedOut, unknown
 }
 
 enum AuthenticationError: LocalizedError {
