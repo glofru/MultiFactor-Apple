@@ -19,8 +19,8 @@
 		3705873B288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
 		370A64EE2891FC1900D529E1 /* MFClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64ED2891FC1900D529E1 /* MFClock.swift */; };
 		370A64EF2891FC1900D529E1 /* MFClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64ED2891FC1900D529E1 /* MFClock.swift */; };
-		370A64F42892171F00D529E1 /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64F32892171F00D529E1 /* String+Subscript.swift */; };
-		370A64F52892171F00D529E1 /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64F32892171F00D529E1 /* String+Subscript.swift */; };
+		370A64F42892171F00D529E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64F32892171F00D529E1 /* String+Extensions.swift */; };
+		370A64F52892171F00D529E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A64F32892171F00D529E1 /* String+Extensions.swift */; };
 		371F3EBB28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371F3EBA28931F2400EBAB91 /* CloudEncryptedOTP.swift */; };
 		371F3EBC28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371F3EBA28931F2400EBAB91 /* CloudEncryptedOTP.swift */; };
 		373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */; };
@@ -31,6 +31,10 @@
 		373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AB288CA85200ABB9C4 /* CloudProvider.swift */; };
 		373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */; };
 		373408B0288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */; };
+		37369117289B1C880093336E /* MFCipher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37369116289B1C880093336E /* MFCipher.swift */; };
+		37369118289B1C880093336E /* MFCipher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37369116289B1C880093336E /* MFCipher.swift */; };
+		3736911D289BC6160093336E /* SHA256Digest+Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736911C289BC6160093336E /* SHA256Digest+Digest.swift */; };
+		3736911E289BC6160093336E /* SHA256Digest+Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736911C289BC6160093336E /* SHA256Digest+Digest.swift */; };
 		3736B212288DA16500C7AEAF /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 3736B211288DA16500C7AEAF /* SwiftOTP */; };
 		3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B213288DA26800C7AEAF /* HomeViewModel.swift */; };
 		3736B215288DA26800C7AEAF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B213288DA26800C7AEAF /* HomeViewModel.swift */; };
@@ -86,12 +90,14 @@
 		37058732288A05AF00E6048C /* FirebaseCloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudProvider.swift; sourceTree = "<group>"; };
 		37058739288A0E7B00E6048C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		370A64ED2891FC1900D529E1 /* MFClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClock.swift; sourceTree = "<group>"; };
-		370A64F32892171F00D529E1 /* String+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscript.swift"; sourceTree = "<group>"; };
+		370A64F32892171F00D529E1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		371F3EBA28931F2400EBAB91 /* CloudEncryptedOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEncryptedOTP.swift; sourceTree = "<group>"; };
 		373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassBackground.swift"; sourceTree = "<group>"; };
 		373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+MFColors.swift"; sourceTree = "<group>"; };
 		373408AB288CA85200ABB9C4 /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
 		373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+VersionNumber.swift"; sourceTree = "<group>"; };
+		37369116289B1C880093336E /* MFCipher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCipher.swift; sourceTree = "<group>"; };
+		3736911C289BC6160093336E /* SHA256Digest+Digest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SHA256Digest+Digest.swift"; sourceTree = "<group>"; };
 		3736B213288DA26800C7AEAF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPViewModel.swift; sourceTree = "<group>"; };
 		3737A68B2888C9CF007F8DFD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -175,6 +181,7 @@
 		372B2EB7288F4CAC00043D4F /* OTP */ = {
 			isa = PBXGroup;
 			children = (
+				37369115289B1C7F0093336E /* Cipher */,
 				37E337DF28931C0000094293 /* DecryptedOTP.swift */,
 				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
 				370A64ED2891FC1900D529E1 /* MFClock.swift */,
@@ -187,8 +194,9 @@
 			children = (
 				373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */,
 				373408A7288C9FDE00ABB9C4 /* Color+MFColors.swift */,
+				3736911C289BC6160093336E /* SHA256Digest+Digest.swift */,
+				370A64F32892171F00D529E1 /* String+Extensions.swift */,
 				373408A4288C98E700ABB9C4 /* View+GlassBackground.swift */,
-				370A64F32892171F00D529E1 /* String+Subscript.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -201,6 +209,14 @@
 				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		37369115289B1C7F0093336E /* Cipher */ = {
+			isa = PBXGroup;
+			children = (
+				37369116289B1C880093336E /* MFCipher.swift */,
+			);
+			path = Cipher;
 			sourceTree = "<group>";
 		};
 		3737A68E2888CA04007F8DFD /* View */ = {
@@ -472,8 +488,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3736911D289BC6160093336E /* SHA256Digest+Digest.swift in Sources */,
 				37E337E028931C0000094293 /* DecryptedOTP.swift in Sources */,
-				370A64F42892171F00D529E1 /* String+Subscript.swift in Sources */,
+				370A64F42892171F00D529E1 /* String+Extensions.swift in Sources */,
 				37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				37C0C21D28862CC000553B73 /* Persistence.swift in Sources */,
@@ -488,6 +505,7 @@
 				373408A5288C98E700ABB9C4 /* View+GlassBackground.swift in Sources */,
 				37C0C21B28862CC000553B73 /* ContentView.swift in Sources */,
 				373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
+				37369117289B1C880093336E /* MFCipher.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
 				3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */,
@@ -505,6 +523,7 @@
 				370A64EF2891FC1900D529E1 /* MFClock.swift in Sources */,
 				37E337E128931C0000094293 /* DecryptedOTP.swift in Sources */,
 				3736B215288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
+				3736911E289BC6160093336E /* SHA256Digest+Digest.swift in Sources */,
 				37058725288A023100E6048C /* AppDelegate.swift in Sources */,
 				37C0C21A28862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				37C0C21E28862CC000553B73 /* Persistence.swift in Sources */,
@@ -512,13 +531,14 @@
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				3736B218288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
+				37369118289B1C880093336E /* MFCipher.swift in Sources */,
 				37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */,
 				371F3EBC28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
 				373408B0288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				3705873B288A0E7B00E6048C /* LoginView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,
-				370A64F52892171F00D529E1 /* String+Subscript.swift in Sources */,
+				370A64F52892171F00D529E1 /* String+Extensions.swift in Sources */,
 				3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
