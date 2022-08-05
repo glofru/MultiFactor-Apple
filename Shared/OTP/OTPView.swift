@@ -63,6 +63,9 @@ struct OTPView: View {
                     .onReceive(MFClock.shared.$time) { time in
                         totpViewModel.generateCode(for: time)
                     }
+                    .onAppear {
+                        totpViewModel.generateCode(for: .now)
+                    }
                     .privacySensitive()
 
                 LoadingSpinner(period: totpViewModel.period)
@@ -130,7 +133,8 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        OTPView(encryptedOTP: EncryptedOTP(entity: .init(), insertInto: .none))
+        return OTPView(encryptedOTP: EncryptedOTP(context: PersistenceController.shared.context))
+            .padding()
     }
 }
 

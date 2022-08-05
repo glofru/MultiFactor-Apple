@@ -16,7 +16,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
 
     private let totp: TOTP
 
-    @Published var code: String
+    @Published private(set) var code: String
 
     private init(encryptedOTP: EncryptedOTP) {
         let decryptedOTP = MFCipher.decrypt(encryptedOTP)!
@@ -26,7 +26,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
         self.label = decryptedOTP.label
         self.period = decryptedOTP.period
         self.totp = TOTP(secret: base32DecodeToData(decryptedOTP.secret)!, digits: decryptedOTP.digits.rawValue, timeInterval: decryptedOTP.period.rawValue, algorithm: .sha1)!
-        self.code = self.totp.generate(time: .now) ?? ""
+        self.code = "******"
     }
 
     func generateCode(for date: Date) {
