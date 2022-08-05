@@ -145,10 +145,11 @@ struct OTPView_Previews: PreviewProvider {
     }
 }
 
-enum KnowProviders: String {
+private enum KnowProviders: String {
     case amazon
     case autodesk
     case binance
+    case discord
     case dropbox
     case facebook
     case github
@@ -157,6 +158,7 @@ enum KnowProviders: String {
     case jetbrains
     case netflix
     case paypal
+    case reddit
     case twitter
 
     var color: Color {
@@ -167,6 +169,8 @@ enum KnowProviders: String {
             return .white
         case .binance:
             return Color(.sRGB, red: 34/255, green: 34/255, blue: 34/255)
+        case .discord:
+            return Color(.sRGB, red: 77/255, green: 96/255, blue: 233/255)
         case .dropbox:
             return Color(.sRGB, red: 13/255, green: 35/255, blue: 129/255)
         case .facebook:
@@ -183,6 +187,8 @@ enum KnowProviders: String {
             return .black
         case .paypal:
             return .white
+        case .reddit:
+            return Color(.sRGB, red: 242/255, green: 66/255, blue: 1/255)
         case .twitter:
             return Color(.sRGB, red: 30/255, green: 161/255, blue: 241/255)
         }
