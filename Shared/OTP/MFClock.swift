@@ -53,6 +53,7 @@ class MFClock: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             self?.increment()
         }
+        RunLoop.main.add(timer, forMode: .common)
     }
 
     enum State {

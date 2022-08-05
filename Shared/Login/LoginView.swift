@@ -163,6 +163,7 @@ struct MasterLoginView: View {
             if success == true {
                 withAnimation {
                     isSigningIn = true
+                    password = "******"
                 }
                 Task {
                     await authenticationViewModel.signInMaster(password: "master")

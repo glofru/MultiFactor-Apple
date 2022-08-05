@@ -99,6 +99,7 @@
 		373408AB288CA85200ABB9C4 /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
 		373408AE288CB44700ABB9C4 /* Bundle+VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+VersionNumber.swift"; sourceTree = "<group>"; };
 		373544E4289C45890052115A /* BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryType.swift; sourceTree = "<group>"; };
+		373544F1289D14DA0052115A /* MultiFactor--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MultiFactor--iOS--Info.plist"; sourceTree = "<group>"; };
 		37369116289B1C880093336E /* MFCipher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCipher.swift; sourceTree = "<group>"; };
 		3736911C289BC6160093336E /* SHA256Digest+Digest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SHA256Digest+Digest.swift"; sourceTree = "<group>"; };
 		3736B213288DA26800C7AEAF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -236,6 +237,7 @@
 		37C0C1E628862CBD00553B73 = {
 			isa = PBXGroup;
 			children = (
+				373544F1289D14DA0052115A /* MultiFactor--iOS--Info.plist */,
 				378D9F292889DF1C007BDFB6 /* MultiFactor--macOS--Info.plist */,
 				37C0C1EB28862CBD00553B73 /* Shared */,
 				37C0C1FD28862CBF00553B73 /* macOS */,
@@ -698,6 +700,7 @@
 				DEVELOPMENT_TEAM = 4MJXMYZ3D9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MultiFactor--iOS--Info.plist";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Need to unlock with face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -729,6 +732,7 @@
 				DEVELOPMENT_TEAM = 4MJXMYZ3D9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MultiFactor--iOS--Info.plist";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Need to unlock with face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

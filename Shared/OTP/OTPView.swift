@@ -23,64 +23,52 @@ struct OTPView: View {
         Button(action: {
 
         }, label: {
-            VStack(alignment: .leading, spacing: 20) {
-                HStack {
-                    if let knownProvider = KnowProviders(rawValue: (totpViewModel.issuer ?? "").lowercased()) {
-                        Image(knownProvider.rawValue)
-                            .resizable()
-                            .frame(width: 30, height: 30, alignment: .center)
-                            .frame(width: 40, height: 40)
-                            .background(knownProvider.color)
-                            .cornerRadius(OTPView.cornerRadius)
-                            .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
-                            .privacySensitive()
-                    } else {
-                        Text(String(totpViewModel.label?.first ?? totpViewModel.issuer?.first ?? " "))
-                            .frame(width: 30, height: 30, alignment: .center)
-                            .frame(width: 40, height: 40)
-                            .background(.white) //TODO: random
-                            .cornerRadius(OTPView.cornerRadius)
-                            .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
-                            .privacySensitive()
-                    }
+            HStack {
+                if let knownProvider = KnowProviders(rawValue: (totpViewModel.issuer ?? "").lowercased()) {
+                    Image(knownProvider.rawValue)
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                        .frame(width: 40, height: 40)
+                        .background(knownProvider.color)
+                        .cornerRadius(OTPView.cornerRadius)
+                        .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
+                        .privacySensitive()
+                } else {
+                    Text(String(totpViewModel.issuer?.first ?? totpViewModel.label?.first ?? " "))
+                        .frame(width: 30, height: 30, alignment: .center)
+                        .frame(width: 40, height: 40)
+                        .background(.white) //TODO: random
+                        .cornerRadius(OTPView.cornerRadius)
+                        .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
+                        .privacySensitive()
+                }
 
-                    VStack(alignment: .leading) {
-                        Text(totpViewModel.issuer ?? "No issuer")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(totpViewModel.label ?? "No label")
-                            .font(.caption2)
+                VStack(alignment: .leading) {
+                    Text(totpViewModel.issuer ?? "No issuer")
+                        .font(.title2)
+                        .bold()
+                    Text(totpViewModel.label ?? "No label")
+                        .font(.caption2)
+                }
+                .privacySensitive()
+
+                Spacer()
+
+                Text(totpViewModel.code)
+                    .font(.custom("American Typewriter", size: 20))
+                    .bold()
+//                    .frame(width: 30)
+//                    .glassBackground(.background)
+                    .cornerRadius(8)
+                    .onReceive(MFClock.shared.$time) { time in
+                        totpViewModel.generateCode(for: time)
                     }
                     .privacySensitive()
 
-                    Spacer()
-
-                    LoadingSpinner(period: totpViewModel.period)
-                        .frame(width: 35, height: 35)
-                }.frame(height: 40)
-
-                HStack {
-                    ForEach(0..<6) { index in
-                        Text(totpViewModel.code[index])
-                            .fontWeight(.bold)
-                            .font(.title)
-                            .frame(width: 30)
-                            .glassBackground(.background)
-                            .cornerRadius(8)
-                            .onReceive(MFClock.shared.$time) { time in
-                                totpViewModel.generateCode(for: time)
-                            }
-                            .onAppear {
-                                totpViewModel.generateCode(for: .now)
-                            }
-                        if index != 5 {
-                            Spacer()
-                        }
-                    }
-                }
-                .privacySensitive()
+                LoadingSpinner(period: totpViewModel.period)
+                    .frame(width: 25)
             }
-            .padding()
+            .padding(10)
             .glassBackground(.element, intensity: .strong)
             .frame(maxWidth: 400)
             .cornerRadius(OTPView.cornerRadius)
@@ -88,6 +76,7 @@ struct OTPView: View {
             .foregroundColor(Color(uiColor: .label))
             #endif
         })
+        .frame(height: 40)
         .matchedGeometryEffect(id: totpViewModel.id, in: namespace)
         .contextMenu {
             Button(action: {

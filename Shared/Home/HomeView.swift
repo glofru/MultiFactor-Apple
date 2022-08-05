@@ -62,6 +62,7 @@ struct CodeView: View {
                     ForEach(encryptedOTPs, id: \.id) { otp in
                         if otp.isValid {
                             OTPView(encryptedOTP: otp)
+                                .padding(.vertical, 10)
                         } else {
                             EmptyView()
                         }
