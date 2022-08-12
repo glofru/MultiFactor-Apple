@@ -8,7 +8,6 @@
 import SwiftUI
 import CoreData
 
-
 struct ContentView: View {
 
     @Environment(\.scenePhase) var scenePhase

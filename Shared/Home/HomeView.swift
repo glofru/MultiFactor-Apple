@@ -38,6 +38,7 @@ struct HomeView: View {
 }
 
 struct CodeView: View {
+
     @EnvironmentObject var homeViewModel: HomeViewModel
 
     @FetchRequest(sortDescriptors: [
@@ -46,31 +47,34 @@ struct CodeView: View {
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 
     var body: some View {
-        ScrollView {
-            Button(action: {
-                Task {
-                    await homeViewModel.addOTP()
-                }
-            }, label: {
-                Label("Add", systemImage: "plus")
-            })
+        NavigationView {
+            ScrollView {
+                Button(action: {
+                    Task {
+                        await homeViewModel.addOTP()
+                    }
+                }, label: {
+                    Label("Add", systemImage: "plus")
+                })
 
-            if encryptedOTPs.isEmpty {
-                Text("No otps")
-            } else {
-                LazyVStack {
-                    ForEach(encryptedOTPs, id: \.id) { otp in
-                        if otp.isValid {
-                            OTPView(encryptedOTP: otp)
-                                .padding(.vertical, 10)
-                        } else {
-                            EmptyView()
+                if encryptedOTPs.isEmpty {
+                    Text("No otps")
+                } else {
+                    LazyVStack {
+                        ForEach(encryptedOTPs, id: \.id) { otp in
+                            if otp.isValid {
+                                OTPView(encryptedOTP: otp)
+                                    .padding(.vertical, 10)
+                            } else {
+                                EmptyView()
+                            }
                         }
                     }
                 }
             }
+            .padding(.horizontal)
+            .navigationTitle("MultiFactor")
         }
-        .padding(.horizontal)
     }
 }
 

@@ -31,6 +31,7 @@ struct LoginView: View {
                 .onSubmit {
                     focusedField = .password
                 }
+                .disableAutocorrection(true)
             #if os(iOS)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
