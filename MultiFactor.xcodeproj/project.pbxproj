@@ -68,6 +68,12 @@
 		37C0C2312886352800553B73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C0C22F2886352800553B73 /* GoogleService-Info.plist */; };
 		37E337E028931C0000094293 /* DecryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E337DF28931C0000094293 /* DecryptedOTP.swift */; };
 		37E337E128931C0000094293 /* DecryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E337DF28931C0000094293 /* DecryptedOTP.swift */; };
+		999B021D28A6CBF700F97C69 /* CodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021C28A6CBF700F97C69 /* CodesView.swift */; };
+		999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021C28A6CBF700F97C69 /* CodesView.swift */; };
+		999B022028A6CC1900F97C69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021F28A6CC1900F97C69 /* AccountView.swift */; };
+		999B022128A6CC1900F97C69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021F28A6CC1900F97C69 /* AccountView.swift */; };
+		999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
+		999B022728A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +131,9 @@
 		37C0C21528862CC000553B73 /* TestsMacOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsMacOSLaunchTests.swift; sourceTree = "<group>"; };
 		37C0C22F2886352800553B73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37E337DF28931C0000094293 /* DecryptedOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptedOTP.swift; sourceTree = "<group>"; };
+		999B021C28A6CBF700F97C69 /* CodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesView.swift; sourceTree = "<group>"; };
+		999B021F28A6CC1900F97C69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,8 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				37058739288A0E7B00E6048C /* LoginView.swift */,
-				377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */,
 				373544E4289C45890052115A /* BiometryType.swift */,
+				377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -188,9 +197,9 @@
 			children = (
 				37369115289B1C7F0093336E /* Cipher */,
 				37E337DF28931C0000094293 /* DecryptedOTP.swift */,
-				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
 				370A64ED2891FC1900D529E1 /* MFClock.swift */,
 				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
+				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
 			);
 			path = OTP;
 			sourceTree = "<group>";
@@ -211,6 +220,9 @@
 			isa = PBXGroup;
 			children = (
 				3737A68B2888C9CF007F8DFD /* HomeView.swift */,
+				999B021C28A6CBF700F97C69 /* CodesView.swift */,
+				999B021F28A6CC1900F97C69 /* AccountView.swift */,
+				999B022528A6D72200F97C69 /* AddOTPView.swift */,
 				3736B213288DA26800C7AEAF /* HomeViewModel.swift */,
 			);
 			path = Home;
@@ -489,6 +501,7 @@
 				3736911D289BC6160093336E /* SHA256Digest+Digest.swift in Sources */,
 				37E337E028931C0000094293 /* DecryptedOTP.swift in Sources */,
 				370A64F42892171F00D529E1 /* String+Extensions.swift in Sources */,
+				999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */,
 				37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				37C0C21D28862CC000553B73 /* Persistence.swift in Sources */,
@@ -497,6 +510,7 @@
 				3737A68C2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */,
 				373408A8288C9FDE00ABB9C4 /* Color+MFColors.swift in Sources */,
+				999B021D28A6CBF700F97C69 /* CodesView.swift in Sources */,
 				371F3EBB28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
 				37058733288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				37058724288A023100E6048C /* AppDelegate.swift in Sources */,
@@ -504,6 +518,7 @@
 				37C0C21B28862CC000553B73 /* ContentView.swift in Sources */,
 				373408AF288CB44700ABB9C4 /* Bundle+VersionNumber.swift in Sources */,
 				37369117289B1C880093336E /* MFCipher.swift in Sources */,
+				999B022028A6CC1900F97C69 /* AccountView.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
 				373544E5289C45890052115A /* BiometryType.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
@@ -529,6 +544,7 @@
 				37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
+				999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */,
 				373544E6289C45890052115A /* BiometryType.swift in Sources */,
 				3736B218288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				37369118289B1C880093336E /* MFCipher.swift in Sources */,
@@ -539,6 +555,8 @@
 				3705873B288A0E7B00E6048C /* LoginView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,
 				370A64F52892171F00D529E1 /* String+Extensions.swift in Sources */,
+				999B022728A6D72200F97C69 /* AddOTPView.swift in Sources */,
+				999B022128A6CC1900F97C69 /* AccountView.swift in Sources */,
 				3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -701,6 +719,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MultiFactor--iOS--Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Need to unlock with face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -733,6 +752,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MultiFactor--iOS--Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Need to unlock with face";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

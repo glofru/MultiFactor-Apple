@@ -10,9 +10,9 @@ import CoreData
 
 struct ContentView: View {
 
-    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.scenePhase) private var scenePhase
 
-    @StateObject var authenticationViewModel = AuthenticationViewModel()
+    @StateObject private var authenticationViewModel = AuthenticationViewModel()
 
     var body: some View {
         Group {

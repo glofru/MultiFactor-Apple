@@ -10,7 +10,7 @@ import LocalAuthentication
 
 struct LoginView: View {
 
-    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @State private var username = ""
     @State private var password = ""
@@ -84,7 +84,7 @@ struct LoginView: View {
 
 struct MasterLoginView: View {
 
-    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @AppStorage("biometryUnlock") private var biometryUnlock: Bool?
     @AppStorage("biometryType") private var biometryType: BiometryType?
