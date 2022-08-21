@@ -1,5 +1,5 @@
 //
-//  Bundle+VersionNumber.swift
+//  Bundle+Extensions.swift
 //  MultiFactor
 //
 //  Created by g.lofrumento on 24/07/22.
@@ -13,5 +13,8 @@ extension Bundle {
     }
     var buildVersionNumber: String? {
         return infoDictionary?["CFBundleVersion"] as? String
+    }
+    var displayName: String {
+        return object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "MultiFactor"
     }
 }

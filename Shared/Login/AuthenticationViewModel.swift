@@ -16,10 +16,12 @@ class AuthenticationViewModel: ObservableObject {
     }
     @Published private(set) var state = AuthenticationState.unknown {
         didSet {
-            error = nil
+            signInError = nil
+            signUpError = nil
         }
     }
-    @Published private(set) var error: String?
+    @Published private(set) var signInError: String?
+    @Published private(set) var signUpError: String?
 
     init() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -44,12 +46,12 @@ class AuthenticationViewModel: ObservableObject {
         case .username(let username, let password):
             if username.trimmingCharacters(in: .whitespaces).isEmpty {
                 withAnimation {
-                    error = "Provided username is empty"
+                    signInError = "Provided username is empty"
                 }
                 return .usernameEmpty
             } else if password.isEmpty {
                 withAnimation {
-                    error = "Provided password is empty"
+                    signInError = "Provided password is empty"
                 }
                 return .passwordEmpty
             }
@@ -62,7 +64,7 @@ class AuthenticationViewModel: ObservableObject {
             await MainActor.run {
                 withAnimation {
                     self.state = .signedOut
-                    self.error = error.localizedDescription
+                    self.signInError = error.localizedDescription
                 }
             }
             return error
@@ -72,7 +74,7 @@ class AuthenticationViewModel: ObservableObject {
     func signInMaster(password: String) async {
         guard !password.isEmpty else {
             withAnimation {
-                error = "Provided password is empty"
+                signInError = "Provided password is empty"
             }
             return
         }
@@ -94,7 +96,7 @@ class AuthenticationViewModel: ObservableObject {
         } catch {
             await MainActor.run {
                 withAnimation {
-                    self.error = error.localizedDescription
+                    self.signInError = error.localizedDescription
                 }
             }
         }

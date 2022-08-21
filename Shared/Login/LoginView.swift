@@ -16,42 +16,94 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isSigningIn = false
 
+    @State private var sheet: Sheet?
+
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
-        VStack(alignment: .center) {
-            Text("MultiFactor")
-                .font(.title)
-                .padding()
-
-            TextField("Username", text: $username)
-                .submitLabel(.next)
-                .focused($focusedField, equals: .username)
-                .textFieldStyle(MFLoginTextFieldStyle())
-                .onSubmit {
-                    focusedField = .password
-                }
-                .disableAutocorrection(true)
-            #if os(iOS)
-                .keyboardType(.emailAddress)
-                .textContentType(.emailAddress)
-                .textInputAutocapitalization(.never)
-            #endif
-
-            SecureField("Password", text: $password)
-                .textContentType(.password)
-                .submitLabel(.done)
-                .focused($focusedField, equals: .password)
-                .textFieldStyle(MFLoginTextFieldStyle())
-                .onSubmit(signIn)
-
-            if let error = authenticationViewModel.error {
-                Text(error)
-                    .foregroundColor(.red)
+        VStack(alignment: .trailing) {
+            HStack {
+                Spacer()
+                Text("Login")
+                    .mfFont(size: 30)
+                    .bold()
+                    .padding(.vertical)
+                Spacer()
             }
+
+            Group {
+                TextField("Username", text: $username)
+                    .submitLabel(.next)
+                    .focused($focusedField, equals: .username)
+                    .textFieldStyle(MFLoginTextFieldStyle())
+                    .onSubmit {
+                        focusedField = .password
+                    }
+                    .padding(.vertical)
+                    .disableAutocorrection(true)
+                #if os(iOS)
+                    .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
+                    .textInputAutocapitalization(.never)
+                #endif
+
+                PasswordTextField(text: $password)
+                    .submitLabel(.done)
+                    .focused($focusedField, equals: .password)
+                    .textFieldStyle(MFLoginTextFieldStyle())
+                    .disableAutocorrection(true)
+                #if os(iOS)
+                    .textContentType(.password)
+                    .textInputAutocapitalization(.never)
+                #endif
+
+                if let error = authenticationViewModel.signInError {
+                    Text(error)
+                        .foregroundColor(.red)
+                }
+
+                Button(action: {
+                    sheet = .forgotPassword
+                }, label: {
+                    Text("Forgot password?")
+                        .foregroundColor(.label)
+                        .padding(.vertical)
+                })
+            }
+
+            Button(action: signIn, label: {
+                Text("Login")
+                    .bold()
+                    .gradientBackground(.login)
+            })
+
+            HStack {
+                Spacer()
+                Text("or")
+                Spacer()
+            }
+            .padding()
+
+            Button(action: {
+                sheet = .signUp
+            }, label: {
+                Text("Sign Up")
+                    .bold()
+                    .gradientBackground(.signUp)
+            })
+
+            Spacer()
         }
         .padding()
         .disabled(isSigningIn)
+        .sheet(item: $sheet, content: { type in
+            switch type {
+            case .signUp:
+                SignUpView()
+            case .forgotPassword:
+                ForgotPasswordView()
+            }
+        })
     }
 
     private func signIn() {
@@ -59,18 +111,20 @@ struct LoginView: View {
         isSigningIn = true
         Task {
             if let error = await authenticationViewModel.signInCloud(method: .username(username, password)) {
-                switch error {
-                case .usernameEmpty: fallthrough
-                case .usernameNotFound: fallthrough
-                case .userDisabled: fallthrough
-                case .usernameInvalid:
-                    focusedField = .username
-                case .passwordEmpty: fallthrough
-                case .passwordInvalid: fallthrough
-                case .passwordIncorrect:
-                    focusedField = .password
-                case .unknown(_):
-                    focusedField = nil
+                await MainActor.run {
+                    switch error {
+                    case .usernameEmpty: fallthrough
+                    case .usernameNotFound: fallthrough
+                    case .userDisabled: fallthrough
+                    case .usernameInvalid:
+                        focusedField = .username
+                    case .passwordEmpty: fallthrough
+                    case .passwordInvalid: fallthrough
+                    case .passwordIncorrect:
+                        focusedField = .password
+                    case .unknown(_):
+                        focusedField = nil
+                    }
                 }
             }
             isSigningIn = false
@@ -79,6 +133,14 @@ struct LoginView: View {
 
     private enum FocusedField {
         case username, password
+    }
+
+    private enum Sheet: Identifiable {
+        case signUp, forgotPassword
+
+        var id: UUID {
+            UUID()
+        }
     }
 }
 
@@ -123,7 +185,7 @@ struct MasterLoginView: View {
                 ProgressView()
             }
 
-            if let error = authenticationViewModel.error {
+            if let error = authenticationViewModel.signInError {
                 Text(error)
                     .foregroundColor(.red)
             }
@@ -177,7 +239,7 @@ struct MasterLoginView: View {
     }
 }
 
-private struct MFLoginTextFieldStyle: TextFieldStyle {
+struct MFLoginTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding()
@@ -189,9 +251,37 @@ private struct MFLoginTextFieldStyle: TextFieldStyle {
     }
 }
 
+struct PasswordTextField: View {
+
+    @Binding var text: String
+    @State private var showPassword = false
+
+    var body: some View {
+        ZStack(alignment: .trailing) {
+            if showPassword {
+                TextField("Password", text: $text)
+            } else {
+                SecureField("Password", text: $text)
+            }
+
+            Button(action: {
+                showPassword.toggle()
+            }, label: {
+                Image(systemName: showPassword ? "eye.slash" : "eye")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 15)
+                    .foregroundColor(.label)
+                    .padding()
+            })
+        }
+    }
+}
+
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
             .environmentObject(AuthenticationViewModel())
+//            .preferredColorScheme(.dark)
     }
 }

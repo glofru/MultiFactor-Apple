@@ -22,17 +22,22 @@ struct AddOTPView: View {
 
     var body: some View {
         if showCamera {
+            #if os(iOS)
             QrScanView(onQrCodeDeted: { qr in
                 print("QR: \(qr.value)")
             }, onFailCamera: {
                 showCamera = false
             })
+            #elseif os(macOS)
+            Text("QR")
+            #endif
         } else {
             Text("No camera")
         }
     }
 }
 
+#if os(iOS)
 private struct QrScanView: View, QrScanViewControllerDelegate {
 
     let onQrCodeDeted: (QrCode) -> Void
@@ -286,6 +291,7 @@ extension View {
         self.modifier(MaskedBlur(qrCode: qrCode))
     }
 }
+#endif
 
 struct AddOTPView_Previews: PreviewProvider {
     static var previews: some View {

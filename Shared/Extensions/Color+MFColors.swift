@@ -14,5 +14,11 @@ extension Color {
     static let background = Color(nsColor: .controlBackgroundColor)
     #endif
 
+    #if os(iOS)
+    static let label = Color(uiColor: .label)
+    #elseif os(macOS)
+    static let label = Color(nsColor: .labelColor)
+    #endif
+
     static let element = Color("element")
 }

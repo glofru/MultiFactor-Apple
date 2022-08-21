@@ -28,8 +28,8 @@ struct HomeView: View {
                     }
             }
             #elseif os(macOS)
-            CodeView()
-            AccountView()
+            CodesView()
+//            AccountView()
             #endif
         }
         .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
