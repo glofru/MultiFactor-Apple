@@ -15,6 +15,10 @@ class MFCipher {
         MFCipher.key = SymmetricKey(data: Data(hex: MFCipher.hash(password)))
     }
 
+    static func setKeyFrom(hash: String) {
+        MFCipher.key = SymmetricKey(data: Data(hex: hash))
+    }
+
     static func setKeyFrom(string: String) {
         MFCipher.key = SymmetricKey(data: string.data(using: .utf8)!)
     }

@@ -68,12 +68,18 @@ class PersistenceController {
 
     func deleteAll() {
         // Clean CoreData
-        let fetchRequest = EncryptedOTP.fetchRequest()
-        fetchRequest.includesPropertyValues = false
+        let fetchRequests: [NSFetchRequest] = [
+            EncryptedOTP.fetchRequest(),
+            MFUserEntity.fetchRequest()
+        ]
 
-        if let items = try? context.fetch(fetchRequest) {
-            for item in items {
-                context.delete(item)
+        for fetchRequest in fetchRequests {
+            fetchRequest.includesPropertyValues = false
+
+            if let items = try? context.fetch(fetchRequest) {
+                for item in items {
+                    context.delete(item as! NSManagedObject)
+                }
             }
         }
 
@@ -121,6 +127,59 @@ extension PersistenceController {
             let user = try? context.fetch(request).first
 
             return MFUser(entity: user)
+        }
+    }
+
+    var masterPassword: String? {
+        set {
+            let request = MFUserEntity.fetchRequest()
+            request.fetchLimit = 1
+
+            if let item = try? context.fetch(request).first {
+                item.masterPassword = newValue
+            } else {
+                return
+            }
+
+            save()
+        }
+        get {
+            let request = MFUserEntity.fetchRequest()
+            request.fetchLimit = 1
+            guard let item = try? context.fetch(request).first else {
+                return nil
+            }
+
+            return item.masterPassword
+        }
+    }
+}
+
+//MARK: MFCloudKey
+extension PersistenceController {
+    var cloudKey: String? {
+        set {
+            let request = MFCloudKeyEntity.fetchRequest()
+            request.fetchLimit = 1
+
+            if let item = try? context.fetch(request).first {
+                if let newValue = newValue {
+                    item.key = newValue
+                } else {
+                    context.delete(item)
+                }
+
+                save()
+            }
+        }
+        get {
+            let request = MFCloudKeyEntity.fetchRequest()
+            request.fetchLimit = 1
+            guard let item = try? context.fetch(request).first else {
+                return nil
+            }
+
+            return item.key
         }
     }
 }

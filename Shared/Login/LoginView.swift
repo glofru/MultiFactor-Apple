@@ -202,9 +202,6 @@ struct MasterLoginView: View {
     }
 
     private func signIn() {
-        guard !password.isEmpty else {
-            return
-        }
         isSigningIn = true
         Task {
             await authenticationViewModel.signInMaster(password: password)
@@ -229,7 +226,7 @@ struct MasterLoginView: View {
                     password = "******"
                 }
                 Task {
-                    await authenticationViewModel.signInMaster(password: "master")
+                    await authenticationViewModel.signInMaster(password: "", biometric: true)
                     isSigningIn = false
                 }
             }

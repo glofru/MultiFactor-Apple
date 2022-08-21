@@ -71,8 +71,8 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func signInMaster(password: String) async {
-        guard !password.isEmpty else {
+    func signInMaster(password: String, biometric: Bool = false) async {
+        guard biometric || !password.isEmpty else {
             withAnimation {
                 signInError = "Provided password is empty"
             }
@@ -80,13 +80,31 @@ class AuthenticationViewModel: ObservableObject {
         }
 
         do {
-            let cloudKey = try await CloudProvider.shared.key
-            MFCipher.setKeyFrom(password: password)
-            guard let decryptedKey = MFCipher.decrypt(base64: cloudKey) else {
+            var key: String
+            if let cloudKey = try? await CloudProvider.shared.key {
+                key = cloudKey
+            } else if let cloudKey = PersistenceController.shared.cloudKey {
+                key = cloudKey
+            } else {
+                throw CloudError.keyNotFound
+            }
+
+            if biometric {
+                if let masterPassword = PersistenceController.shared.masterPassword {
+                    MFCipher.setKeyFrom(hash: masterPassword)
+                } else {
+                    throw CloudError.keyNotFound
+                }
+            } else {
+                MFCipher.setKeyFrom(password: password)
+            }
+
+            guard let decryptedKey = MFCipher.decrypt(base64: key) else {
                 MFCipher.reset()
                 throw CloudError.keyIncorrect
             }
             MFCipher.setKeyFrom(string: decryptedKey)
+            PersistenceController.shared.masterPassword = MFCipher.hash(password)
 
             await MainActor.run {
                 withAnimation {
