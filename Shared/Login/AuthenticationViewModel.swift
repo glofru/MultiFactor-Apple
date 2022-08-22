@@ -104,7 +104,10 @@ class AuthenticationViewModel: ObservableObject {
                 throw CloudError.keyIncorrect
             }
             MFCipher.setKeyFrom(string: decryptedKey)
-            PersistenceController.shared.masterPassword = MFCipher.hash(password)
+
+            if !biometric {
+                PersistenceController.shared.masterPassword = MFCipher.hash(password)
+            }
 
             await MainActor.run {
                 withAnimation {
