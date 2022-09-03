@@ -21,18 +21,31 @@ struct AddOTPView: View {
     }
 
     var body: some View {
-        if showCamera {
-            #if os(iOS)
-            QrScanView(onQrCodeDeted: { qr in
-                print("QR: \(qr.value)")
-            }, onFailCamera: {
-                showCamera = false
+        VStack {
+            if showCamera {
+                #if os(iOS)
+                QrScanView(onQrCodeDeted: { qr in
+                    print("QR: \(qr.value)")
+                }, onFailCamera: {
+                    showCamera = false
+                })
+                #elseif os(macOS)
+                Text("QR")
+                #endif
+            } else {
+                Spacer()
+                Text("No camera")
+                Spacer()
+            }
+
+            Button(action: {
+                
+            }, label: {
+                Label("Fill manually", systemImage: "rectangle.and.pencil.and.ellipsis")
+                    .gradientBackground(.login)
             })
-            #elseif os(macOS)
-            Text("QR")
-            #endif
-        } else {
-            Text("No camera")
+            .padding()
+            .background(.background)
         }
     }
 }
@@ -46,7 +59,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
     @State private var detectedQr: DetectedQrCode?
     @State private var animationSwitch = false
 
-    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
 
     private let pathRadius = 10.0
     private let pathColor = Color.yellow
@@ -56,11 +69,13 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
 
     var body: some View {
         QrScanViewControllerRepresentable(delegate: self)
+//            .maskedBlur(qrCode: $detectedQr)
             .overlay {
                 if let detectedQr = detectedQr {
                     let angle = Double(atan2(detectedQr.corners[3].y - detectedQr.corners[0].y, detectedQr.corners[3].x - detectedQr.corners[0].x))
                     let animationValue = animationSlide * sin(Double.pi/4 * (animationSwitch ? 1 : -1))
-                    let signSine = (sin(angle) + 0.5) * -2
+                    let cos2Angle = cos(angle*2)
+                    let cos2AngleAnimationValue = cos2Angle*animationValue
                     Group {
                         Path() { path in
                             let center = detectedQr.corners[0]
@@ -78,7 +93,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                             path.addLine(to: CGPoint(x: newPointB.x - sideLength * sin(angle), y: newPointB.y + sideLength * cos(angle)))
                         }
                         .stroke(pathColor, lineWidth: pathLineWidth)
-                        .offset(x: -animationValue, y: signSine * animationValue)
+                        .offset(x: -abs(cos2Angle)*animationValue, y: -cos2AngleAnimationValue)
 
                         Path() { path in
                             let center = detectedQr.corners[1]
@@ -96,7 +111,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                             path.addLine(to: CGPoint(x: newPointB.x + sideLength * cos(angle), y: newPointB.y + sideLength * sin(angle)))
                         }
                         .stroke(pathColor, lineWidth: pathLineWidth)
-                        .offset(x: -animationValue, y: animationValue)
+                        .offset(x: -cos2AngleAnimationValue, y: animationValue)
 
                         Path() { path in
                             let center = detectedQr.corners[2]
@@ -114,7 +129,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                             path.addLine(to: CGPoint(x: newPointB.x + sideLength * sin(angle), y: newPointB.y - sideLength * cos(angle)))
                         }
                         .stroke(pathColor, lineWidth: pathLineWidth)
-                        .offset(x: animationValue, y: animationValue)
+                        .offset(x: animationValue, y: cos2AngleAnimationValue)
 
                         Path() { path in
                             let center = detectedQr.corners[3]
@@ -132,7 +147,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                             path.addLine(to: CGPoint(x: newPointB.x - sideLength * sin(angle), y: newPointB.y + sideLength * cos(angle)))
                         }
                         .stroke(pathColor, lineWidth: pathLineWidth)
-                        .offset(x: animationValue, y: -animationValue)
+                        .offset(x: cos2AngleAnimationValue, y: -animationValue)
                     }
                     .animation(.linear(duration: 0.3), value: animationSwitch)
                     .onReceive(timer) { _ in
@@ -151,14 +166,13 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                     }
                 }
             }
-            .maskedBlur(qrCode: $detectedQr)
     }
 
     func didQrCodeDetect(_ code: DetectedQrCode?) {
         if let code = code {
             if detectedQr?.value != code.value {
                 onQrCodeDeted(QrCode(value: code.value))
-                withAnimation {
+                withAnimation(.easeIn(duration: 1)) {
                     detectedQr = code
                 }
             } else {
@@ -239,8 +253,7 @@ private class QrScanViewController: UIViewController, AVCaptureMetadataOutputObj
             let value = metadataObject.stringValue,
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObject) as? AVMetadataMachineReadableCodeObject {
 
-//            qrCodeFrameView!.frame = barCodeObject.bounds
-            delegate.didQrCodeDetect(DetectedQrCode(value: value, corners: barCodeObject.corners, bounds: barCodeObject.bounds))
+            delegate.didQrCodeDetect(DetectedQrCode(value: value, corners: barCodeObject.corners))
         } else {
             qrCodeFrameView?.frame = .zero
             delegate.didQrCodeDetect(nil)
@@ -255,7 +268,6 @@ private protocol QrScanViewControllerDelegate {
 private struct DetectedQrCode {
     let value: String
     let corners: [CGPoint]
-    let bounds: CGRect
 }
 
 private struct QrCode {
@@ -276,7 +288,8 @@ private struct MaskedBlur: ViewModifier {
                     .mask(
                         Path() { path in
                             path.addRect(UIScreen.main.bounds)
-                            path.addRect(CGRect(x: qrCode.bounds.minX - 16, y: qrCode.bounds.minY - 16, width: qrCode.bounds.width + 32, height: qrCode.bounds.height + 32))
+                            path.move(to: qrCode.corners[0])
+                            path.addLines([qrCode.corners[1], qrCode.corners[2], qrCode.corners[3], qrCode.corners[0]])
                         }
                             .fill(style: FillStyle(eoFill: true))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)

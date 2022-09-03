@@ -9,9 +9,9 @@ import SwiftUI
 
 extension Color {
     #if os(iOS)
-    static let background = Color(uiColor: .systemBackground)
+    static let systemBackground = Color(uiColor: .systemBackground)
     #elseif os(macOS)
-    static let background = Color(nsColor: .controlBackgroundColor)
+    static let systemBackground = Color(nsColor: .controlBackgroundColor)
     #endif
 
     #if os(iOS)

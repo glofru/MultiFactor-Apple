@@ -51,6 +51,7 @@ struct LoginView: View {
                     .submitLabel(.done)
                     .focused($focusedField, equals: .password)
                     .textFieldStyle(MFLoginTextFieldStyle())
+                    .onSubmit(signIn)
                     .disableAutocorrection(true)
                 #if os(iOS)
                     .textContentType(.password)
@@ -72,9 +73,14 @@ struct LoginView: View {
             }
 
             Button(action: signIn, label: {
-                Text("Login")
-                    .bold()
-                    .gradientBackground(.login)
+                if isSigningIn {
+                    ProgressView()
+                        .gradientBackground(.login)
+                } else {
+                    Text("Login")
+                        .bold()
+                        .gradientBackground(.login)
+                }
             })
 
             HStack {
@@ -127,7 +133,9 @@ struct LoginView: View {
                     }
                 }
             }
-            isSigningIn = false
+            await MainActor.run {
+                isSigningIn = false
+            }
         }
     }
 
@@ -158,6 +166,8 @@ struct MasterLoginView: View {
 
     var body: some View {
         VStack(alignment: .center) {
+            Spacer()
+
             Text("Master login")
                 .font(.title)
                 .padding()
@@ -183,12 +193,20 @@ struct MasterLoginView: View {
 
             if isSigningIn {
                 ProgressView()
-            }
-
-            if let error = authenticationViewModel.signInError {
+            } else if let error = authenticationViewModel.signInError {
                 Text(error)
                     .foregroundColor(.red)
             }
+
+            Spacer()
+
+            Button(role: .destructive, action: {
+                authenticationViewModel.signOut()
+            }, label: {
+                Text("Sign out")
+                    .bold()
+                    .gradientBackground(.login)
+            })
         }
         .padding()
         .disabled(isSigningIn)
