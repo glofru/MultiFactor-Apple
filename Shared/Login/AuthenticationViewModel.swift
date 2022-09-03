@@ -123,10 +123,6 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func background() {
-        state = .signedInCloud
-    }
-
     func signOut() {
         withAnimation {
             state = .signedOut
@@ -135,6 +131,31 @@ class AuthenticationViewModel: ObservableObject {
             TOTPViewModel.reset()
             PersistenceController.shared.deleteAll()
             CloudProvider.shared.signOut()
+        }
+    }
+
+    func sendResetPasswordLink(to email: String) async -> AuthenticationError? {
+        guard !email.isEmpty else {
+            return .usernameEmpty
+        }
+
+        switch await CloudProvider.shared.sendResetPasswordLink(to: email) {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
+    }
+
+    func onActive() {
+        MFClock.shared.start()
+    }
+
+    func onBackground() {
+        if state == .signedInCloud {
+            MFClock.shared.stop()
+            TOTPViewModel.reset()
+            state = .signedInCloud
         }
     }
 }

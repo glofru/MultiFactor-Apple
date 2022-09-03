@@ -48,8 +48,8 @@ struct GradientBackground: ViewModifier {
 
         fileprivate var gradient: LinearGradient {
             switch self {
-            case .login: return LinearGradient(gradient: Gradient(colors: [.init(red: 0, green: 0.34, blue: 1), .init(red: 0.3, green: 0.85, blue: 0.39)]), startPoint: .leading, endPoint: .trailing)
-            case .signUp: return LinearGradient(gradient: Gradient(colors: [.init(red: 0.93, green: 0.45, blue: 0.02), .init(red: 0.94, green: 0, blue: 0.86)]), startPoint: .leading, endPoint: .trailing)
+            case .login: return LinearGradient(gradient: Gradient(colors: [.init(red: 0, green: 0.34, blue: 1), .init(red: 0.11, green: 1, blue: 0.95)]), startPoint: .bottomLeading, endPoint: .topTrailing)
+            case .signUp: return LinearGradient(gradient: Gradient(colors: [.init(red: 0.93, green: 0.45, blue: 0.02), .init(red: 0.94, green: 0, blue: 0.86)]), startPoint: .bottomLeading, endPoint: .topTrailing)
             }
         }
     }

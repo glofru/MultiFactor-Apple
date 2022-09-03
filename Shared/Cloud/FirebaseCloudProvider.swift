@@ -33,7 +33,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
                 let result = try await Auth.auth().signIn(withEmail: username, password: password)
                 return .success(MFUser(firebaseUser: result.user)!)
             } catch let error as AuthErrorCode {
-                return handleAuthErrorCode(error)
+                return .failure(handleAuthErrorCode(error))
             } catch {
                 return .failure(.unknown(error.localizedDescription))
             }
@@ -43,6 +43,17 @@ final class FirebaseCloudProvider: MFCloudProvider {
     func signOut() {
         Firestore.firestore().clearPersistence()
         try? Auth.auth().signOut()
+    }
+
+    func sendResetPasswordLink(to email: String) async -> Result<Bool, AuthenticationError> {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return .success(true)
+        } catch let error as AuthErrorCode {
+            return .failure(handleAuthErrorCode(error))
+        } catch {
+            return .failure(.unknown(error.localizedDescription))
+        }
     }
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void) {
@@ -148,20 +159,22 @@ final class FirebaseCloudProvider: MFCloudProvider {
 }
 
 extension FirebaseCloudProvider {
-    fileprivate func handleAuthErrorCode(_ error: AuthErrorCode) -> Result<MFUser, AuthenticationError> {
+    fileprivate func handleAuthErrorCode(_ error: AuthErrorCode) -> AuthenticationError {
         let code = error.code
         if code == .invalidEmail {
-            return .failure(.usernameInvalid)
+            return .usernameInvalid
         } else if code == .userNotFound {
-            return .failure(.usernameNotFound)
+            return .usernameNotFound
         } else if code == .weakPassword {
-            return .failure(.passwordInvalid)
+            return .passwordInvalid
         } else if code == .wrongPassword {
-            return .failure(.passwordIncorrect)
+            return .passwordIncorrect
         } else if code == .userDisabled {
-            return .failure(.userDisabled)
+            return .userDisabled
+        } else if code == .invalidRecipientEmail || code == .invalidMessagePayload {
+            return .usernameInvalid
         } else {
-            return .failure(.unknown(error.localizedDescription))
+            return .unknown(error.localizedDescription)
         }
     }
 }

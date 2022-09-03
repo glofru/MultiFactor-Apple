@@ -12,10 +12,27 @@ struct ForgotPasswordView: View {
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @State private var username = ""
-    @State private var isRestoring = false
+    @State private var message: String?
+    @State private var status = Status.userInput
 
-    func restorePassword() {
-        
+    private func restorePassword() {
+        status = .waiting
+        Task {
+            if let error = await authenticationViewModel.sendResetPasswordLink(to: username) {
+                await MainActor.run {
+                    withAnimation {
+                        message = error.localizedDescription
+                        status = .userInput
+                    }
+                }
+            } else {
+                await MainActor.run {
+                    withAnimation {
+                        status = .completed
+                    }
+                }
+            }
+        }
     }
 
     var body: some View {
@@ -29,7 +46,7 @@ struct ForgotPasswordView: View {
                 Spacer()
             }
 
-            Text("Please enter your registered email ID. We’ll send a code to reset your password")
+            Text("Please enter your registered email ID. We’ll send a code to reset your password.")
 
             TextField("Username", text: $username)
                 .submitLabel(.next)
@@ -43,18 +60,90 @@ struct ForgotPasswordView: View {
                 .textInputAutocapitalization(.never)
             #endif
 
-            Button(action: restorePassword, label: {
-                Text("Send")
-                    .bold()
-                    .gradientBackground(.signUp)
-            })
-
-            if #unavailable(iOS 16) {
-                Spacer()
+            if let message = message {
+                Text(message)
+                    .foregroundColor(.red)
             }
+
+            if status != .completed {
+                Button(action: restorePassword, label: {
+                    if status == .waiting {
+                        ProgressView()
+                            .gradientBackground(.signUp)
+                    } else {
+                        Text("Send")
+                            .bold()
+                            .gradientBackground(.signUp)
+                    }
+                })
+            } else {
+                HStack {
+                    Spacer()
+                    AnimatedCheckmark()
+                    Spacer()
+                }
+            }
+
+//            if #unavailable(iOS 16) {
+//                Spacer()
+//            }
         }
         .padding()
-        .disabled(isRestoring)
+        .disabled(status != .userInput)
+    }
+
+    private enum Status {
+        case userInput, waiting, completed
+    }
+}
+
+private struct AnimatedCheckmark: View {
+    private let animationDuration: Double = 0.40
+
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var trimCircle: CGFloat = 0
+    @State private var trimCheckmark: CGFloat = 0
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .trim(from: 0.0, to: trimCircle)
+                .stroke(Color.green, lineWidth: 4)
+                .rotationEffect(.degrees(-90))
+
+            Checkmark()
+                .trim(from: 0.0, to: trimCheckmark)
+                .stroke(Color.green, lineWidth: 4)
+                .frame(width: 20, height: 20)
+        }
+        .frame(width: 40, height: 40)
+        .onAppear {
+            withAnimation(.linear(duration: animationDuration)) {
+                trimCircle = 1.0
+            }
+            withAnimation(
+                .linear(duration: animationDuration)
+                .delay(animationDuration)) {
+                trimCheckmark = 1.0
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration*2.2) {
+                dismiss()
+            }
+        }
+    }
+
+    private struct Checkmark: Shape {
+        func path(in rect: CGRect) -> Path {
+            let width = rect.size.width
+            let height = rect.size.height
+     
+            var path = Path()
+            path.move(to: .init(x: 0 * width, y: 0.5 * height))
+            path.addLine(to: .init(x: 0.4 * width, y: 1.0 * height))
+            path.addLine(to: .init(x: 1.0 * width, y: 0 * height))
+            return path
+        }
     }
 }
 

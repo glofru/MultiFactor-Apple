@@ -32,13 +32,11 @@ struct ContentView: View {
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .background:
-                MFClock.shared.stop()
-                TOTPViewModel.reset()
-                authenticationViewModel.background()
+                authenticationViewModel.onBackground()
             case .inactive:
                 return
             case .active:
-                MFClock.shared.start()
+                authenticationViewModel.onActive()
             @unknown default:
                 return
             }
