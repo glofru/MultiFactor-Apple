@@ -80,6 +80,10 @@
 		999B022128A6CC1900F97C69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021F28A6CC1900F97C69 /* AccountView.swift */; };
 		999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
 		999B022728A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
+		99B9194B28C508A8008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194A28C508A8008E7D6F /* SwiftProtobuf */; };
+		99B9194D28C508BE008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194C28C508BE008E7D6F /* SwiftProtobuf */; };
+		99B9195228C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
+		99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
 		99C10D6E28AE85790022324A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C10D6D28AE85790022324A /* Text.swift */; };
 		99C10D6F28AE85790022324A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C10D6D28AE85790022324A /* Text.swift */; };
 		99E875CF28AE7286006931F3 /* Playfair.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99E875CE28AE7286006931F3 /* Playfair.ttf */; };
@@ -147,6 +151,7 @@
 		999B021C28A6CBF700F97C69 /* CodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesView.swift; sourceTree = "<group>"; };
 		999B021F28A6CC1900F97C69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
+		99B9195128C50F99008E7D6F /* OTPMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPMigration.swift; sourceTree = "<group>"; };
 		99C10D6D28AE85790022324A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		99E875CE28AE7286006931F3 /* Playfair.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Playfair.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,6 +164,7 @@
 				37058729288A031200E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
 				3736B212288DA16500C7AEAF /* SwiftOTP in Frameworks */,
 				37058727288A030900E6048C /* FirebaseAuthCombine-Community in Frameworks */,
+				99B9194B28C508A8008E7D6F /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +175,7 @@
 				3705872B288A032000E6048C /* FirebaseAuthCombine-Community in Frameworks */,
 				373E7930289A72080067B226 /* SwiftOTP in Frameworks */,
 				3705872D288A032000E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
+				99B9194D28C508BE008E7D6F /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +224,7 @@
 				370A64ED2891FC1900D529E1 /* MFClock.swift */,
 				3737A68F2888CA0F007F8DFD /* OTPView.swift */,
 				3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */,
+				99B9195128C50F99008E7D6F /* OTPMigration.swift */,
 			);
 			path = OTP;
 			sourceTree = "<group>";
@@ -364,6 +372,7 @@
 				37058726288A030900E6048C /* FirebaseAuthCombine-Community */,
 				37058728288A031200E6048C /* FirebaseFirestoreCombine-Community */,
 				3736B211288DA16500C7AEAF /* SwiftOTP */,
+				99B9194A28C508A8008E7D6F /* SwiftProtobuf */,
 			);
 			productName = "MultiFactor (iOS)";
 			productReference = 37C0C1F628862CBF00553B73 /* MultiFactor.app */;
@@ -386,6 +395,7 @@
 				3705872A288A032000E6048C /* FirebaseAuthCombine-Community */,
 				3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */,
 				373E792F289A72080067B226 /* SwiftOTP */,
+				99B9194C28C508BE008E7D6F /* SwiftProtobuf */,
 			);
 			productName = "MultiFactor (macOS)";
 			productReference = 37C0C1FC28862CBF00553B73 /* MultiFactor.app */;
@@ -465,6 +475,7 @@
 			packageReferences = (
 				378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = 37C0C1F728862CBF00553B73 /* Products */;
 			projectDirPath = "";
@@ -549,6 +560,7 @@
 				992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
 				3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */,
+				99B9195228C50F99008E7D6F /* OTPMigration.swift in Sources */,
 				370A64EE2891FC1900D529E1 /* MFClock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,6 +579,7 @@
 				37058725288A023100E6048C /* AppDelegate.swift in Sources */,
 				37C0C21A28862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				37C0C21E28862CC000553B73 /* Persistence.swift in Sources */,
+				99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */,
 				37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
@@ -1011,6 +1024,14 @@
 				kind = branch;
 			};
 		};
+		99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1043,6 +1064,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
+		};
+		99B9194A28C508A8008E7D6F /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		99B9194C28C508BE008E7D6F /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
 		};
 /* End XCSwiftPackageProductDependency section */
 

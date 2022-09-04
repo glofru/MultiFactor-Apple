@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftOTP
 
 class HomeViewModel: ObservableObject {
 
@@ -17,18 +18,21 @@ class HomeViewModel: ObservableObject {
     }
 
     func addOTPFrom(url: String) async throws {
-        guard let decrypted = DecryptedOTP(from: url) else {
+        let decrypted = DecryptedOTP.decode(from: url)
+        guard !decrypted.isEmpty else {
             throw AddOTPError.urlInvalid
         }
 
-        guard let encrypted = MFCipher.encrypt(decrypted) else {
-            throw AddOTPError.encryptionFailed
-        }
+        for decrypt in decrypted {
+            guard let encrypted = MFCipher.encrypt(decrypt) else {
+                throw AddOTPError.encryptionFailed
+            }
 
-        do {
-            try await CloudProvider.shared.addOTP(encrypted)
-        } catch {
-            throw AddOTPError.cloudFailed(error.localizedDescription)
+            do {
+                try await CloudProvider.shared.addOTP(encrypted)
+            } catch {
+                throw AddOTPError.cloudFailed(error.localizedDescription)
+            }
         }
     }
 
@@ -50,6 +54,94 @@ class HomeViewModel: ObservableObject {
             case .cloudFailed(let string):
                 return "Cloud provider error: \(string)"
             }
+        }
+    }
+}
+
+private extension DecryptedOTP {
+    static func decode(from url: String) -> [DecryptedOTP] {
+        guard let components = URLComponents(string: url) else {
+            return []
+        }
+
+        if components.scheme == "otpauth" {
+            guard components.host == "totp",
+                  let queryItems = components.queryItems,
+                  let secret = queryItems.first(where: { $0.name == "secret" })?.value else {
+                return []
+            }
+
+            var issuer = ""
+            var algorithm = DecryptedOTP.Algorithm.standard
+            var digits = DecryptedOTP.Digits.standard
+            var period = DecryptedOTP.Period.standard
+            for item in queryItems {
+                switch item.name {
+                case "issuer": issuer = item.value ?? issuer
+                case "algorithm":
+                    if let newAlgorithm = DecryptedOTP.Algorithm(rawValue: item.value?.lowercased() ?? "") {
+                        algorithm = newAlgorithm
+                    } else {
+                        return []
+                    }
+                case "digits":
+                    if let newDigits = DecryptedOTP.Digits(rawValue: Int(item.value ?? "0") ?? 0) {
+                        digits = newDigits
+                    } else {
+                        return []
+                    }
+                case "period":
+                    if let newPeriod = DecryptedOTP.Period(rawValue: Int(item.value ?? "0") ?? 0) {
+                        period = newPeriod
+                    } else {
+                        return []
+                    }
+                default: continue
+                }
+            }
+
+            var labelPath = components.path
+            labelPath.removeFirst()
+
+            return [DecryptedOTP(id: UUID().uuidString, secret: secret, issuer: issuer, label: labelPath, algorithm: algorithm, digits: digits, period: period)]
+        } else if components.scheme == "otpauth-migration" {
+            guard let data = components.queryItems?.first(where: { $0.name == "data" })?.value,
+                  let decoded = Data(base64Encoded: data) else {
+                return []
+            }
+
+            if let payload = try? MigrationPayload(serializedData: decoded) {
+                var result = [DecryptedOTP]()
+                for otp in payload.otpParameters {
+                    if otp.type == .totp {
+                        result.append(DecryptedOTP(id: UUID().uuidString, secret: base32Encode(otp.secret), issuer: otp.issuer, label: otp.name, algorithm: otp.algorithm.mfAlgorithm, digits: otp.digits.mfDigits, period: .init(rawValue: Int(otp.counter)) ?? .standard))
+                    }
+                }
+                return result
+            }
+        }
+
+        return []
+    }
+}
+
+private extension MigrationPayload.Algorithm {
+    var mfAlgorithm: DecryptedOTP.Algorithm {
+        switch self {
+        case .sha1: return .sha1
+        case .sha256: return .sha256
+        case .sha512: return .sha512
+        default: return .standard
+        }
+    }
+}
+
+private extension MigrationPayload.DigitCount {
+    var mfDigits: DecryptedOTP.Digits {
+        switch self {
+        case .six: return .six
+        case .eight: return .eight
+        default: return .standard
         }
     }
 }

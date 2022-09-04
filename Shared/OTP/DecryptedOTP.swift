@@ -28,58 +28,6 @@ struct DecryptedOTP: Codable, Identifiable {
         self.period = period
     }
 
-    init?(from url: String) {
-        guard let components = URLComponents(string: url),
-              (components.scheme == "otpauth" || components.scheme == "otpauthmigration"),
-              components.host == "totp",
-              let queryItems = components.queryItems,
-              queryItems.contains(where: { $0.name == "secret" }) else {
-            return nil
-        }
-
-        var secret = ""
-        var issuer = ""
-        var algorithm = DecryptedOTP.Algorithm.standard
-        var digits = DecryptedOTP.Digits.standard
-        var period = DecryptedOTP.Period.standard
-        for item in queryItems {
-            switch item.name {
-            case "secret": secret = item.value!
-            case "issuer": issuer = item.value ?? issuer
-            case "algorithm":
-                if let newAlgorithm = DecryptedOTP.Algorithm(rawValue: item.value?.lowercased() ?? "") {
-                    algorithm = newAlgorithm
-                } else {
-                    return nil
-                }
-            case "digits":
-                if let newDigits = DecryptedOTP.Digits(rawValue: Int(item.value ?? "0") ?? 0) {
-                    digits = newDigits
-                } else {
-                    return nil
-                }
-            case "period":
-                if let newPeriod = DecryptedOTP.Period(rawValue: Int(item.value ?? "0") ?? 0) {
-                    period = newPeriod
-                } else {
-                    return nil
-                }
-            default: continue
-            }
-        }
-
-        self.id = UUID().uuidString
-        self.secret = secret
-        self.issuer = issuer
-        self.algorithm = algorithm
-        self.digits = digits
-        self.period = period
-
-        var labelPath = components.path
-        labelPath.removeFirst()
-        self.label = labelPath
-    }
-
     enum Algorithm: String, Codable {
         case sha1
         case sha256
