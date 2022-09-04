@@ -16,13 +16,13 @@ struct CodesView: View {
     ])
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 
-    @State private var showAddSheet = false
+    @State private var sheet: PresentedSheet?
 
     var body: some View {
         NavigationView {
             ScrollView {
                 Button(action: {
-                    showAddSheet = true
+                    sheet = .addQr
                 }, label: {
                     Label("Add", systemImage: "plus")
                 })
@@ -45,8 +45,23 @@ struct CodesView: View {
             .padding(.horizontal)
             .navigationTitle("MultiFactor")
         }
-        .sheet(isPresented: $showAddSheet) {
-            AddOTPView()
+        .sheet(item: $sheet) { type in
+            switch type {
+            case .addQr:
+                AddOTPView(onFillManually: {
+                    sheet = .addManual
+                })
+            case .addManual:
+                AddOTPManuallyView()
+            }
+        }
+    }
+
+    private enum PresentedSheet: Identifiable {
+        case addQr, addManual
+
+        var id: UUID {
+            UUID()
         }
     }
 }

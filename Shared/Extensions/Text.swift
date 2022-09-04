@@ -1,5 +1,5 @@
 //
-//  Text+GradientBackground.swift
+//  Text.swift
 //  MultiFactor
 //
 //  Created by Gianluca Lofrumento on 18/08/22.

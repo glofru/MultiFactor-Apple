@@ -16,7 +16,7 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isSigningIn = false
 
-    @State private var sheet: Sheet?
+    @State private var sheet: PresentedSheet?
 
     @FocusState private var focusedField: FocusedField?
 
@@ -35,7 +35,6 @@ struct LoginView: View {
                 TextField("Username", text: $username)
                     .submitLabel(.next)
                     .focused($focusedField, equals: .username)
-                    .textFieldStyle(MFLoginTextFieldStyle())
                     .onSubmit {
                         focusedField = .password
                     }
@@ -50,7 +49,6 @@ struct LoginView: View {
                 PasswordTextField(text: $password)
                     .submitLabel(.done)
                     .focused($focusedField, equals: .password)
-                    .textFieldStyle(MFLoginTextFieldStyle())
                     .onSubmit(signIn)
                     .disableAutocorrection(true)
                 #if os(iOS)
@@ -78,7 +76,6 @@ struct LoginView: View {
                         .gradientBackground(.login)
                 } else {
                     Text("Login")
-                        .bold()
                         .gradientBackground(.login)
                 }
             })
@@ -94,7 +91,6 @@ struct LoginView: View {
                 sheet = .signUp
             }, label: {
                 Text("Sign Up")
-                    .bold()
                     .gradientBackground(.signUp)
             })
 
@@ -143,7 +139,7 @@ struct LoginView: View {
         case username, password
     }
 
-    private enum Sheet: Identifiable {
+    private enum PresentedSheet: Identifiable {
         case signUp, forgotPassword
 
         var id: UUID {
@@ -176,7 +172,6 @@ struct MasterLoginView: View {
                 .textContentType(.password)
                 .submitLabel(.done)
                 .focused($focusPassword, equals: true)
-                .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(signIn)
 
             if biometryUnlock == true, let biometryType = biometryType {
@@ -204,7 +199,6 @@ struct MasterLoginView: View {
                 authenticationViewModel.signOut()
             }, label: {
                 Text("Sign out")
-                    .bold()
                     .gradientBackground(.login)
             })
         }
@@ -251,18 +245,6 @@ struct MasterLoginView: View {
         } else {
             isSigningIn = false
         }
-    }
-}
-
-struct MFLoginTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding()
-            .glassBackground(.element)
-            .cornerRadius(10)
-        #if os(macOS)
-            .textFieldStyle(.plain)
-        #endif
     }
 }
 

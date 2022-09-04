@@ -27,6 +27,7 @@ struct ContentView: View {
                 ProgressView()
             }
         }
+        .mfStyle()
         .environmentObject(authenticationViewModel)
         .environment(\.managedObjectContext, PersistenceController.shared.context)
         .onChange(of: scenePhase) { newPhase in

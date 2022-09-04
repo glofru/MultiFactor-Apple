@@ -1,5 +1,5 @@
 //
-//  SHA256Digest+Digest.swift
+//  SHA256Digest.swift
 //  MultiFactor
 //
 //  Created by g.lofrumento on 04/08/22.

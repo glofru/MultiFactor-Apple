@@ -1,5 +1,5 @@
 //
-//  Bundle+Extensions.swift
+//  Bundle.swift
 //  MultiFactor
 //
 //  Created by g.lofrumento on 24/07/22.

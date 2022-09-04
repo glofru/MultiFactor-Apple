@@ -10,28 +10,46 @@ import SwiftUI
 
 class HomeViewModel: ObservableObject {
 
-    @Published var error: String?
-
     init() {
         try? CloudProvider.shared.addOTPChangeListener { otps in
             PersistenceController.shared.save(cloudEncryptedOTPs: otps)
         }
     }
 
-    func addOTP() async {
-        let decrypted = DecryptedOTP(id: UUID().uuidString, secret: "I65VU7K5ZQL7WB4E", issuer: "Dropbox", label: "gianluca", algorithm: .sha256, digits: .six, period: .thirty)
-        if let encrypted = MFCipher.encrypt(decrypted) {
-            do {
-                try await CloudProvider.shared.addOTP(encrypted)
-            } catch {
-                self.error = error.localizedDescription
-            }
-        } else {
-            error = "Cannot encrypt"
+    func addOTPFrom(url: String) async throws {
+        guard let decrypted = DecryptedOTP(from: url) else {
+            throw AddOTPError.urlInvalid
+        }
+
+        guard let encrypted = MFCipher.encrypt(decrypted) else {
+            throw AddOTPError.encryptionFailed
+        }
+
+        do {
+            try await CloudProvider.shared.addOTP(encrypted)
+        } catch {
+            throw AddOTPError.cloudFailed(error.localizedDescription)
         }
     }
 
     func deleteOTP(_ otp: OTPIdentifier) async {
         try? await CloudProvider.shared.deleteOTP(otp)
+    }
+
+    enum AddOTPError: Error, LocalizedError {
+        case urlInvalid
+        case encryptionFailed
+        case cloudFailed(String)
+
+        var errorDescription: String? {
+            switch self {
+            case .urlInvalid:
+                return "URL invalid"
+            case .encryptionFailed:
+                return "Encryption failed, are you logged in?"
+            case .cloudFailed(let string):
+                return "Cloud provider error: \(string)"
+            }
+        }
     }
 }

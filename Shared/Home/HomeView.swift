@@ -32,7 +32,7 @@ struct HomeView: View {
 //            AccountView()
             #endif
         }
-        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
+//        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
     }
 }

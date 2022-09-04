@@ -50,7 +50,6 @@ struct ForgotPasswordView: View {
 
             TextField("Username", text: $username)
                 .submitLabel(.next)
-                .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(restorePassword)
                 .disableAutocorrection(true)
                 .padding(.vertical)
@@ -72,7 +71,6 @@ struct ForgotPasswordView: View {
                             .gradientBackground(.signUp)
                     } else {
                         Text("Send")
-                            .bold()
                             .gradientBackground(.signUp)
                     }
                 })

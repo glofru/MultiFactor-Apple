@@ -1,5 +1,5 @@
 //
-//  String+Subscript.swift
+//  String.swift
 //  MultiFactor
 //
 //  Created by g.lofrumento on 28/07/22.

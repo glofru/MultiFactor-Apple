@@ -10,43 +10,114 @@ import AVKit
 
 struct AddOTPView: View {
 
+    let onFillManually: () -> Void
+
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var homeViewModel: HomeViewModel
 
     @State private var showCamera = true
+    @State private var loading = false
+    @State private var error: String?
 
-    private func addOTP() {
+    private func addOTP(_ value: String) {
+        loading = true
         Task {
-            await homeViewModel.addOTP()
+            do {
+                try await homeViewModel.addOTPFrom(url: value)
+                dismiss()
+//                try await Task.sleep(nanoseconds: 3_000_000_000)
+//                throw HomeViewModel.AddOTPError.cloudFailed("SFAD")
+            } catch {
+                await MainActor.run {
+                    loading = false
+                    self.error = error.localizedDescription
+                }
+            }
         }
     }
 
     var body: some View {
         VStack {
-            if showCamera {
-                #if os(iOS)
-                QrScanView(onQrCodeDeted: { qr in
-                    print("QR: \(qr.value)")
-                }, onFailCamera: {
-                    showCamera = false
-                })
-                #elseif os(macOS)
-                Text("QR")
-                #endif
-            } else {
-                Spacer()
-                Text("No camera")
-                Spacer()
+            ZStack {
+                if showCamera {
+                    #if os(iOS)
+                    QrScanView(onQrCodeDeted: { qr in
+                        addOTP(qr.value)
+                    }, onFailCamera: {
+                        showCamera = false
+                    })
+                    #elseif os(macOS)
+                    Text("QR")
+                    #endif
+                } else {
+                    Spacer()
+                    Text("No camera")
+                    Spacer()
+                }
             }
+            .animation(.default, value: loading)
 
             Button(action: {
-                
+                dismiss()
+                onFillManually()
             }, label: {
                 Label("Fill manually", systemImage: "rectangle.and.pencil.and.ellipsis")
                     .gradientBackground(.login)
             })
             .padding()
-            .background(.background)
+            .background(Color.systemBackground.opacity(0.7))
         }
+    }
+}
+
+struct AddOTPManuallyView: View {
+
+    @State private var addType = AddType.manual
+    @State private var url = ""
+
+    var disabled: Bool {
+        switch addType {
+        case .manual:
+            return false
+        case .url:
+            return url.isEmpty
+        }
+    }
+
+    var body: some View {
+        VStack {
+            VStack {
+                Spacer()
+
+                if addType == .manual {
+                    Text("Manual")
+                } else if addType == .url {
+                    TextField("otpauth://", text: $url)
+                        .mfStyle()
+                }
+
+                Spacer()
+            }
+
+            Picker("", selection: $addType) {
+                Text("Manual").tag(AddType.manual)
+                Text("URL").tag(AddType.url)
+            }
+            .pickerStyle(.segmented)
+
+            Button(action: {
+                
+            }, label: {
+                Label("Add", systemImage: "plus.app")
+                    .gradientBackground(.login)
+            })
+            .disabled(disabled)
+        }
+        .padding()
+    }
+
+    private enum AddType {
+        case manual, url
     }
 }
 
@@ -57,6 +128,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
     let onFailCamera: () -> Void
 
     @State private var detectedQr: DetectedQrCode?
+    @State private var detectedQrTime: Date?
     @State private var animationSwitch = false
 
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
@@ -69,7 +141,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
 
     var body: some View {
         QrScanViewControllerRepresentable(delegate: self)
-//            .maskedBlur(qrCode: $detectedQr)
+            .maskedBlur(qrCode: $detectedQr)
             .overlay {
                 if let detectedQr = detectedQr {
                     let angle = Double(atan2(detectedQr.corners[3].y - detectedQr.corners[0].y, detectedQr.corners[3].x - detectedQr.corners[0].x))
@@ -171,15 +243,21 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
     func didQrCodeDetect(_ code: DetectedQrCode?) {
         if let code = code {
             if detectedQr?.value != code.value {
-                onQrCodeDeted(QrCode(value: code.value))
-                withAnimation(.easeIn(duration: 1)) {
+                detectedQrTime = .now
+                withAnimation(.easeIn(duration: 0.5)) {
                     detectedQr = code
                 }
             } else {
                 detectedQr = code
+                // If detection lasts more than 2 seconds...
+                if detectedQrTime?.timeIntervalSinceNow ?? 0 < -2 {
+                    detectedQrTime = nil
+                    onQrCodeDeted(QrCode(value: code.value))
+                }
             }
         } else {
             if detectedQr != nil {
+                detectedQrTime = nil
                 withAnimation {
                     detectedQr = nil
                 }
@@ -308,6 +386,6 @@ extension View {
 
 struct AddOTPView_Previews: PreviewProvider {
     static var previews: some View {
-        AddOTPView()
+        AddOTPView(onFillManually: {})
     }
 }

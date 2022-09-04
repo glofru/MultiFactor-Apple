@@ -72,6 +72,8 @@
 		992C961C28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961E28AFD41D004923D5 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */; };
 		992C961F28AFD41D004923D5 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */; };
+		998B70CC28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */; };
+		998B70CD28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */; };
 		999B021D28A6CBF700F97C69 /* CodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021C28A6CBF700F97C69 /* CodesView.swift */; };
 		999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021C28A6CBF700F97C69 /* CodesView.swift */; };
 		999B022028A6CC1900F97C69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021F28A6CC1900F97C69 /* AccountView.swift */; };
@@ -141,6 +143,7 @@
 		37E337DF28931C0000094293 /* DecryptedOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptedOTP.swift; sourceTree = "<group>"; };
 		992C961A28AFD3C1004923D5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		999B021C28A6CBF700F97C69 /* CodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesView.swift; sourceTree = "<group>"; };
 		999B021F28A6CC1900F97C69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
@@ -226,6 +229,7 @@
 				3736911C289BC6160093336E /* SHA256Digest.swift */,
 				370A64F32892171F00D529E1 /* String.swift */,
 				99C10D6D28AE85790022324A /* Text.swift */,
+				998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */,
 				373408A4288C98E700ABB9C4 /* View.swift */,
 			);
 			path = Extensions;
@@ -519,6 +523,7 @@
 				3736911D289BC6160093336E /* SHA256Digest.swift in Sources */,
 				37E337E028931C0000094293 /* DecryptedOTP.swift in Sources */,
 				370A64F42892171F00D529E1 /* String.swift in Sources */,
+				998B70CC28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */,
 				999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */,
 				37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
@@ -573,6 +578,7 @@
 				37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */,
 				371F3EBC28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
+				998B70CD28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */,
 				373408B0288CB44700ABB9C4 /* Bundle.swift in Sources */,
 				3705873B288A0E7B00E6048C /* LoginView.swift in Sources */,
 				37C0C21C28862CC000553B73 /* ContentView.swift in Sources */,

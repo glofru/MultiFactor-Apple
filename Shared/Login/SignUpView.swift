@@ -32,7 +32,6 @@ struct SignUpView: View {
             TextField("Username", text: $username)
                 .submitLabel(.next)
                 .focused($focusedField, equals: .username)
-                .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit {
                     focusedField = .password
                 }
@@ -47,7 +46,6 @@ struct SignUpView: View {
             SecureField("Password", text: $password)
                 .textContentType(.password)
                 .focused($focusedField, equals: .password)
-                .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit {
                     focusedField = .repeatPassword
                 }
@@ -56,7 +54,6 @@ struct SignUpView: View {
                 .textContentType(.password)
                 .submitLabel(.done)
                 .focused($focusedField, equals: .repeatPassword)
-                .textFieldStyle(MFLoginTextFieldStyle())
                 .onSubmit(signUp)
 
             if let error = authenticationViewModel.signUpError {
@@ -66,7 +63,6 @@ struct SignUpView: View {
 
             Button(action: signUp, label: {
                 Text("Sign Up")
-                    .bold()
                     .gradientBackground(.signUp)
             })
 
