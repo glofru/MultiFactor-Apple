@@ -70,7 +70,15 @@ struct CodesView: View {
     }
 
     private func moveOTPs(from source: IndexSet, to destination: Int) {
-        print(source)
+        guard let first = source.first, first != destination && first != destination + 1 else {
+            return
+        }
+        var copiedList = encryptedOTPs.map({ $0 })
+        copiedList.move(fromOffsets: source, toOffset: destination)
+        for i in 0..<copiedList.count {
+            copiedList[i].order = Int16(i)
+        }
+        homeViewModel.moveOTPs(copiedList)
     }
 
     private func deleteOTPs(at offset: IndexSet) {

@@ -27,18 +27,39 @@ class HomeViewModel: ObservableObject {
         }
 
         var lastIndex = otpNumber
-        for var decrypt in decrypted {
-            decrypt.order = Int16(lastIndex)
-            lastIndex += 1
+        var failError: Error?
+        await withThrowingTaskGroup(of: Void.self) { group in
+            for var decrypt in decrypted {
+                decrypt.order = Int16(lastIndex)
+                lastIndex += 1
 
-            guard let encrypted = MFCipher.encrypt(decrypt) else {
-                throw AddOTPError.encryptionFailed
+                guard let encrypted = MFCipher.encrypt(decrypt) else {
+                    failError = AddOTPError.encryptionFailed
+                    group.cancelAll()
+                    return
+                }
+
+                let _ = group.addTaskUnlessCancelled(priority: .userInitiated) {
+                    try await CloudProvider.shared.addOTP(encrypted)
+                }
             }
+        }
 
-            do {
-                try await CloudProvider.shared.addOTP(encrypted)
-            } catch {
-                throw AddOTPError.cloudFailed(error.localizedDescription)
+        if let failError = failError {
+            throw failError
+        }
+    }
+
+    func moveOTPs(_ otps: [EncryptedOTP]) {
+        Task(priority: .userInitiated) {
+            await withTaskGroup(of: Void.self) { group in
+                for otp in otps {
+                    group.addTask(priority: .userInitiated) {
+                        try? await CloudProvider.shared.updateOTP(id: otp.id!, data: [
+                            DecryptedOTP.CodingKeys.order.rawValue: otp.order
+                        ])
+                    }
+                }
             }
         }
     }

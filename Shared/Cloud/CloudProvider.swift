@@ -22,6 +22,7 @@ protocol MFCloudProvider {
 
     //MARK: OTP
     func addOTP(_ otp: CloudEncryptedOTP) async throws
+    func updateOTP(id: OTPIdentifier, data: [AnyHashable: Any]) async throws
     func deleteOTP(_ otp: OTPIdentifier) async throws
     func addOTPChangeListener(_ listener: @escaping ([CloudEncryptedOTP]) -> Void) throws
 

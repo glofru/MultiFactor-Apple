@@ -84,7 +84,24 @@ final class FirebaseCloudProvider: MFCloudProvider {
             throw CloudError.otpFail(error.localizedDescription)
         }
     }
-    
+
+    func updateOTP(id: OTPIdentifier, data: [AnyHashable: Any]) async throws {
+        guard let user = firebaseUser else {
+            throw CloudError.userNotLogged
+        }
+
+        do {
+            try await Firestore.firestore()
+                .collection("otp")
+                .document(user.uid)
+                .collection("list")
+                .document(id)
+                .updateData(data)
+        } catch {
+            throw CloudError.otpFail(error.localizedDescription)
+        }
+    }
+
     func deleteOTP(_ id: OTPIdentifier) async throws {
         guard let user = firebaseUser else {
             throw CloudError.userNotLogged

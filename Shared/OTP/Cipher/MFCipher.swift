@@ -28,14 +28,16 @@ class MFCipher {
     }
 
     static func encrypt(_ decryptedOTP: DecryptedOTP) -> CloudEncryptedOTP? {
-        guard let secret = encrypt(decryptedOTP.secret) else {
+        guard let secret = encrypt(decryptedOTP.secret),
+              let issuer = encrypt(decryptedOTP.issuer),
+              let label = encrypt(decryptedOTP.label) else {
             return nil
         }
         return CloudEncryptedOTP(
             id: decryptedOTP.id,
             secret: secret,
-            issuer: encrypt(decryptedOTP.issuer) ?? "",
-            label: encrypt(decryptedOTP.label) ?? "",
+            issuer: issuer,
+            label: label,
             algorithm: decryptedOTP.algorithm,
             digits: decryptedOTP.digits,
             period: decryptedOTP.period,
