@@ -50,15 +50,13 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    func moveOTPs(_ otps: [EncryptedOTP]) {
-        Task(priority: .userInitiated) {
-            await withTaskGroup(of: Void.self) { group in
-                for otp in otps {
-                    group.addTask(priority: .userInitiated) {
-                        try? await CloudProvider.shared.updateOTP(id: otp.id!, data: [
-                            DecryptedOTP.CodingKeys.order.rawValue: otp.order
-                        ])
-                    }
+    func moveOTPs(_ otps: [EncryptedOTP]) async{
+        await withTaskGroup(of: Void.self) { group in
+            for otp in otps {
+                group.addTask(priority: .userInitiated) {
+                    try? await CloudProvider.shared.updateOTP(id: otp.id!, data: [
+                        DecryptedOTP.CodingKeys.order.rawValue: otp.order
+                    ])
                 }
             }
         }

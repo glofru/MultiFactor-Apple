@@ -70,7 +70,7 @@ struct CodesView: View {
     }
 
     private func moveOTPs(from source: IndexSet, to destination: Int) {
-        guard let first = source.first, first != destination && first != destination + 1 else {
+        guard let first = source.first, first != destination else {
             return
         }
         var copiedList = encryptedOTPs.map({ $0 })
@@ -78,7 +78,9 @@ struct CodesView: View {
         for i in 0..<copiedList.count {
             copiedList[i].order = Int16(i)
         }
-        homeViewModel.moveOTPs(copiedList)
+        Task(priority: .userInitiated) {
+            await homeViewModel.moveOTPs(copiedList)
+        }
     }
 
     private func deleteOTPs(at offset: IndexSet) {
@@ -86,7 +88,7 @@ struct CodesView: View {
         offset.forEach { i in
             ids.append(encryptedOTPs[i].id!)
         }
-        Task {
+        Task(priority: .userInitiated) {
             await homeViewModel.deleteOTPs(ids)
         }
     }
