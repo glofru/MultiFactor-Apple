@@ -94,6 +94,12 @@ struct AddOTPManuallyView: View {
                 } else if addType == .url {
                     TextField("otpauth://", text: $url)
                         .mfStyle()
+                        .disableAutocorrection(true)
+                    #if os(iOS)
+                        .keyboardType(.URL)
+                        .textContentType(.URL)
+                        .textInputAutocapitalization(.never)
+                    #endif
                 }
 
                 Spacer()

@@ -11,8 +11,11 @@ import SwiftOTP
 
 class HomeViewModel: ObservableObject {
 
+    private var otpNumber = 0
+
     init() {
-        try? CloudProvider.shared.addOTPChangeListener { otps in
+        try? CloudProvider.shared.addOTPChangeListener { [weak self] otps in
+            self?.otpNumber = otps.count
             PersistenceController.shared.save(cloudEncryptedOTPs: otps)
         }
     }
@@ -23,7 +26,11 @@ class HomeViewModel: ObservableObject {
             throw AddOTPError.urlInvalid
         }
 
-        for decrypt in decrypted {
+        var lastIndex = otpNumber
+        for var decrypt in decrypted {
+            decrypt.order = Int16(lastIndex)
+            lastIndex += 1
+
             guard let encrypted = MFCipher.encrypt(decrypt) else {
                 throw AddOTPError.encryptionFailed
             }
@@ -38,6 +45,12 @@ class HomeViewModel: ObservableObject {
 
     func deleteOTP(_ otp: OTPIdentifier) async {
         try? await CloudProvider.shared.deleteOTP(otp)
+    }
+
+    func deleteOTPs(_ otps: [OTPIdentifier]) async {
+        for otp in otps {
+            await deleteOTP(otp)
+        }
     }
 
     enum AddOTPError: Error, LocalizedError {
@@ -64,7 +77,8 @@ private extension DecryptedOTP {
             return []
         }
 
-        if components.scheme == "otpauth" {
+        switch components.scheme {
+        case "otpauth":
             guard components.host == "totp",
                   let queryItems = components.queryItems,
                   let secret = queryItems.first(where: { $0.name == "secret" })?.value else {
@@ -101,10 +115,10 @@ private extension DecryptedOTP {
             }
 
             var labelPath = components.path
-            labelPath.removeFirst()
+            labelPath.removeFirst() // remove leading slash
 
             return [DecryptedOTP(id: UUID().uuidString, secret: secret, issuer: issuer, label: labelPath, algorithm: algorithm, digits: digits, period: period)]
-        } else if components.scheme == "otpauth-migration" {
+        case "otpauth-migration":
             guard let data = components.queryItems?.first(where: { $0.name == "data" })?.value,
                   let decoded = Data(base64Encoded: data) else {
                 return []
@@ -119,9 +133,10 @@ private extension DecryptedOTP {
                 }
                 return result
             }
-        }
 
-        return []
+            fallthrough
+        default: return []
+        }
     }
 }
 

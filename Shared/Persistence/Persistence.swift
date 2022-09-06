@@ -213,6 +213,7 @@ extension EncryptedOTP {
         self.algorithm = cloudEncryptedOTP.algorithm.rawValue
         self.digits = Int16(cloudEncryptedOTP.digits.rawValue)
         self.period = Int16(cloudEncryptedOTP.period.rawValue)
+        self.order = cloudEncryptedOTP.order
     }
 
     var isValid: Bool {

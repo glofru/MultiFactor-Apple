@@ -38,7 +38,8 @@ class MFCipher {
             label: encrypt(decryptedOTP.label) ?? "",
             algorithm: decryptedOTP.algorithm,
             digits: decryptedOTP.digits,
-            period: decryptedOTP.period
+            period: decryptedOTP.period,
+            order: decryptedOTP.order
         )
     }
 
@@ -53,7 +54,8 @@ class MFCipher {
             label: decrypt(base64: encryptedOTP.label ?? "") ?? "",
             algorithm: .init(rawValue: encryptedOTP.algorithm!) ?? .sha256,
             digits: .init(rawValue: Int(encryptedOTP.digits)) ?? .six,
-            period: .init(rawValue: Int(encryptedOTP.period)) ?? .thirty
+            period: .init(rawValue: Int(encryptedOTP.period)) ?? .thirty,
+            order: encryptedOTP.order
         )
     }
 

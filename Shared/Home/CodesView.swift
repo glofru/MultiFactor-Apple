@@ -12,6 +12,7 @@ struct CodesView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
 
     @FetchRequest(sortDescriptors: [
+        SortDescriptor(\EncryptedOTP.order),
         SortDescriptor(\EncryptedOTP.label)
     ])
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
@@ -20,30 +21,41 @@ struct CodesView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                Button(action: {
-                    sheet = .addQr
-                }, label: {
-                    Label("Add", systemImage: "plus")
-                })
-
+            Group {
                 if encryptedOTPs.isEmpty {
                     Text("No otps")
                 } else {
-                    LazyVStack {
+                    List {
                         ForEach(encryptedOTPs, id: \.id) { otp in
-                            if otp.isValid {
-                                OTPView(encryptedOTP: otp)
-                                    .padding(.vertical, 10)
-                            } else {
-                                EmptyView()
+                            Group {
+                                if otp.isValid {
+                                    OTPView(encryptedOTP: otp)
+                                        .padding(.vertical, 10)
+                                } else {
+                                    EmptyView()
+                                }
                             }
+                            .listRowSeparator(.hidden)
                         }
+                        .onMove(perform: moveOTPs)
+                        .onDelete(perform: deleteOTPs)
                     }
+                    .listStyle(.plain)
                 }
             }
-            .padding(.horizontal)
             .navigationTitle("MultiFactor")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        sheet = .addQr
+                    }, label: {
+                        Label("Add", systemImage: "plus")
+                    })
+                }
+            }
         }
         .sheet(item: $sheet) { type in
             switch type {
@@ -54,6 +66,20 @@ struct CodesView: View {
             case .addManual:
                 AddOTPManuallyView()
             }
+        }
+    }
+
+    private func moveOTPs(from source: IndexSet, to destination: Int) {
+        print(source)
+    }
+
+    private func deleteOTPs(at offset: IndexSet) {
+        var ids = [OTPIdentifier]()
+        offset.forEach { i in
+            ids.append(encryptedOTPs[i].id!)
+        }
+        Task {
+            await homeViewModel.deleteOTPs(ids)
         }
     }
 

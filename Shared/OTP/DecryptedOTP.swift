@@ -17,8 +17,9 @@ struct DecryptedOTP: Codable, Identifiable {
     let algorithm: Algorithm
     let digits: Digits
     let period: Period
+    var order: Int16
 
-    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty) {
+    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty, order: Int16 = .max) {
         self.id = id
         self.secret = secret
         self.issuer = issuer
@@ -26,6 +27,7 @@ struct DecryptedOTP: Codable, Identifiable {
         self.algorithm = algorithm
         self.digits = digits
         self.period = period
+        self.order = order
     }
 
     enum Algorithm: String, Codable {

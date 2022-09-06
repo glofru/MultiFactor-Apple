@@ -13,8 +13,9 @@ struct CloudEncryptedOTP: Codable, Identifiable {
     let algorithm: DecryptedOTP.Algorithm
     let digits: DecryptedOTP.Digits
     let period: DecryptedOTP.Period
+    let order: Int16
 
-    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: DecryptedOTP.Algorithm = .sha256, digits: DecryptedOTP.Digits = .six, period: DecryptedOTP.Period = .thirty) {
+    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: DecryptedOTP.Algorithm = .sha256, digits: DecryptedOTP.Digits = .six, period: DecryptedOTP.Period = .thirty, order: Int16) {
         self.id = id
         self.secret = secret
         self.issuer = issuer
@@ -22,5 +23,6 @@ struct CloudEncryptedOTP: Codable, Identifiable {
         self.algorithm = algorithm
         self.digits = digits
         self.period = period
+        self.order = order
     }
 }

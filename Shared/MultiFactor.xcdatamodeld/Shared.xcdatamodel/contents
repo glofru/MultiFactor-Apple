@@ -6,6 +6,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="issuer" optional="YES" attributeType="String"/>
         <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="period" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="secret" attributeType="String"/>
     </entity>
@@ -18,8 +19,8 @@
         <attribute name="username" attributeType="String"/>
     </entity>
     <elements>
-        <element name="EncryptedOTP" positionX="-63" positionY="0" width="128" height="134"/>
-        <element name="MFUserEntity" positionX="-63" positionY="-9" width="128" height="74"/>
+        <element name="EncryptedOTP" positionX="-63" positionY="0" width="128" height="149"/>
         <element name="MFCloudKeyEntity" positionX="-63" positionY="45" width="128" height="44"/>
+        <element name="MFUserEntity" positionX="-63" positionY="-9" width="128" height="74"/>
     </elements>
 </model>
