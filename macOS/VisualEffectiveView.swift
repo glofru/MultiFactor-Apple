@@ -12,5 +12,4 @@ struct VisualEffectView: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: NSView, context: Context) { }
-
 }

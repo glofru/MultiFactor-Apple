@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>ATSApplicationFontsPath</key>
-	<string>Fonts/Playfair.ttf</string>
+	<string>Playfair.ttf</string>
 </dict>
 </plist>

@@ -10,8 +10,6 @@ import SwiftUI
 struct OTPView: View {
     static private let cornerRadius = 12.0
 
-    @Namespace private var namespace
-
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject private var totpViewModel: TOTPViewModel
 
@@ -31,7 +29,7 @@ struct OTPView: View {
                         .frame(width: 40, height: 40)
                         .background(knownProvider.color)
                         .cornerRadius(OTPView.cornerRadius)
-                        .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
+//                        .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
                         .privacySensitive()
                 } else {
                     Text(String(totpViewModel.issuer?.first ?? totpViewModel.label?.first ?? " "))
@@ -39,7 +37,7 @@ struct OTPView: View {
                         .frame(width: 40, height: 40)
                         .background(.white) //TODO: random
                         .cornerRadius(OTPView.cornerRadius)
-                        .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
+//                        .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
                         .privacySensitive()
                 }
 
@@ -55,11 +53,10 @@ struct OTPView: View {
                 Spacer()
 
                 Text(totpViewModel.code)
-                    .font(.custom("American Typewriter", size: 20))
-                    .bold()
-//                    .frame(width: 30)
+                    .font(.custom("Poppins", size: 20).monospacedDigit())
+//                    .bold()
 //                    .glassBackground(.background)
-                    .cornerRadius(8)
+//                    .cornerRadius(8)
                     .onReceive(MFClock.shared.$time) { time in
                         totpViewModel.generateCode(for: time)
                     }
@@ -71,16 +68,15 @@ struct OTPView: View {
                 LoadingSpinner(period: totpViewModel.period)
                     .frame(width: 25)
             }
-            .padding(10)
-            .glassBackground(.element, intensity: .strong)
+            .padding(8)
+            .glassBackground(.element, intensity: .weak)
             .frame(maxWidth: 400)
-            .cornerRadius(OTPView.cornerRadius)
+            .cornerRadius(OTPView.cornerRadius*1.5)
             #if os(iOS)
             .foregroundColor(Color(uiColor: .label))
             #endif
         })
         .frame(height: 40)
-        .matchedGeometryEffect(id: totpViewModel.id, in: namespace)
         .contextMenu {
             Button(action: {
                 print("Copy")
@@ -112,6 +108,8 @@ struct LoadingSpinner: View {
 
     @ObservedObject private var clock = MFClock.shared
 
+    private let lineWidth = 3
+
     init(period: DecryptedOTP.Period) {
         self.period = Double(period.rawValue)
     }
@@ -119,11 +117,11 @@ struct LoadingSpinner: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .foregroundColor(Color.gray.opacity(0.1))
             Circle()
                 .trim(from: 0, to: clock.loaded)
-                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .rotation(.degrees(-90))
                 .foregroundColor(clock.loaded > 0.3 ? Color.green : clock.loaded > 0.1 ? Color.yellow : Color.red)
                 .animation(.linear(duration: 1), value: clock.loaded)

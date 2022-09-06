@@ -68,6 +68,10 @@
 		37C0C2312886352800553B73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C0C22F2886352800553B73 /* GoogleService-Info.plist */; };
 		37E337E028931C0000094293 /* DecryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E337DF28931C0000094293 /* DecryptedOTP.swift */; };
 		37E337E128931C0000094293 /* DecryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E337DF28931C0000094293 /* DecryptedOTP.swift */; };
+		990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
+		990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
+		990F0ACE28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
+		990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
 		992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961C28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961E28AFD41D004923D5 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */; };
@@ -145,6 +149,8 @@
 		37C0C21528862CC000553B73 /* TestsMacOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsMacOSLaunchTests.swift; sourceTree = "<group>"; };
 		37C0C22F2886352800553B73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37E337DF28931C0000094293 /* DecryptedOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptedOTP.swift; sourceTree = "<group>"; };
+		990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		990F0ACD28C7934F00512DC5 /* NSTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTableView.swift; sourceTree = "<group>"; };
 		992C961A28AFD3C1004923D5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
@@ -301,6 +307,7 @@
 				37C0C1EF28862CBD00553B73 /* ContentView.swift */,
 				37C0C1F128862CBF00553B73 /* Assets.xcassets */,
 				99E875CE28AE7286006931F3 /* Playfair.ttf */,
+				990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */,
 				37C0C1EC28862CBD00553B73 /* MultiFactor.xcdatamodeld */,
 				37C0C22F2886352800553B73 /* GoogleService-Info.plist */,
 			);
@@ -322,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */,
+				990F0ACD28C7934F00512DC5 /* NSTableView.swift */,
 				37C0C1FE28862CBF00553B73 /* macOS.entitlements */,
 			);
 			path = macOS;
@@ -495,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37C0C21F28862CC000553B73 /* Assets.xcassets in Resources */,
+				990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
 				99E875CF28AE7286006931F3 /* Playfair.ttf in Resources */,
 				37C0C2302886352800553B73 /* GoogleService-Info.plist in Resources */,
 			);
@@ -505,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37C0C22028862CC000553B73 /* Assets.xcassets in Resources */,
+				990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
 				99E875D028AE7286006931F3 /* Playfair.ttf in Resources */,
 				37C0C2312886352800553B73 /* GoogleService-Info.plist in Resources */,
 			);
@@ -547,6 +557,7 @@
 				377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */,
 				373408A8288C9FDE00ABB9C4 /* Color.swift in Sources */,
 				999B021D28A6CBF700F97C69 /* CodesView.swift in Sources */,
+				990F0ACE28C7934F00512DC5 /* NSTableView.swift in Sources */,
 				371F3EBB28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
 				37058733288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				37058724288A023100E6048C /* AppDelegate.swift in Sources */,
@@ -584,6 +595,7 @@
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */,
+				990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */,
 				99C10D6F28AE85790022324A /* Text.swift in Sources */,
 				373544E6289C45890052115A /* BiometryType.swift in Sources */,
 				3736B218288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,

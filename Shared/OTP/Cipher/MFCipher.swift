@@ -28,11 +28,11 @@ class MFCipher {
     }
 
     static func encrypt(_ decryptedOTP: DecryptedOTP) -> CloudEncryptedOTP? {
-        guard let secret = encrypt(decryptedOTP.secret),
-              let issuer = encrypt(decryptedOTP.issuer),
-              let label = encrypt(decryptedOTP.label) else {
+        guard let secret = encrypt(decryptedOTP.secret) else {
             return nil
         }
+        let issuer = encrypt(decryptedOTP.issuer) ?? ""
+        let label = encrypt(decryptedOTP.label) ?? ""
         return CloudEncryptedOTP(
             id: decryptedOTP.id,
             secret: secret,
