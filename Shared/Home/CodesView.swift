@@ -8,16 +8,28 @@
 import SwiftUI
 
 struct CodesView: View {
+
+    @EnvironmentObject var homeViewModel: HomeViewModel
+
     var body: some View {
-        #if os(iOS)
-        NavigationView {
-            CodesViewContent()
+        ZStack {
+            #if os(iOS)
+            NavigationView {
+                CodesViewContent()
+            }
+            #elseif os(macOS)
+            VStack(alignment: .center) {
+                CodesViewContent()
+            }
+            #endif
+
+            Text("Copied code \(Image(systemName: "checkmark.circle.fill"))")
+                .padding()
+                .background(.ultraThinMaterial)
+                .cornerRadius(10)
+                .opacity(homeViewModel.showCopy ? 1 : 0)
+                .animation(.easeInOut, value: homeViewModel.showCopy)
         }
-        #elseif os(macOS)
-        VStack(alignment: .center) {
-            CodesViewContent()
-        }
-        #endif
     }
 }
     

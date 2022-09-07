@@ -86,40 +86,46 @@ struct AddOTPManuallyView: View {
 
     var body: some View {
         VStack {
-            VStack {
-                Spacer()
+            Spacer()
 
+            Form {
                 if addType == .manual {
                     Text("Manual")
                 } else if addType == .url {
-                    TextField("otpauth://", text: $url)
-                        .mfStyle()
-                        .disableAutocorrection(true)
-                    #if os(iOS)
-                        .keyboardType(.URL)
-                        .textContentType(.URL)
-                        .textInputAutocapitalization(.never)
-                    #endif
+                    Section("URL") {
+                        TextField("otpauth://", text: $url)
+                            .disableAutocorrection(true)
+                            .textFieldStyle(.automatic)
+                        #if os(iOS)
+                            .keyboardType(.URL)
+                            .textContentType(.URL)
+                            .textInputAutocapitalization(.never)
+                        #endif
+                    }
                 }
-
-                Spacer()
             }
+            .frame(height: 150)
+            .background(.red)
 
-            Picker("", selection: $addType) {
-                Text("Manual").tag(AddType.manual)
-                Text("URL").tag(AddType.url)
+            Spacer()
+
+            Group {
+                Picker("", selection: $addType) {
+                    Text("Manual").tag(AddType.manual)
+                    Text("URL").tag(AddType.url)
+                }
+                .pickerStyle(.segmented)
+
+                Button(action: {
+                    
+                }, label: {
+                    Label("Add", systemImage: "plus.app")
+                        .gradientBackground(.login)
+                })
+                .disabled(disabled)
             }
-            .pickerStyle(.segmented)
-
-            Button(action: {
-                
-            }, label: {
-                Label("Add", systemImage: "plus.app")
-                    .gradientBackground(.login)
-            })
-            .disabled(disabled)
+            .padding()
         }
-        .padding()
     }
 
     private enum AddType {

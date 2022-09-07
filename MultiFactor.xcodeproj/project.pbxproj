@@ -70,7 +70,6 @@
 		37E337E128931C0000094293 /* DecryptedOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E337DF28931C0000094293 /* DecryptedOTP.swift */; };
 		990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
 		990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
-		990F0ACE28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
 		990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
 		992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961C28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
@@ -557,7 +556,6 @@
 				377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */,
 				373408A8288C9FDE00ABB9C4 /* Color.swift in Sources */,
 				999B021D28A6CBF700F97C69 /* CodesView.swift in Sources */,
-				990F0ACE28C7934F00512DC5 /* NSTableView.swift in Sources */,
 				371F3EBB28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
 				37058733288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
 				37058724288A023100E6048C /* AppDelegate.swift in Sources */,

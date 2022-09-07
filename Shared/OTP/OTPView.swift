@@ -18,9 +18,7 @@ struct OTPView: View {
     }
 
     var body: some View {
-        Button(action: {
-
-        }, label: {
+        Button(action: copyCode, label: {
             HStack {
                 if let knownProvider = KnowProviders(rawValue: (totpViewModel.issuer ?? "").lowercased()) {
                     Image(knownProvider.rawValue)
@@ -78,9 +76,7 @@ struct OTPView: View {
         })
         .frame(height: 40)
         .contextMenu {
-            Button(action: {
-                print("Copy")
-            }, label: {
+            Button(action: copyCode, label: {
                 Label("Copy", systemImage: "doc.on.doc")
             })
 
@@ -99,6 +95,10 @@ struct OTPView: View {
                 Label("Delete", systemImage: "trash")
             })
         }
+    }
+
+    private func copyCode() {
+        homeViewModel.copyCode(totpViewModel.code)
     }
 }
 

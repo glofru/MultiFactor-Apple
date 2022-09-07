@@ -13,6 +13,8 @@ class HomeViewModel: ObservableObject {
 
     private var otpNumber = 0
 
+    @Published var showCopy = false
+
     init() {
         try? CloudProvider.shared.addOTPChangeListener { [weak self] otps in
             self?.otpNumber = otps.count
@@ -69,6 +71,16 @@ class HomeViewModel: ObservableObject {
     func deleteOTPs(_ otps: [OTPIdentifier]) async {
         for otp in otps {
             await deleteOTP(otp)
+        }
+    }
+
+    func copyCode(_ code: String) {
+        UIPasteboard.general.string = code
+        withAnimation {
+            showCopy = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.showCopy = false
         }
     }
 
