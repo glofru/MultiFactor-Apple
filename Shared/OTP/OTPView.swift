@@ -51,7 +51,7 @@ struct OTPView: View {
                 Spacer()
 
                 Text(totpViewModel.code)
-                    .font(.custom("Poppins", size: 20).monospacedDigit())
+                    .font(.custom("Poppins", size: 20).monospaced())
 //                    .bold()
 //                    .glassBackground(.background)
 //                    .cornerRadius(8)
@@ -64,7 +64,6 @@ struct OTPView: View {
                     .privacySensitive()
 
                 LoadingSpinner(period: totpViewModel.period)
-                    .frame(width: 25)
             }
             .padding(8)
             .glassBackground(.element, intensity: .weak)
@@ -106,26 +105,48 @@ struct LoadingSpinner: View {
 
     private let period: Double
 
-    @ObservedObject private var clock = MFClock.shared
+    static private let lineWidth = 3
 
-    private let lineWidth = 3
+    @AppStorage("loadingSpinner") private var isTime = false
+    @ObservedObject private var clock = MFClock.shared
 
     init(period: DecryptedOTP.Period) {
         self.period = Double(period.rawValue)
     }
 
+    private var loadingColor: Color {
+        clock.loaded > 0.3 ? Color.green : clock.loaded > 0.1 && !isTime ? Color.yellow : Color.red
+    }
+
     var body: some View {
         ZStack {
-            Circle()
-                .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                .foregroundColor(Color.gray.opacity(0.1))
-            Circle()
-                .trim(from: 0, to: clock.loaded)
-                .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                .rotation(.degrees(-90))
-                .foregroundColor(clock.loaded > 0.3 ? Color.green : clock.loaded > 0.1 ? Color.yellow : Color.red)
-                .animation(.linear(duration: 1), value: clock.loaded)
+            if isTime {
+                Text("0:\(String(format: "%02d", Int(30*clock.loaded)))")
+                    .font(.custom("Poppins", size: 16).monospaced())
+                    .padding(4)
+                    .background(loadingColor)
+                    .cornerRadius(10)
+            } else {
+                Circle()
+                    .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .foregroundColor(Color.gray.opacity(0.1))
+                    .frame(width: 25)
+                Circle()
+                    .trim(from: 0, to: clock.loaded)
+                    .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .rotation(.degrees(-90))
+                    .foregroundColor(loadingColor)
+                    .frame(width: 25)
+            }
         }
+        .animation(.linear(duration: 1), value: clock.loaded)
+        .animation(.default, value: isTime)
+        .highPriorityGesture(
+            TapGesture()
+                .onEnded {
+                    isTime.toggle()
+                }
+        )
     }
 }
 
