@@ -24,7 +24,7 @@ struct ContentView: View {
             case .signedOut:
                 LoginView()
             case .unknown:
-                ProgressView()
+                LoadingView()
             }
         }
         .mfStyle()
@@ -48,5 +48,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewInterfaceOrientation(.portrait)
     }
 }

@@ -71,6 +71,8 @@
 		990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
 		990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
 		990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
+		9923A12328CA24F900EE9A9E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 9923A12228CA24F900EE9A9E /* RiveRuntime */; };
+		9923A12528CA252E00EE9A9E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 9923A12428CA252E00EE9A9E /* RiveRuntime */; };
 		992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961C28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961E28AFD41D004923D5 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */; };
@@ -83,6 +85,10 @@
 		999B022128A6CC1900F97C69 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B021F28A6CC1900F97C69 /* AccountView.swift */; };
 		999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
 		999B022728A6D72200F97C69 /* AddOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B022528A6D72200F97C69 /* AddOTPView.swift */; };
+		99AEFDB128CA33A10019D9FC /* lock.riv in Resources */ = {isa = PBXBuildFile; fileRef = 99AEFDAE28CA33A10019D9FC /* lock.riv */; };
+		99AEFDB228CA33A10019D9FC /* lock.riv in Resources */ = {isa = PBXBuildFile; fileRef = 99AEFDAE28CA33A10019D9FC /* lock.riv */; };
+		99AEFDB528CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
+		99AEFDB628CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
 		99B9194B28C508A8008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194A28C508A8008E7D6F /* SwiftProtobuf */; };
 		99B9194D28C508BE008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194C28C508BE008E7D6F /* SwiftProtobuf */; };
 		99B9195228C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
@@ -156,6 +162,8 @@
 		999B021C28A6CBF700F97C69 /* CodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesView.swift; sourceTree = "<group>"; };
 		999B021F28A6CC1900F97C69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
+		99AEFDAE28CA33A10019D9FC /* lock.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = lock.riv; sourceTree = "<group>"; };
+		99AEFDB428CA482F0019D9FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		99B9195128C50F99008E7D6F /* OTPMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPMigration.swift; sourceTree = "<group>"; };
 		99C10D6D28AE85790022324A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		99E875CE28AE7286006931F3 /* Playfair.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Playfair.ttf; sourceTree = "<group>"; };
@@ -166,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9923A12328CA24F900EE9A9E /* RiveRuntime in Frameworks */,
 				37058729288A031200E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
 				3736B212288DA16500C7AEAF /* SwiftOTP in Frameworks */,
 				37058727288A030900E6048C /* FirebaseAuthCombine-Community in Frameworks */,
@@ -177,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9923A12528CA252E00EE9A9E /* RiveRuntime in Frameworks */,
 				3705872B288A032000E6048C /* FirebaseAuthCombine-Community in Frameworks */,
 				373E7930289A72080067B226 /* SwiftOTP in Frameworks */,
 				3705872D288A032000E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
@@ -209,6 +219,7 @@
 				992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */,
 				373544E4289C45890052115A /* BiometryType.swift */,
 				377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */,
+				99AEFDB428CA482F0019D9FC /* LoadingView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -295,6 +306,8 @@
 		37C0C1EB28862CBD00553B73 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9923A11D28CA221800EE9A9E /* Animations */,
+				99AEFDB328CA44ED0019D9FC /* Fonts */,
 				373408A3288C986800ABB9C4 /* Extensions */,
 				370A64EC2891F92800D529E1 /* Persistence */,
 				377B9D63288A337C00090D84 /* Cloud */,
@@ -305,8 +318,6 @@
 				37C0C1EE28862CBD00553B73 /* MultiFactorApp.swift */,
 				37C0C1EF28862CBD00553B73 /* ContentView.swift */,
 				37C0C1F128862CBF00553B73 /* Assets.xcassets */,
-				99E875CE28AE7286006931F3 /* Playfair.ttf */,
-				990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */,
 				37C0C1EC28862CBD00553B73 /* MultiFactor.xcdatamodeld */,
 				37C0C22F2886352800553B73 /* GoogleService-Info.plist */,
 			);
@@ -359,6 +370,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9923A11D28CA221800EE9A9E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				99AEFDAE28CA33A10019D9FC /* lock.riv */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		99AEFDB328CA44ED0019D9FC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */,
+				99E875CE28AE7286006931F3 /* Playfair.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -380,6 +408,7 @@
 				37058728288A031200E6048C /* FirebaseFirestoreCombine-Community */,
 				3736B211288DA16500C7AEAF /* SwiftOTP */,
 				99B9194A28C508A8008E7D6F /* SwiftProtobuf */,
+				9923A12228CA24F900EE9A9E /* RiveRuntime */,
 			);
 			productName = "MultiFactor (iOS)";
 			productReference = 37C0C1F628862CBF00553B73 /* MultiFactor.app */;
@@ -403,6 +432,7 @@
 				3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */,
 				373E792F289A72080067B226 /* SwiftOTP */,
 				99B9194C28C508BE008E7D6F /* SwiftProtobuf */,
+				9923A12428CA252E00EE9A9E /* RiveRuntime */,
 			);
 			productName = "MultiFactor (macOS)";
 			productReference = 37C0C1FC28862CBF00553B73 /* MultiFactor.app */;
@@ -483,6 +513,7 @@
 				378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
 				99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */,
 			);
 			productRefGroup = 37C0C1F728862CBF00553B73 /* Products */;
 			projectDirPath = "";
@@ -504,6 +535,7 @@
 				37C0C21F28862CC000553B73 /* Assets.xcassets in Resources */,
 				990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
 				99E875CF28AE7286006931F3 /* Playfair.ttf in Resources */,
+				99AEFDB128CA33A10019D9FC /* lock.riv in Resources */,
 				37C0C2302886352800553B73 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,6 +547,7 @@
 				37C0C22028862CC000553B73 /* Assets.xcassets in Resources */,
 				990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
 				99E875D028AE7286006931F3 /* Playfair.ttf in Resources */,
+				99AEFDB228CA33A10019D9FC /* lock.riv in Resources */,
 				37C0C2312886352800553B73 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +578,7 @@
 				370A64F42892171F00D529E1 /* String.swift in Sources */,
 				998B70CC28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */,
 				999B022628A6D72200F97C69 /* AddOTPView.swift in Sources */,
+				99AEFDB528CA482F0019D9FC /* LoadingView.swift in Sources */,
 				37C0C21928862CC000553B73 /* MultiFactorApp.swift in Sources */,
 				3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				99C10D6E28AE85790022324A /* Text.swift in Sources */,
@@ -599,6 +633,7 @@
 				3736B218288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */,
 				37369118289B1C880093336E /* MFCipher.swift in Sources */,
 				37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */,
+				99AEFDB628CA482F0019D9FC /* LoadingView.swift in Sources */,
 				373408AD288CA85200ABB9C4 /* CloudProvider.swift in Sources */,
 				371F3EBC28931F2400EBAB91 /* CloudEncryptedOTP.swift in Sources */,
 				998B70CD28C3D23700DC1EB7 /* TextFieldStyle.swift in Sources */,
@@ -1034,6 +1069,14 @@
 				kind = branch;
 			};
 		};
+		9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
@@ -1074,6 +1117,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
+		};
+		9923A12228CA24F900EE9A9E /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
+		9923A12428CA252E00EE9A9E /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
 		};
 		99B9194A28C508A8008E7D6F /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;

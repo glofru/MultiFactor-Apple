@@ -115,17 +115,22 @@ struct LoadingSpinner: View {
     }
 
     private var loadingColor: Color {
-        clock.loaded > 0.3 ? Color.green : clock.loaded > 0.1 && !isTime ? Color.yellow : Color.red
+        if isTime {
+            return clock.loaded > 0.16 ? .green : .red
+        } else {
+            return clock.loaded > 0.3 ? .green : clock.loaded > 0.1 ? .yellow : .red
+        }
     }
 
     var body: some View {
         ZStack {
             if isTime {
-                Text("0:\(String(format: "%02d", Int(30*clock.loaded)))")
+                Text("0:\(String(format: "%02d", Int(self.period * clock.loaded)))")
                     .font(.custom("Poppins", size: 16).monospaced())
                     .padding(4)
                     .background(loadingColor)
                     .cornerRadius(10)
+                    .foregroundColor(.white)
             } else {
                 Circle()
                     .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
