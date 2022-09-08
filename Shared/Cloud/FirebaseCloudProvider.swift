@@ -26,7 +26,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
     private var otpListenerRegistration: ListenerRegistration?
 
     //MARK: Authentication
-    func signIn(method: AuthenticationMethod) async -> Result<MFUser, AuthenticationError> {
+    func signIn(method: CloudAuthenticationMethod) async -> Result<MFUser, AuthenticationError> {
         switch method {
         case .username(let username, let password):
             do {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 class AuthenticationViewModel: ObservableObject {
 
@@ -40,7 +41,7 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func signInCloud(method: AuthenticationMethod) async -> AuthenticationError? {
+    func signInCloud(method: CloudAuthenticationMethod) async -> AuthenticationError? {
         // Input validation
         switch method {
         case .username(let username, let password):
@@ -71,15 +72,24 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    func signInMaster(password: String, biometric: Bool = false) async {
-        guard biometric || !password.isEmpty else {
-            withAnimation {
-                signInError = "Provided password is empty"
+    func signInMaster(method: MasterAuthenticationMethod) async -> Bool {
+        if case .biometric = method {
+            let context = LAContext()
+            var error: NSError?
+
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                let reason = "We need to unlock your data."
+
+                guard let success = try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason), success else {
+                    return false
+                }
+            } else {
+                return false
             }
-            return
         }
 
         do {
+            // Retrieve key from cloud or persistance
             var key: String
             if let cloudKey = try? await CloudProvider.shared.key {
                 key = cloudKey
@@ -89,23 +99,29 @@ class AuthenticationViewModel: ObservableObject {
                 throw CloudError.keyNotFound
             }
 
-            if biometric {
-                if let masterPassword = PersistenceController.shared.masterPassword {
-                    MFCipher.setKeyFrom(hash: masterPassword)
-                } else {
+            // Set the cipher key
+            switch method {
+            case .password(let password):
+                guard !password.isEmpty else {
+                    throw AuthenticationError.passwordEmpty
+                }
+                MFCipher.setKeyFrom(password: password)
+            case .biometric:
+                guard let masterPassword = PersistenceController.shared.masterPassword else {
                     throw CloudError.keyNotFound
                 }
-            } else {
-                MFCipher.setKeyFrom(password: password)
+                MFCipher.setKeyFrom(hash: masterPassword)
             }
 
+            // Tries to decrypt
             guard let decryptedKey = MFCipher.decrypt(base64: key) else {
                 MFCipher.reset()
                 throw CloudError.keyIncorrect
             }
             MFCipher.setKeyFrom(string: decryptedKey)
 
-            if !biometric {
+            // Save master password on persistance
+            if case .password(let password) = method {
                 PersistenceController.shared.masterPassword = MFCipher.hash(password)
             }
 
@@ -120,7 +136,10 @@ class AuthenticationViewModel: ObservableObject {
                     self.signInError = error.localizedDescription
                 }
             }
+            return false
         }
+
+        return true
     }
 
     func signOut() {
@@ -171,8 +190,13 @@ struct MFUser {
     let username: String
 }
 
-enum AuthenticationMethod {
+enum CloudAuthenticationMethod {
     case username(String, String) // Username, password
+}
+
+enum MasterAuthenticationMethod {
+    case password(String)
+    case biometric
 }
 
 enum AuthenticationState {

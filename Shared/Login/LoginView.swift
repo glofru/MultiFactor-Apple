@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import LocalAuthentication
 
 struct LoginView: View {
 
@@ -216,33 +215,23 @@ struct MasterLoginView: View {
     private func signIn() {
         isSigningIn = true
         Task {
-            await authenticationViewModel.signInMaster(password: password)
+            let success = await authenticationViewModel.signInMaster(method: .password(password))
             isSigningIn = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                focusPassword = true
+            if !success {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    focusPassword = true
+                }
             }
         }
     }
 
     private func signInBiometric() async {
-        let context = LAContext()
-        var error: NSError?
-
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "We need to unlock your data."
-
-            let success = try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)
-            if success == true {
-                withAnimation {
-                    isSigningIn = true
-                    password = "******"
-                }
-                Task {
-                    await authenticationViewModel.signInMaster(password: "", biometric: true)
-                    isSigningIn = false
-                }
-            }
-        } else {
+        withAnimation {
+            isSigningIn = true
+            password = "******"
+        }
+        let _ = await authenticationViewModel.signInMaster(method: .biometric)
+        withAnimation {
             isSigningIn = false
         }
     }

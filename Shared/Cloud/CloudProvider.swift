@@ -14,7 +14,7 @@ protocol MFCloudProvider {
     func initialize()
 
     //MARK: Authentication
-    func signIn(method: AuthenticationMethod) async -> Result<MFUser, AuthenticationError>
+    func signIn(method: CloudAuthenticationMethod) async -> Result<MFUser, AuthenticationError>
     func signOut()
     func sendResetPasswordLink(to email: String) async -> Result<Bool, AuthenticationError>
 
