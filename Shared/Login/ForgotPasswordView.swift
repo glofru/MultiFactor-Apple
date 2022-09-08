@@ -20,16 +20,12 @@ struct ForgotPasswordView: View {
         Task {
             if let error = await authenticationViewModel.sendResetPasswordLink(to: username) {
                 await MainActor.run {
-                    withAnimation {
-                        message = error.localizedDescription
-                        status = .userInput
-                    }
+                    message = error.localizedDescription
+                    status = .userInput
                 }
             } else {
                 await MainActor.run {
-                    withAnimation {
-                        status = .completed
-                    }
+                    status = .completed
                 }
             }
         }
@@ -87,6 +83,7 @@ struct ForgotPasswordView: View {
 //            }
         }
         .padding()
+        .animation(.default, value: status)
         .disabled(status != .userInput)
     }
 

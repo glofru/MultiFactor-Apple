@@ -76,9 +76,7 @@ class HomeViewModel: ObservableObject {
 
     func copyCode(_ code: String) {
         UIPasteboard.general.string = code
-        withAnimation {
-            showCopy = true
-        }
+        showCopy = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.showCopy = false
         }

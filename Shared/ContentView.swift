@@ -15,7 +15,7 @@ struct ContentView: View {
     @StateObject private var authenticationViewModel = AuthenticationViewModel()
 
     var body: some View {
-        Group {
+        ZStack {
             switch authenticationViewModel.state {
             case .signedInCloud:
                 MasterLoginView()
@@ -27,6 +27,7 @@ struct ContentView: View {
                 LoadingView()
             }
         }
+        .animation(.default, value: authenticationViewModel.state)
         .mfStyle()
         .environmentObject(authenticationViewModel)
         .environment(\.managedObjectContext, PersistenceController.shared.context)

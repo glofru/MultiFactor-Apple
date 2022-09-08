@@ -69,6 +69,7 @@ struct SignUpView: View {
             Spacer()
         }
         .padding()
+        .animation(.default, value: authenticationViewModel.signUpError)
         .disabled(isSigningUp)
     }
 

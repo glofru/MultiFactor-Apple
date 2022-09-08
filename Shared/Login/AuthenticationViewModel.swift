@@ -27,16 +27,14 @@ class AuthenticationViewModel: ObservableObject {
     init() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             CloudProvider.shared.addUserDidChangeListener({ user in
-                withAnimation {
-                    if user != nil {
-                        if self.state == .unknown || self.state == .signedOut {
-                            self.state = .signedInCloud
-                        }
-                    } else {
-                        self.state = .signedOut
+                if user != nil {
+                    if self.state == .unknown || self.state == .signedOut {
+                        self.state = .signedInCloud
                     }
-                    self.user = user
+                } else {
+                    self.state = .signedOut
                 }
+                self.user = user
             })
         }
     }
@@ -46,14 +44,10 @@ class AuthenticationViewModel: ObservableObject {
         switch method {
         case .username(let username, let password):
             if username.trimmingCharacters(in: .whitespaces).isEmpty {
-                withAnimation {
-                    signInError = "Provided username is empty"
-                }
+                signInError = "Provided username is empty"
                 return .usernameEmpty
             } else if password.isEmpty {
-                withAnimation {
-                    signInError = "Provided password is empty"
-                }
+                signInError = "Provided password is empty"
                 return .passwordEmpty
             }
         }
@@ -63,10 +57,8 @@ class AuthenticationViewModel: ObservableObject {
         case .success: return nil
         case .failure(let error):
             await MainActor.run {
-                withAnimation {
-                    self.state = .signedOut
-                    self.signInError = error.localizedDescription
-                }
+                self.state = .signedOut
+                self.signInError = error.localizedDescription
             }
             return error
         }
@@ -126,15 +118,11 @@ class AuthenticationViewModel: ObservableObject {
             }
 
             await MainActor.run {
-                withAnimation {
-                    self.state = .signedInMaster
-                }
+                self.state = .signedInMaster
             }
         } catch {
             await MainActor.run {
-                withAnimation {
-                    self.signInError = error.localizedDescription
-                }
+                self.signInError = error.localizedDescription
             }
             return false
         }
@@ -143,9 +131,7 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     func signOut() {
-        withAnimation {
-            state = .signedOut
-        }
+        state = .signedOut
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             TOTPViewModel.reset()
             PersistenceController.shared.deleteAll()

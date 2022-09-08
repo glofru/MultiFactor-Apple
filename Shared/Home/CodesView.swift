@@ -46,7 +46,7 @@ private struct CodesViewContent: View {
     @State private var sheet: PresentedSheet?
 
     var body: some View {
-        Group {
+        ZStack {
             if encryptedOTPs.isEmpty {
                 Text("No otps")
             } else {
@@ -70,6 +70,7 @@ private struct CodesViewContent: View {
                 .listStyle(.plain)
             }
         }
+        .animation(.default, value: encryptedOTPs.isEmpty)
         #if os(iOS)
         .navigationTitle("MultiFactor")
         .toolbar {

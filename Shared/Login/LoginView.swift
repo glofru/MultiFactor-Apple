@@ -30,7 +30,7 @@ struct LoginView: View {
                 Spacer()
             }
 
-            Group {
+            VStack {
                 TextField("Username", text: $username)
                     .submitLabel(.next)
                     .focused($focusedField, equals: .username)
@@ -96,6 +96,7 @@ struct LoginView: View {
             Spacer()
         }
         .padding()
+        .animation(.default, value: authenticationViewModel.signInError)
         .disabled(isSigningIn)
         .sheet(item: $sheet, content: { type in
             switch type {
@@ -202,6 +203,7 @@ struct MasterLoginView: View {
             })
         }
         .padding()
+        .animation(.default, value: isSigningIn)
         .disabled(isSigningIn)
         .task(id: "biometryUnlock", priority: .userInitiated) {
             if biometryUnlock == true {
@@ -226,14 +228,10 @@ struct MasterLoginView: View {
     }
 
     private func signInBiometric() async {
-        withAnimation {
-            isSigningIn = true
-            password = "******"
-        }
+        password = "******"
+        isSigningIn = true
         let _ = await authenticationViewModel.signInMaster(method: .biometric)
-        withAnimation {
-            isSigningIn = false
-        }
+        isSigningIn = false
     }
 }
 
