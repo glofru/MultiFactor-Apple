@@ -171,7 +171,7 @@ class AuthenticationViewModel: ObservableObject {
     }
 
     func onBackground() {
-        if state == .signedInCloud {
+        if state == .signedInMaster {
             MFClock.shared.stop()
             TOTPViewModel.reset()
             state = .signedInCloud

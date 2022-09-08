@@ -55,7 +55,7 @@ private struct CodesViewContent: View {
                         Group {
                             if otp.isValid {
                                 OTPView(encryptedOTP: otp)
-                                    .padding(.vertical, 10)
+                                    .padding(.vertical, 5)
                             } else {
                                 EmptyView()
                             }

@@ -203,13 +203,13 @@ struct MasterLoginView: View {
         }
         .padding()
         .disabled(isSigningIn)
-//        .task(id: "mpwd", priority: .userInitiated) {
-//            if biometricUnlock {
-//                await signInBiometric()
-//            } else {
-//                focusPassword = true
-//            }
-//        }
+        .task(id: "biometryUnlock", priority: .userInitiated) {
+            if biometryUnlock == true {
+                await signInBiometric()
+            } else {
+                focusPassword = true
+            }
+        }
     }
 
     private func signIn() {
