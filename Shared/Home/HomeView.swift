@@ -11,22 +11,30 @@ struct HomeView: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
+    @Namespace var namespace
+
     @StateObject private var homeViewModel = HomeViewModel()
+
+    @State private var selectedTab = MFTabBar.Tab.codes
 
     var body: some View {
         Group {
             #if os(iOS)
-            TabView {
-                CodesView()
-                    .tabItem {
-                        Label("Codes", systemImage: "lock")
+            ZStack(alignment: .bottom) {
+                Group {
+                    switch selectedTab {
+                    case .codes:
+                        CodesView()
+                            .transition(.asymmetric(insertion: .scale(scale: 2), removal: .scale(scale: 2)).combined(with: .opacity))
+                    case .account:
+                        AccountView()
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .scale).combined(with: .opacity))
                     }
+                }
 
-                AccountView()
-                    .tabItem {
-                        Label("Account", systemImage: "person.crop.circle")
-                    }
+                MFTabBar(selectedTab: $selectedTab)
             }
+            .animation(.easeIn, value: selectedTab)
             #elseif os(macOS)
             CodesView()
 //            AccountView()
@@ -37,9 +45,112 @@ struct HomeView: View {
     }
 }
 
+private struct MFTabBar: View {
+
+    @Binding var selectedTab: Tab
+    @State private var showAdd = false
+
+    var body: some View {
+        HStack {
+            Button(action: {
+                selectedTab = .codes
+            }, label: {
+                Image(systemName: "lock")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.label)
+            })
+            .background(selectedLight(.codes))
+
+            Spacer()
+
+            Button(action: {
+                showAdd = true
+            }, label: {
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .scaledToFit()
+                    .foregroundColor(.white)
+            })
+            .frame(width: 50, height: 50)
+            .background(.blue)
+            .clipShape(Circle())
+            .contextMenu {
+                Button(action: {
+                    
+                }, label: {
+                    Label("Camera", systemImage: "camera")
+                })
+
+                Button(action: {
+                    
+                }, label: {
+                    Label("Manual", systemImage: "rectangle.and.pencil.and.ellipsis")
+                })
+            }
+
+            Spacer()
+
+            Button(action: {
+                selectedTab = .account
+            }, label: {
+                Image(systemName: "person")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.label)
+            })
+            .background(selectedLight(.account))
+            .contextMenu {
+                Button(role: .destructive, action: {
+                    
+                }, label: {
+                    Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")
+                })
+            }
+        }
+        .frame(height: 24)
+        .padding()
+        .background(.ultraThinMaterial)
+        .cornerRadius(20)
+        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 0)
+        .padding(.horizontal, 70)
+        .padding(.vertical)
+        .sheet(isPresented: $showAdd) {
+            AddOTPView(onFillManually: {
+                
+            })
+        }
+    }
+
+    private func selectedLight(_ tab: Tab) -> some View {
+        VStack {
+            if selectedTab == tab {
+                RoundedRectangle(cornerRadius: 2)
+                    .frame(width: 20, height: 5)
+                    .foregroundColor(.blue)
+                    .offset(x: 0, y: -10)
+
+                Spacer()
+            } else {
+                EmptyView()
+            }
+        }
+    }
+
+    enum Tab {
+        case codes
+        case account
+    }
+}
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(AuthenticationViewModel())
+            .preferredColorScheme(.dark)
+//        HomeView()
+//            .environmentObject(AuthenticationViewModel())
+//            .preferredColorScheme(.light)
     }
 }
