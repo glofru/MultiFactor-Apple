@@ -13,8 +13,8 @@ struct OTPView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject private var totpViewModel: TOTPViewModel
 
-    init(encryptedOTP: EncryptedOTP) {
-        _totpViewModel = StateObject(wrappedValue: TOTPViewModel.getInstance(otp: encryptedOTP))
+    init(viewModel: TOTPViewModel) {
+        _totpViewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -28,15 +28,15 @@ struct OTPView: View {
                         .background(knownProvider.color)
                         .cornerRadius(OTPView.cornerRadius)
 //                        .shadow(color: knownProvider.color.opacity(0.4), radius: 3, y: 2)
-                        .privacySensitive()
+//                        .privacySensitive()
                 } else {
                     Text(String(totpViewModel.issuer?.first ?? totpViewModel.label?.first ?? " "))
                         .frame(width: 30, height: 30, alignment: .center)
                         .frame(width: 40, height: 40)
-                        .background(.white) //TODO: random
+                        .background(Color.systemBackground)
                         .cornerRadius(OTPView.cornerRadius)
 //                        .shadow(color: .white.opacity(0.4), radius: 3, y: 2)
-                        .privacySensitive()
+//                        .privacySensitive()
                 }
 
                 VStack(alignment: .leading) {
@@ -46,22 +46,19 @@ struct OTPView: View {
                     Text(totpViewModel.label ?? "No label")
                         .font(.caption2)
                 }
-                .privacySensitive()
+//                .privacySensitive()
 
                 Spacer()
 
                 Text(totpViewModel.code)
                     .font(.custom("Poppins", size: 20).monospaced())
-//                    .bold()
-//                    .glassBackground(.background)
-//                    .cornerRadius(8)
                     .onReceive(MFClock.shared.$time) { time in
                         totpViewModel.generateCode(for: time)
                     }
                     .onAppear {
                         totpViewModel.generateCode(for: .now)
                     }
-                    .privacySensitive()
+//                    .privacySensitive()
 
                 LoadingSpinner(period: totpViewModel.period)
             }
@@ -157,7 +154,7 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        return OTPView(encryptedOTP: EncryptedOTP(context: PersistenceController.shared.context))
+        return OTPView(viewModel: TOTPViewModel.getInstance(otp: .init(entity: .init(), insertInto: .none)))
             .padding()
     }
 }

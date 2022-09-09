@@ -54,8 +54,21 @@ struct AddOTPView: View {
                     Text("No camera")
                     Spacer()
                 }
+
+                if let error = error {
+                    Text(error)
+                        .padding()
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(10)
+                        .task {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                self.error = nil
+                            }
+                        }
+                }
             }
             .animation(.default, value: loading)
+            .animation(.default, value: error)
 
             Button(action: {
                 dismiss()

@@ -98,14 +98,16 @@ struct LoginView: View {
         .padding()
         .animation(.default, value: authenticationViewModel.signInError)
         .disabled(isSigningIn)
-        .sheet(item: $sheet, content: { type in
+        .sheet(item: $sheet, onDismiss: {
+            sheet = nil
+        }) { type in
             switch type {
             case .signUp:
                 SignUpView()
             case .forgotPassword:
                 ForgotPasswordView()
             }
-        })
+        }
     }
 
     private func signIn() {

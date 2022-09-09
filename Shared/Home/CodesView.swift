@@ -44,6 +44,7 @@ private struct CodesViewContent: View {
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 
     @State private var sheet: PresentedSheet?
+    @State private var searched = ""
 
     var body: some View {
         ZStack {
@@ -53,8 +54,11 @@ private struct CodesViewContent: View {
                 List {
                     ForEach(encryptedOTPs, id: \.id) { otp in
                         Group {
-                            if otp.isValid {
-                                OTPView(encryptedOTP: otp)
+                            if otp.isValid &&
+                                (searched.isEmpty ||
+                                 TOTPViewModel.getInstance(otp: otp).issuer?.lowercased().contains(searched.lowercased()) == true ||
+                                 TOTPViewModel.getInstance(otp: otp).label?.lowercased().contains(searched.lowercased()) == true) {
+                                OTPView(viewModel: TOTPViewModel.getInstance(otp: otp))
                                     .padding(.vertical, 5)
                             } else {
                                 EmptyView()
@@ -68,6 +72,8 @@ private struct CodesViewContent: View {
                     .onDelete(perform: deleteOTPs)
                 }
                 .listStyle(.plain)
+                .searchable(text: $searched)
+                
             }
         }
         .animation(.default, value: encryptedOTPs.isEmpty)
@@ -86,7 +92,9 @@ private struct CodesViewContent: View {
             }
         }
         #endif
-        .sheet(item: $sheet) { type in
+        .sheet(item: $sheet, onDismiss: {
+            sheet = nil
+        }) { type in
             switch type {
             case .addQr:
                 AddOTPView(onFillManually: {
