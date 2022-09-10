@@ -43,7 +43,6 @@ private struct CodesViewContent: View {
     ])
     private var encryptedOTPs: FetchedResults<EncryptedOTP>
 
-    @State private var sheet: PresentedSheet?
     @State private var searched = ""
 
     var body: some View {
@@ -85,18 +84,6 @@ private struct CodesViewContent: View {
             }
         }
         .animation(.default, value: encryptedOTPs.isEmpty)
-        .sheet(item: $sheet, onDismiss: {
-            sheet = nil
-        }) { type in
-            switch type {
-            case .addQr:
-                AddOTPView(onFillManually: {
-                    sheet = .addManual
-                })
-            case .addManual:
-                AddOTPManuallyView()
-            }
-        }
     }
 
     private func moveOTPs(from source: IndexSet, to destination: Int) {
@@ -120,14 +107,6 @@ private struct CodesViewContent: View {
         }
         Task(priority: .userInitiated) {
             await homeViewModel.deleteOTPs(ids)
-        }
-    }
-
-    private enum PresentedSheet: Identifiable {
-        case addQr, addManual
-
-        var id: UUID {
-            UUID()
         }
     }
 }

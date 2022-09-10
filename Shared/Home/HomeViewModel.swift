@@ -14,6 +14,7 @@ class HomeViewModel: ObservableObject {
     private var otpNumber = 0
 
     @Published var showCopy = false
+    @Published var sheet: PresentedSheet?
 
     init() {
         try? CloudProvider.shared.addOTPChangeListener { [weak self] otps in
@@ -96,6 +97,14 @@ class HomeViewModel: ObservableObject {
             case .cloudFailed(let string):
                 return "Cloud provider error: \(string)"
             }
+        }
+    }
+
+    enum PresentedSheet: Identifiable {
+        case addQr, addManual
+
+        var id: UUID {
+            UUID()
         }
     }
 }

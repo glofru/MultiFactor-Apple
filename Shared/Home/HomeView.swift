@@ -47,6 +47,19 @@ struct HomeView: View {
                 authenticationViewModel.showSignOut = false
             }
         }
+        .sheet(item: $homeViewModel.sheet, onDismiss: {
+            // Without this SwiftUI seems to be a bit buggy:
+            homeViewModel.sheet = nil
+        }) { type in
+            switch type {
+            case .addQr:
+                AddOTPView(onFillManually: {
+                    homeViewModel.sheet = .addManual
+                })
+            case .addManual:
+                AddOTPManuallyView()
+            }
+        }
 //        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
     }
@@ -55,9 +68,9 @@ struct HomeView: View {
 private struct MFTabBar: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
 
     @Binding var selectedTab: Tab
-    @State private var showAdd = false
 
     var body: some View {
         HStack {
@@ -74,7 +87,7 @@ private struct MFTabBar: View {
             Spacer()
 
             Button(action: {
-                showAdd = true
+                homeViewModel.sheet = .addQr
             }, label: {
                 Image(systemName: "plus")
                     .resizable()
@@ -87,13 +100,13 @@ private struct MFTabBar: View {
             .clipShape(Circle())
             .contextMenu {
                 Button(action: {
-                    
+                    homeViewModel.sheet = .addQr
                 }, label: {
                     Label("Camera", systemImage: "camera")
                 })
 
                 Button(action: {
-                    
+                    homeViewModel.sheet = .addManual
                 }, label: {
                     Label("Manual", systemImage: "rectangle.and.pencil.and.ellipsis")
                 })
@@ -125,11 +138,6 @@ private struct MFTabBar: View {
         .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 0)
         .padding(.horizontal, 70)
         .padding(.vertical)
-        .sheet(isPresented: $showAdd) {
-            AddOTPView(onFillManually: {
-                
-            })
-        }
     }
 
     private func selectedLight(_ tab: Tab) -> some View {
