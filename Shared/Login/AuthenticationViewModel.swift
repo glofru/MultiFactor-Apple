@@ -24,6 +24,8 @@ class AuthenticationViewModel: ObservableObject {
     @Published private(set) var signInError: String?
     @Published private(set) var signUpError: String?
 
+    @Published var showSignOut = false
+
     init() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             CloudProvider.shared.addUserDidChangeListener({ user in

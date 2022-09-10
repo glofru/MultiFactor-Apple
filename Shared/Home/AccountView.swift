@@ -16,8 +16,6 @@ struct AccountView: View {
     @AppStorage("biometryUnlock") private var biometryUnlock: Bool = false
     @AppStorage("biometryType") private var biometryType: BiometryType?
 
-    @State private var showSignOut = false
-
     init() {
         if biometryType == nil {
             let context = LAContext()
@@ -46,16 +44,7 @@ struct AccountView: View {
 
                 Section {
                     Button("Sign out", role: .destructive) {
-                        showSignOut.toggle()
-                    }
-                    .confirmationDialog("Do you want to sign out?", isPresented: $showSignOut, titleVisibility: .visible) {
-                        Button("Sign out", role: .destructive) {
-                            authenticationViewModel.signOut()
-                        }
-
-                        Button("Cancel", role: .cancel) {
-                            showSignOut = false
-                        }
+                        authenticationViewModel.showSignOut = true
                     }
                 }
             }

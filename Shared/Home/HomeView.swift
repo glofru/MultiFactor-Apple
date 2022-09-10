@@ -11,7 +11,7 @@ struct HomeView: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
-    @Namespace var namespace
+    @Namespace private var namespace
 
     @StateObject private var homeViewModel = HomeViewModel()
 
@@ -21,15 +21,13 @@ struct HomeView: View {
         Group {
             #if os(iOS)
             ZStack(alignment: .bottom) {
-                Group {
-                    switch selectedTab {
-                    case .codes:
-                        CodesView()
-                            .transition(.asymmetric(insertion: .scale(scale: 2), removal: .scale(scale: 2)).combined(with: .opacity))
-                    case .account:
-                        AccountView()
-                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .scale).combined(with: .opacity))
-                    }
+                switch selectedTab {
+                case .codes:
+                    CodesView()
+                        .transition(.scale(scale: 2).combined(with: .opacity))
+                case .account:
+                    AccountView()
+                        .transition(.move(edge: .trailing).combined(with: .opacity))
                 }
 
                 MFTabBar(selectedTab: $selectedTab)
@@ -40,12 +38,23 @@ struct HomeView: View {
 //            AccountView()
             #endif
         }
+        .confirmationDialog("Do you want to sign out?", isPresented: $authenticationViewModel.showSignOut, titleVisibility: .visible) {
+            Button("Sign out", role: .destructive) {
+                authenticationViewModel.signOut()
+            }
+
+            Button("Cancel", role: .cancel) {
+                authenticationViewModel.showSignOut = false
+            }
+        }
 //        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
     }
 }
 
 private struct MFTabBar: View {
+
+    @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @Binding var selectedTab: Tab
     @State private var showAdd = false
@@ -103,7 +112,7 @@ private struct MFTabBar: View {
             .background(selectedLight(.account))
             .contextMenu {
                 Button(role: .destructive, action: {
-                    
+                    authenticationViewModel.showSignOut = true
                 }, label: {
                     Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")
                 })
