@@ -66,6 +66,7 @@ private struct CodesViewContent: View {
                         }
                         #if os(iOS)
                         .listRowSeparator(.hidden)
+                        .listRowInsets(.init(top: 5, leading: 16, bottom: 5, trailing: 16))
                         #endif
                     }
                     .onMove(perform: moveOTPs)
@@ -73,25 +74,17 @@ private struct CodesViewContent: View {
                 }
                 .listStyle(.plain)
                 .searchable(text: $searched)
-                
+                #if os(iOS)
+                .navigationTitle("MultiFactor")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                }
+                #endif
             }
         }
         .animation(.default, value: encryptedOTPs.isEmpty)
-        #if os(iOS)
-        .navigationTitle("MultiFactor")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                EditButton()
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    sheet = .addQr
-                }, label: {
-                    Label("Add", systemImage: "plus")
-                })
-            }
-        }
-        #endif
         .sheet(item: $sheet, onDismiss: {
             sheet = nil
         }) { type in
