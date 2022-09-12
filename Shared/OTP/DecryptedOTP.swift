@@ -19,18 +19,18 @@ struct DecryptedOTP: Codable, Identifiable {
     let period: Period
     var order: Int16
 
-    init(id: OTPIdentifier, secret: String, issuer: String = "", label: String = "", algorithm: Algorithm = .sha256, digits: Digits = .six, period: Period = .thirty, order: Int16 = .max) {
-        self.id = id
+    init(id: OTPIdentifier? = nil, secret: String, issuer: String? = nil, label: String? = nil, algorithm: Algorithm? = nil, digits: Digits? = nil, period: Period? = nil, order: Int16? = nil) {
+        self.id = id ?? UUID().uuidString
         self.secret = secret
-        self.issuer = issuer
-        self.label = label
-        self.algorithm = algorithm
-        self.digits = digits
-        self.period = period
-        self.order = order
+        self.issuer = issuer ?? ""
+        self.label = label ?? ""
+        self.algorithm = algorithm ?? .standard
+        self.digits = digits ?? .standard
+        self.period = period ?? .standard
+        self.order = order ?? .max
     }
 
-    enum Algorithm: String, Codable {
+    enum Algorithm: String, CaseIterable, Codable {
         case sha1
         case sha256
         case sha512
@@ -38,14 +38,14 @@ struct DecryptedOTP: Codable, Identifiable {
         static let standard = Algorithm.sha1
     }
 
-    enum Digits: Int, Codable {
+    enum Digits: Int, CaseIterable, Codable {
         case six = 6
         case eight = 8
 
         static let standard = Digits.six
     }
 
-    enum Period: Int, Codable {
+    enum Period: Int, CaseIterable, Codable {
         case thirty = 30
 //        case sixty = 60
 

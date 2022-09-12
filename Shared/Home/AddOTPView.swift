@@ -25,8 +25,6 @@ struct AddOTPView: View {
             do {
                 try await homeViewModel.addOTPFrom(url: value)
                 dismiss()
-//                try await Task.sleep(nanoseconds: 3_000_000_000)
-//                throw HomeViewModel.AddOTPError.cloudFailed("SFAD")
             } catch {
                 await MainActor.run {
                     loading = false
@@ -85,42 +83,160 @@ struct AddOTPView: View {
 
 struct AddOTPManuallyView: View {
 
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+
     @State private var addType = AddType.manual
+
+    @State private var manualAdded = [DecryptedOTP.CodingKeys: Any]()
     @State private var url = ""
 
-    var disabled: Bool {
+    @FocusState private var textFieldFocus: DecryptedOTP.CodingKeys?
+
+    @State private var loading = false
+    @State private var error: String?
+
+    private var disabledButton: Bool {
         switch addType {
         case .manual:
-            return false
+            guard let secret = (manualAdded[.secret] as? String),
+               let issuer = (manualAdded[.issuer] as? String) else {
+                return true
+            }
+            return secret.isEmpty || issuer.isEmpty
         case .url:
             return url.isEmpty
         }
     }
 
+    private func addOTP() {
+        loading = true
+        Task {
+            do {
+                switch addType {
+                case .manual:
+                    try await homeViewModel.addOTPFrom(decrypted: DecryptedOTP(secret: manualAdded[.secret] as? String ?? "", issuer: manualAdded[.issuer] as? String, label: manualAdded[.label] as? String, algorithm: manualAdded[.algorithm] as? DecryptedOTP.Algorithm, digits: manualAdded[.digits] as? DecryptedOTP.Digits, period: manualAdded[.period] as? DecryptedOTP.Period))
+                case .url:
+                    try await homeViewModel.addOTPFrom(url: url)
+                }
+                dismiss()
+            } catch {
+                await MainActor.run {
+                    loading = false
+                    self.error = error.localizedDescription
+                }
+            }
+        }
+    }
+
     var body: some View {
         VStack {
-            Spacer()
-
             Form {
                 if addType == .manual {
-                    Text("Manual")
+                    Section {
+                        TextField("Secret", text: Binding(get: { manualAdded[.secret] as? String ?? "" }, set: { manualAdded[.secret] = $0 }))
+                            .disableAutocorrection(true)
+                            .focused($textFieldFocus, equals: .secret)
+                            .onSubmit {
+                                textFieldFocus = .issuer
+                            }
+                            #if os(iOS)
+                            .textInputAutocapitalization(.characters)
+                            #endif
+
+                        TextField("Issuer", text: Binding(get: { manualAdded[.issuer] as? String ?? "" }, set: { manualAdded[.issuer] = $0 }))
+                            .focused($textFieldFocus, equals: .issuer)
+                            .onSubmit {
+                                textFieldFocus = .label
+                            }
+                            #if os(iOS)
+                            .textInputAutocapitalization(.words)
+                            #endif
+                    } header: {
+                        Text("Required")
+                    } footer: {
+                        if let error = error {
+                            Text(error)
+                                .foregroundColor(.red)
+                        }
+                    }
+
+                    Section {
+                        TextField("Label", text: Binding(get: { manualAdded[.label] as? String ?? "" }, set: { manualAdded[.label] = $0 }))
+                            .disableAutocorrection(true)
+                            .focused($textFieldFocus, equals: .label)
+                            .onSubmit {
+                                textFieldFocus = nil
+                            }
+                            .disableAutocorrection(true)
+                            #if os(iOS)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                            #endif
+                    } header: {
+                        Text("Optional")
+                    }
+
+                    Section("Algorithm") {
+                        Picker("Algorithm", selection: Binding(get: { manualAdded[.algorithm] as? DecryptedOTP.Algorithm ?? .standard }, set: { manualAdded[.algorithm] = $0 })) {
+                            ForEach(DecryptedOTP.Algorithm.allCases, id: \.self) { algorithm in
+                                Text(algorithm.rawValue.uppercased())
+                                    .tag(algorithm)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+
+                    Section("Digits") {
+                        Picker("Digits", selection: Binding(get: { manualAdded[.digits] as? DecryptedOTP.Digits ?? .standard }, set: { manualAdded[.digits] = $0 })) {
+                            ForEach(DecryptedOTP.Digits.allCases, id: \.self) { digit in
+                                Text("\(digit.rawValue)")
+                                    .tag(digit)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
+
+                    Section("Period") {
+                        Picker("Period", selection: Binding(get: { manualAdded[.period] as? DecryptedOTP.Period ?? .standard }, set: { manualAdded[.period] = $0 })) {
+                            ForEach(DecryptedOTP.Period.allCases, id: \.self) { period in
+                                Text("\(period.rawValue)")
+                                    .tag(period)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
                 } else if addType == .url {
-                    Section("URL") {
+//                    if #unavailable(iOS 16) {
+//                        Spacer()
+//                    }
+
+                    Section {
                         TextField("otpauth://", text: $url)
                             .disableAutocorrection(true)
-                            .textFieldStyle(.automatic)
                         #if os(iOS)
                             .keyboardType(.URL)
                             .textContentType(.URL)
                             .textInputAutocapitalization(.never)
                         #endif
+                    } header: {
+                        Text("URL")
+                    } footer: {
+                        if let error = error {
+                            Text(error)
+                                .foregroundColor(.red)
+                        }
                     }
+                    .frame(height: 150)
                 }
             }
-            .frame(height: 150)
-            .background(.red)
+            .textFieldStyle(.automatic)
+            .animation(.default, value: error)
 
-            Spacer()
+//            if #unavailable(iOS 16) {
+//                Spacer()
+//            }
 
             Group {
                 Picker("", selection: $addType) {
@@ -130,15 +246,22 @@ struct AddOTPManuallyView: View {
                 .pickerStyle(.segmented)
 
                 Button(action: {
-                    
+                    addOTP()
                 }, label: {
-                    Label("Add", systemImage: "plus.app")
-                        .gradientBackground(.login)
+                    if loading {
+                        ProgressView()
+                            .gradientBackground(.login)
+                    } else {
+                        Label("Add", systemImage: "plus.app")
+                            .gradientBackground(.login)
+                    }
                 })
-                .disabled(disabled)
+                .disabled(disabledButton)
             }
-            .padding()
+            .padding(.horizontal, 16)
         }
+        .disabled(loading)
+        .animation(.default, value: loading)
     }
 
     private enum AddType {

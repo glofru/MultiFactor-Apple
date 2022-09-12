@@ -23,6 +23,20 @@ class HomeViewModel: ObservableObject {
         }
     }
 
+    func addOTPFrom(decrypted: DecryptedOTP) async throws {
+        guard TOTPViewModel.isValid(secret: decrypted.secret) else {
+            throw AddOTPError.secretInvalid
+        }
+        var decrypted = decrypted
+        decrypted.order = Int16(otpNumber)
+
+        guard let encrypted = MFCipher.encrypt(decrypted) else {
+            throw AddOTPError.encryptionFailed
+        }
+
+        try await CloudProvider.shared.addOTP(encrypted)
+    }
+
     func addOTPFrom(url: String) async throws {
         let decrypted = DecryptedOTP.decode(from: url)
         guard !decrypted.isEmpty else {
@@ -85,6 +99,7 @@ class HomeViewModel: ObservableObject {
 
     enum AddOTPError: Error, LocalizedError {
         case urlInvalid
+        case secretInvalid
         case encryptionFailed
         case cloudFailed(String)
 
@@ -92,6 +107,8 @@ class HomeViewModel: ObservableObject {
             switch self {
             case .urlInvalid:
                 return "URL invalid"
+            case .secretInvalid:
+                return "Secret invalid"
             case .encryptionFailed:
                 return "Encryption failed, are you logged in?"
             case .cloudFailed(let string):
@@ -119,7 +136,8 @@ private extension DecryptedOTP {
         case "otpauth":
             guard components.host == "totp",
                   let queryItems = components.queryItems,
-                  let secret = queryItems.first(where: { $0.name == "secret" })?.value else {
+                  let secret = queryItems.first(where: { $0.name == "secret" })?.value,
+                  TOTPViewModel.isValid(secret: secret) else {
                 return []
             }
 
@@ -155,7 +173,7 @@ private extension DecryptedOTP {
             var labelPath = components.path
             labelPath.removeFirst() // remove leading slash
 
-            return [DecryptedOTP(id: UUID().uuidString, secret: secret, issuer: issuer, label: labelPath, algorithm: algorithm, digits: digits, period: period)]
+            return [DecryptedOTP(secret: secret, issuer: issuer, label: labelPath, algorithm: algorithm, digits: digits, period: period)]
         case "otpauth-migration":
             guard let data = components.queryItems?.first(where: { $0.name == "data" })?.value,
                   let decoded = Data(base64Encoded: data) else {
@@ -166,7 +184,7 @@ private extension DecryptedOTP {
                 var result = [DecryptedOTP]()
                 for otp in payload.otpParameters {
                     if otp.type == .totp {
-                        result.append(DecryptedOTP(id: UUID().uuidString, secret: base32Encode(otp.secret), issuer: otp.issuer, label: otp.name, algorithm: otp.algorithm.mfAlgorithm, digits: otp.digits.mfDigits, period: .init(rawValue: Int(otp.counter)) ?? .standard))
+                        result.append(DecryptedOTP(secret: base32Encode(otp.secret), issuer: otp.issuer, label: otp.name, algorithm: otp.algorithm.mfAlgorithm, digits: otp.digits.mfDigits, period: .init(rawValue: Int(otp.counter)) ?? .standard))
                     }
                 }
                 return result

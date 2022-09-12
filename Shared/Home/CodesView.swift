@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CodesView: View {
 
-    @EnvironmentObject var homeViewModel: HomeViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
 
     var body: some View {
         ZStack {
@@ -70,6 +70,11 @@ private struct CodesViewContent: View {
                     }
                     .onMove(perform: moveOTPs)
                     .onDelete(perform: deleteOTPs)
+
+                    Spacer(minLength: 100)
+                        #if os(iOS)
+                        .listRowSeparator(.hidden)
+                        #endif
                 }
                 .listStyle(.plain)
                 .searchable(text: $searched)

@@ -57,6 +57,10 @@ extension TOTPViewModel {
     static func reset() {
         instancesMappings.removeAll()
     }
+
+    static func isValid(secret: String) -> Bool {
+        base32DecodeToData(secret) != nil
+    }
 }
 
 private extension DecryptedOTP.Algorithm {
