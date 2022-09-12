@@ -45,12 +45,15 @@ private struct CodesViewContent: View {
 
     @State private var searched = ""
 
+    @State private var editMode = EditMode.inactive
+    @State private var selected: Set<EncryptedOTP>?
+
     var body: some View {
         ZStack {
             if encryptedOTPs.isEmpty {
                 Text("No otps")
             } else {
-                List {
+                List(selection: $selected) {
                     ForEach(encryptedOTPs, id: \.id) { otp in
                         Group {
                             if otp.isValid &&
@@ -76,19 +79,30 @@ private struct CodesViewContent: View {
                         .listRowSeparator(.hidden)
                         #endif
                 }
+                .id(editMode)
+                .environment(\.editMode, $editMode)
                 .listStyle(.plain)
                 .searchable(text: $searched)
                 #if os(iOS)
                 .navigationTitle("MultiFactor")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        EditButton()
+                        Button(action: {
+                            if editMode == .active {
+                                editMode = .inactive
+                            } else {
+                                editMode = .active
+                            }
+                        }, label: {
+                            Text(editMode == .active ? "Done" : "Edit")
+                        })
                     }
                 }
                 #endif
             }
         }
         .animation(.default, value: encryptedOTPs.isEmpty)
+        .animation(.default, value: editMode)
     }
 
     private func moveOTPs(from source: IndexSet, to destination: Int) {
