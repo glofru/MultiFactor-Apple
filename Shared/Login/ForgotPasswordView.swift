@@ -32,7 +32,20 @@ struct ForgotPasswordView: View {
     }
 
     var body: some View {
+        if #available(iOS 16.0, *) {
+            content
+                .presentationDetents([.fraction(0.4)])
+        } else {
+            content
+        }
+    }
+
+    private var content: some View {
         VStack(alignment: .leading) {
+            if #unavailable(iOS 16) {
+                Spacer()
+            }
+
             HStack {
                 Spacer()
                 Text("Forgot password")
@@ -60,6 +73,8 @@ struct ForgotPasswordView: View {
                     .foregroundColor(.red)
             }
 
+            Spacer()
+
             if status != .completed {
                 Button(action: restorePassword, label: {
                     if status == .waiting {
@@ -77,14 +92,11 @@ struct ForgotPasswordView: View {
                     Spacer()
                 }
             }
-
-//            if #unavailable(iOS 16) {
-//                Spacer()
-//            }
         }
-        .padding()
+        .padding(.horizontal, 16)
         .animation(.default, value: status)
         .disabled(status != .userInput)
+        .mfStyle()
     }
 
     private enum Status {

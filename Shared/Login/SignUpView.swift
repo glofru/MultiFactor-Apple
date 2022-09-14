@@ -19,6 +19,15 @@ struct SignUpView: View {
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
+        if #available(iOS 16, *) {
+            content
+                .presentationDetents([.medium])
+        } else {
+            content
+        }
+    }
+
+    private var content: some View {
         VStack(alignment: .leading) {
             HStack {
                 Spacer()
@@ -61,16 +70,17 @@ struct SignUpView: View {
                     .foregroundColor(.red)
             }
 
+            Spacer()
+
             Button(action: signUp, label: {
                 Text("Sign Up")
                     .gradientBackground(.signUp)
             })
-
-            Spacer()
         }
         .padding()
         .animation(.default, value: authenticationViewModel.signUpError)
         .disabled(isSigningUp)
+        .mfStyle()
     }
 
     private func signUp() {
