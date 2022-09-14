@@ -15,6 +15,10 @@ extension View {
     func gradientBackground(_ type: GradientBackground.GradientType) -> some View {
         modifier(GradientBackground(type: type))
     }
+
+    func mfFont(size: CGFloat = 20) -> some View {
+        self.font(.custom("PlayfairDisplay-Regular", size: size))
+    }
 }
 
 struct GlassBackground: ViewModifier {

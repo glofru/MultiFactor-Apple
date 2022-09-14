@@ -34,7 +34,7 @@ struct ForgotPasswordView: View {
     var body: some View {
         if #available(iOS 16.0, *) {
             content
-                .presentationDetents([.fraction(0.4)])
+                .presentationDetents([.fraction(0.45)])
         } else {
             content
         }
@@ -46,16 +46,11 @@ struct ForgotPasswordView: View {
                 Spacer()
             }
 
-            HStack {
-                Spacer()
-                Text("Forgot password")
-                    .mfFont(size: 30)
-                    .bold()
-                    .padding(.vertical)
-                Spacer()
-            }
+            Text("Forgot password")
+                .mfTitle()
 
             Text("Please enter your registered email ID. We’ll send a code to reset your password.")
+                .multilineTextAlignment(.center)
 
             TextField("Username", text: $username)
                 .submitLabel(.next)
@@ -71,6 +66,7 @@ struct ForgotPasswordView: View {
             if let message = message {
                 Text(message)
                     .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
             }
 
             Spacer()
@@ -93,7 +89,7 @@ struct ForgotPasswordView: View {
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding()
         .animation(.default, value: status)
         .disabled(status != .userInput)
         .mfStyle()

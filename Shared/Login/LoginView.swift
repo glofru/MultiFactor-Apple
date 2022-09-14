@@ -21,14 +21,8 @@ struct LoginView: View {
 
     var body: some View {
         VStack(alignment: .trailing) {
-            HStack {
-                Spacer()
-                Text("Login")
-                    .mfFont(size: 30)
-                    .bold()
-                    .padding(.vertical)
-                Spacer()
-            }
+            Text("Login")
+                .mfTitle()
 
             VStack {
                 TextField("Username", text: $username)

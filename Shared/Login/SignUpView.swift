@@ -16,6 +16,8 @@ struct SignUpView: View {
     @State private var repeatPassword = ""
     @State private var isSigningUp = false
 
+    @State private var error: String?
+
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
@@ -29,14 +31,12 @@ struct SignUpView: View {
 
     private var content: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Spacer()
-                Text("Sign Up")
-                    .mfFont(size: 30)
-                    .bold()
-                    .padding(.vertical)
+            if #unavailable(iOS 16) {
                 Spacer()
             }
+
+            Text("Sign Up")
+                .mfTitle()
 
             TextField("Username", text: $username)
                 .submitLabel(.next)
@@ -70,6 +70,11 @@ struct SignUpView: View {
                     .foregroundColor(.red)
             }
 
+            if let error = error {
+                Text(error)
+                    .foregroundColor(.red)
+            }
+
             Spacer()
 
             Button(action: signUp, label: {
@@ -78,6 +83,7 @@ struct SignUpView: View {
             })
         }
         .padding()
+        .animation(.default, value: error)
         .animation(.default, value: authenticationViewModel.signUpError)
         .disabled(isSigningUp)
         .mfStyle()
