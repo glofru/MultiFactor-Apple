@@ -49,7 +49,7 @@ struct ForgotPasswordView: View {
             Text("Forgot password")
                 .mfTitle()
 
-            Text("Please enter your registered email ID. We’ll send a code to reset your password.")
+            Text("Please enter your registered email. We will you link to reset your password.")
                 .multilineTextAlignment(.center)
 
             TextField("Username", text: $username)
@@ -65,8 +65,7 @@ struct ForgotPasswordView: View {
 
             if let message = message {
                 Text(message)
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
+                    .mfError()
             }
 
             Spacer()

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SignUpView: View {
 
+    @Environment(\.dismiss) private var dismiss
+
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @State private var username = ""
@@ -31,9 +33,9 @@ struct SignUpView: View {
 
     private var content: some View {
         VStack(alignment: .leading) {
-            if #unavailable(iOS 16) {
-                Spacer()
-            }
+//            if #unavailable(iOS 16) {
+//                Spacer()
+//            }
 
             Text("Sign Up")
                 .mfTitle()
@@ -46,11 +48,11 @@ struct SignUpView: View {
                 }
                 .disableAutocorrection(true)
                 .padding(.vertical)
-            #if os(iOS)
+//            #if os(iOS)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
                 .textInputAutocapitalization(.never)
-            #endif
+//            #endif
 
             SecureField("Password", text: $password)
                 .textContentType(.password)
@@ -67,30 +69,39 @@ struct SignUpView: View {
 
             if let error = authenticationViewModel.signUpError {
                 Text(error)
-                    .foregroundColor(.red)
-            }
-
-            if let error = error {
-                Text(error)
-                    .foregroundColor(.red)
+                    .mfError()
             }
 
             Spacer()
 
             Button(action: signUp, label: {
-                Text("Sign Up")
-                    .gradientBackground(.signUp)
+                if isSigningUp {
+                    ProgressView()
+                        .gradientBackground(.signUp)
+                } else {
+                    Text("Sign Up")
+                        .gradientBackground(.signUp)
+                }
             })
         }
         .padding()
-        .animation(.default, value: error)
         .animation(.default, value: authenticationViewModel.signUpError)
         .disabled(isSigningUp)
         .mfStyle()
     }
 
     private func signUp() {
-        
+        isSigningUp = true
+        Task {
+            let success = false
+//            let success = await signUp
+            await MainActor.run {
+                isSigningUp = false
+                if success {
+                    dismiss()
+                }
+            }
+        }
     }
 
     private enum FocusedField {

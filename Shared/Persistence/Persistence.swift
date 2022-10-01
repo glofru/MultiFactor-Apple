@@ -107,13 +107,13 @@ extension PersistenceController {
             let request = MFUserEntity.fetchRequest()
             request.fetchLimit = 1
             if let oldUser = try? context.fetch(request).first {
-                if let newValue = newValue {
+                if let newValue {
                     oldUser.copy(newValue)
                 } else {
                     context.delete(oldUser)
                 }
             } else {
-                if let newValue = newValue {
+                if let newValue {
                     let newUser = MFUserEntity(context: context)
                     newUser.copy(newValue)
                 }
@@ -187,7 +187,7 @@ extension PersistenceController {
 //MARK: MFUser extensions
 extension MFUser {
     init?(entity: MFUserEntity?) {
-        if let entity = entity {
+        if let entity {
             self.id = entity.id!
             self.username = entity.username!
         } else {

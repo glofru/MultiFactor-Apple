@@ -132,6 +132,22 @@ class AuthenticationViewModel: ObservableObject {
         return true
     }
 
+    func signUp(username: String, password: String, repeatPassword: String) async throws {
+        let username = username.trimmingCharacters(in: .whitespaces)
+        guard !username.isEmpty else {
+            throw AuthenticationError.usernameEmpty
+        }
+
+        guard password == repeatPassword else {
+            throw AuthenticationError.passwordsDoNotMatch
+        }
+        guard !password.isEmpty else {
+            throw AuthenticationError.passwordEmpty
+        }
+
+        
+    }
+
     func signOut() {
         state = .signedOut
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -200,6 +216,7 @@ enum AuthenticationError: LocalizedError {
 
     case passwordInvalid
     case passwordIncorrect
+    case passwordsDoNotMatch
 
     case userDisabled
     case unknown(String)
@@ -218,6 +235,8 @@ enum AuthenticationError: LocalizedError {
             return "Password invalid"
         case .passwordIncorrect:
             return "Password incorrect"
+        case .passwordsDoNotMatch:
+            return "Passwords do not match"
         case .userDisabled:
             return "User disabled"
         case .unknown(let message):

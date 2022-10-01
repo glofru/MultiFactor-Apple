@@ -53,7 +53,7 @@ struct AddOTPView: View {
                     Spacer()
                 }
 
-                if let error = error {
+                if let error {
                     Text(error)
                         .padding()
                         .background(.ultraThinMaterial)
@@ -155,9 +155,9 @@ struct AddOTPManuallyView: View {
                     } header: {
                         Text("Required")
                     } footer: {
-                        if let error = error {
+                        if let error {
                             Text(error)
-                                .foregroundColor(.red)
+                                .mfError()
                         }
                     }
 
@@ -223,9 +223,9 @@ struct AddOTPManuallyView: View {
                     } header: {
                         Text("URL")
                     } footer: {
-                        if let error = error {
+                        if let error {
                             Text(error)
-                                .foregroundColor(.red)
+                                .mfError()
                         }
                     }
                     .frame(height: 150)
@@ -389,7 +389,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
     }
 
     func didQrCodeDetect(_ code: DetectedQrCode?) {
-        if let code = code {
+        if let code {
             if detectedQr?.value != code.value {
                 detectedQrTime = .now
                 withAnimation(.easeIn(duration: 0.5)) {
@@ -508,7 +508,7 @@ private struct MaskedBlur: ViewModifier {
         ZStack {
             content
 
-            if let qrCode = qrCode {
+            if let qrCode {
                 Color.black
                     .opacity(0.4)
                     .mask(

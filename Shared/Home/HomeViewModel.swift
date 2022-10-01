@@ -62,7 +62,7 @@ class HomeViewModel: ObservableObject {
             }
         }
 
-        if let failError = failError {
+        if let failError {
             throw failError
         }
     }

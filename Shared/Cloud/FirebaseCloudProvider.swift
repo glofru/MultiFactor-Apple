@@ -57,7 +57,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
     }
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void) {
-        if let handle = handle {
+        if let handle {
             Auth.auth().removeStateDidChangeListener(handle)
         }
 

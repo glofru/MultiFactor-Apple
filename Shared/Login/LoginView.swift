@@ -51,7 +51,7 @@ struct LoginView: View {
 
                 if let error = authenticationViewModel.signInError {
                     Text(error)
-                        .foregroundColor(.red)
+                        .mfError()
                 }
 
                 Button(action: {
@@ -118,7 +118,8 @@ struct LoginView: View {
                         focusedField = .username
                     case .passwordEmpty: fallthrough
                     case .passwordInvalid: fallthrough
-                    case .passwordIncorrect:
+                    case .passwordIncorrect: fallthrough
+                    case .passwordsDoNotMatch:
                         focusedField = .password
                     case .unknown(_):
                         focusedField = nil
@@ -186,7 +187,7 @@ struct MasterLoginView: View {
                 ProgressView()
             } else if let error = authenticationViewModel.signInError {
                 Text(error)
-                    .foregroundColor(.red)
+                    .mfError()
             }
 
             Spacer()

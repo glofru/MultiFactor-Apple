@@ -37,7 +37,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
     }
 
     func generateCode(for date: Date) {
-        if let totp = totp {
+        if let totp {
             self.code = totp.generate(time: date) ?? ""
         }
     }
