@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		37058724288A023100E6048C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058723288A023100E6048C /* AppDelegate.swift */; };
 		37058725288A023100E6048C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058723288A023100E6048C /* AppDelegate.swift */; };
-		37058727288A030900E6048C /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 37058726288A030900E6048C /* FirebaseAuthCombine-Community */; };
-		37058729288A031200E6048C /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 37058728288A031200E6048C /* FirebaseFirestoreCombine-Community */; };
-		3705872B288A032000E6048C /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3705872A288A032000E6048C /* FirebaseAuthCombine-Community */; };
-		3705872D288A032000E6048C /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */; };
 		37058733288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058732288A05AF00E6048C /* FirebaseCloudProvider.swift */; };
 		37058734288A05AF00E6048C /* FirebaseCloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058732288A05AF00E6048C /* FirebaseCloudProvider.swift */; };
 		3705873A288A0E7B00E6048C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37058739288A0E7B00E6048C /* LoginView.swift */; };
@@ -37,7 +33,6 @@
 		37369118289B1C880093336E /* MFCipher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37369116289B1C880093336E /* MFCipher.swift */; };
 		3736911D289BC6160093336E /* SHA256Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736911C289BC6160093336E /* SHA256Digest.swift */; };
 		3736911E289BC6160093336E /* SHA256Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736911C289BC6160093336E /* SHA256Digest.swift */; };
-		3736B212288DA16500C7AEAF /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 3736B211288DA16500C7AEAF /* SwiftOTP */; };
 		3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B213288DA26800C7AEAF /* HomeViewModel.swift */; };
 		3736B215288DA26800C7AEAF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B213288DA26800C7AEAF /* HomeViewModel.swift */; };
 		3736B217288DA50F00C7AEAF /* TOTPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736B216288DA50F00C7AEAF /* TOTPViewModel.swift */; };
@@ -46,7 +41,6 @@
 		3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68B2888C9CF007F8DFD /* HomeView.swift */; };
 		3737A6902888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
 		3737A6912888CA0F007F8DFD /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737A68F2888CA0F007F8DFD /* OTPView.swift */; };
-		373E7930289A72080067B226 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 373E792F289A72080067B226 /* SwiftOTP */; };
 		377B9D61288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		377B9D62288A2E9400090D84 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B9D60288A2E9400090D84 /* AuthenticationViewModel.swift */; };
 		378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378D9F222889DDDA007BDFB6 /* VisualEffectiveView.swift */; };
@@ -71,8 +65,6 @@
 		990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
 		990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 990F0AC928C7822200512DC5 /* Poppins-Bold.ttf */; };
 		990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F0ACD28C7934F00512DC5 /* NSTableView.swift */; };
-		9923A12328CA24F900EE9A9E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 9923A12228CA24F900EE9A9E /* RiveRuntime */; };
-		9923A12528CA252E00EE9A9E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 9923A12428CA252E00EE9A9E /* RiveRuntime */; };
 		992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961C28AFD3C1004923D5 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961A28AFD3C1004923D5 /* SignUpView.swift */; };
 		992C961E28AFD41D004923D5 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */; };
@@ -89,8 +81,17 @@
 		99AEFDB228CA33A10019D9FC /* lock.riv in Resources */ = {isa = PBXBuildFile; fileRef = 99AEFDAE28CA33A10019D9FC /* lock.riv */; };
 		99AEFDB528CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
 		99AEFDB628CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
-		99B9194B28C508A8008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194A28C508A8008E7D6F /* SwiftProtobuf */; };
-		99B9194D28C508BE008E7D6F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B9194C28C508BE008E7D6F /* SwiftProtobuf */; };
+		99B2E14628EAFF4F00596479 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B2E14528EAFF4F00596479 /* Bool.swift */; };
+		99B2E14728EAFF4F00596479 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B2E14528EAFF4F00596479 /* Bool.swift */; };
+		99B31E8A28E9F7A900B4F5D5 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E8928E9F7A900B4F5D5 /* RiveRuntime */; };
+		99B31E8F28E9F7BE00B4F5D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E8E28E9F7BE00B4F5D5 /* SwiftProtobuf */; };
+		99B31E9228E9F7ED00B4F5D5 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9128E9F7ED00B4F5D5 /* SwiftOTP */; };
+		99B31E9528E9F86D00B4F5D5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9428E9F86D00B4F5D5 /* FirebaseAuthCombine-Community */; };
+		99B31E9728E9F86D00B4F5D5 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9628E9F86D00B4F5D5 /* FirebaseFirestoreCombine-Community */; };
+		99B31E9928E9F87800B4F5D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9828E9F87800B4F5D5 /* SwiftProtobuf */; };
+		99B31E9B28E9F88000B4F5D5 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9A28E9F88000B4F5D5 /* SwiftOTP */; };
+		99B31E9D28E9F88400B4F5D5 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9C28E9F88400B4F5D5 /* FirebaseAuthCombine-Community */; };
+		99B31E9F28E9F88800B4F5D5 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9E28E9F88800B4F5D5 /* FirebaseFirestoreCombine-Community */; };
 		99B9195228C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
 		99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
 		99C10D6E28AE85790022324A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C10D6D28AE85790022324A /* Text.swift */; };
@@ -164,6 +165,7 @@
 		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
 		99AEFDAE28CA33A10019D9FC /* lock.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = lock.riv; sourceTree = "<group>"; };
 		99AEFDB428CA482F0019D9FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		99B2E14528EAFF4F00596479 /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		99B9195128C50F99008E7D6F /* OTPMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPMigration.swift; sourceTree = "<group>"; };
 		99C10D6D28AE85790022324A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		99E875CE28AE7286006931F3 /* Playfair.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Playfair.ttf; sourceTree = "<group>"; };
@@ -174,11 +176,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9923A12328CA24F900EE9A9E /* RiveRuntime in Frameworks */,
-				37058729288A031200E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
-				3736B212288DA16500C7AEAF /* SwiftOTP in Frameworks */,
-				37058727288A030900E6048C /* FirebaseAuthCombine-Community in Frameworks */,
-				99B9194B28C508A8008E7D6F /* SwiftProtobuf in Frameworks */,
+				99B31E8A28E9F7A900B4F5D5 /* RiveRuntime in Frameworks */,
+				99B31E9228E9F7ED00B4F5D5 /* SwiftOTP in Frameworks */,
+				99B31E8F28E9F7BE00B4F5D5 /* SwiftProtobuf in Frameworks */,
+				99B31E9728E9F86D00B4F5D5 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				99B31E9528E9F86D00B4F5D5 /* FirebaseAuthCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,11 +188,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9923A12528CA252E00EE9A9E /* RiveRuntime in Frameworks */,
-				3705872B288A032000E6048C /* FirebaseAuthCombine-Community in Frameworks */,
-				373E7930289A72080067B226 /* SwiftOTP in Frameworks */,
-				3705872D288A032000E6048C /* FirebaseFirestoreCombine-Community in Frameworks */,
-				99B9194D28C508BE008E7D6F /* SwiftProtobuf in Frameworks */,
+				99B31E9B28E9F88000B4F5D5 /* SwiftOTP in Frameworks */,
+				99B31E9928E9F87800B4F5D5 /* SwiftProtobuf in Frameworks */,
+				99B31E9F28E9F88800B4F5D5 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				99B31E9D28E9F88400B4F5D5 /* FirebaseAuthCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +249,7 @@
 		373408A3288C986800ABB9C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				99B2E14528EAFF4F00596479 /* Bool.swift */,
 				373408AE288CB44700ABB9C4 /* Bundle.swift */,
 				373408A7288C9FDE00ABB9C4 /* Color.swift */,
 				3736911C289BC6160093336E /* SHA256Digest.swift */,
@@ -404,11 +406,11 @@
 			);
 			name = "MultiFactor (iOS)";
 			packageProductDependencies = (
-				37058726288A030900E6048C /* FirebaseAuthCombine-Community */,
-				37058728288A031200E6048C /* FirebaseFirestoreCombine-Community */,
-				3736B211288DA16500C7AEAF /* SwiftOTP */,
-				99B9194A28C508A8008E7D6F /* SwiftProtobuf */,
-				9923A12228CA24F900EE9A9E /* RiveRuntime */,
+				99B31E8928E9F7A900B4F5D5 /* RiveRuntime */,
+				99B31E8E28E9F7BE00B4F5D5 /* SwiftProtobuf */,
+				99B31E9128E9F7ED00B4F5D5 /* SwiftOTP */,
+				99B31E9428E9F86D00B4F5D5 /* FirebaseAuthCombine-Community */,
+				99B31E9628E9F86D00B4F5D5 /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = "MultiFactor (iOS)";
 			productReference = 37C0C1F628862CBF00553B73 /* MultiFactor.app */;
@@ -428,11 +430,10 @@
 			);
 			name = "MultiFactor (macOS)";
 			packageProductDependencies = (
-				3705872A288A032000E6048C /* FirebaseAuthCombine-Community */,
-				3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */,
-				373E792F289A72080067B226 /* SwiftOTP */,
-				99B9194C28C508BE008E7D6F /* SwiftProtobuf */,
-				9923A12428CA252E00EE9A9E /* RiveRuntime */,
+				99B31E9828E9F87800B4F5D5 /* SwiftProtobuf */,
+				99B31E9A28E9F88000B4F5D5 /* SwiftOTP */,
+				99B31E9C28E9F88400B4F5D5 /* FirebaseAuthCombine-Community */,
+				99B31E9E28E9F88800B4F5D5 /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = "MultiFactor (macOS)";
 			productReference = 37C0C1FC28862CBF00553B73 /* MultiFactor.app */;
@@ -510,10 +511,10 @@
 			);
 			mainGroup = 37C0C1E628862CBD00553B73;
 			packageReferences = (
-				378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */,
-				99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */,
-				9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */,
+				99B31E8828E9F7A900B4F5D5 /* XCRemoteSwiftPackageReference "rive-ios" */,
+				99B31E8D28E9F7BE00B4F5D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				99B31E9028E9F7ED00B4F5D5 /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 37C0C1F728862CBF00553B73 /* Products */;
 			projectDirPath = "";
@@ -599,6 +600,7 @@
 				37369117289B1C880093336E /* MFCipher.swift in Sources */,
 				999B022028A6CC1900F97C69 /* AccountView.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
+				99B2E14628EAFF4F00596479 /* Bool.swift in Sources */,
 				373544E5289C45890052115A /* BiometryType.swift in Sources */,
 				992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
@@ -625,6 +627,7 @@
 				99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */,
 				37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
+				99B2E14728EAFF4F00596479 /* Bool.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */,
 				990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */,
@@ -1053,23 +1056,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
-		378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+		99B31E8828E9F7A900B4F5D5 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rive-app/rive-ios.git";
 			requirement = {
@@ -1077,7 +1064,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+		99B31E8D28E9F7BE00B4F5D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
@@ -1085,58 +1072,69 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		99B31E9028E9F7ED00B4F5D5 /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		37058726288A030900E6048C /* FirebaseAuthCombine-Community */ = {
+		99B31E8928E9F7A900B4F5D5 /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseAuthCombine-Community";
-		};
-		37058728288A031200E6048C /* FirebaseFirestoreCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreCombine-Community";
-		};
-		3705872A288A032000E6048C /* FirebaseAuthCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseAuthCombine-Community";
-		};
-		3705872C288A032000E6048C /* FirebaseFirestoreCombine-Community */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 378D9F242889DE87007BDFB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreCombine-Community";
-		};
-		3736B211288DA16500C7AEAF /* SwiftOTP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
-			productName = SwiftOTP;
-		};
-		373E792F289A72080067B226 /* SwiftOTP */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3736B210288DA16500C7AEAF /* XCRemoteSwiftPackageReference "SwiftOTP" */;
-			productName = SwiftOTP;
-		};
-		9923A12228CA24F900EE9A9E /* RiveRuntime */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */;
+			package = 99B31E8828E9F7A900B4F5D5 /* XCRemoteSwiftPackageReference "rive-ios" */;
 			productName = RiveRuntime;
 		};
-		9923A12428CA252E00EE9A9E /* RiveRuntime */ = {
+		99B31E8E28E9F7BE00B4F5D5 /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9923A12128CA24F900EE9A9E /* XCRemoteSwiftPackageReference "rive-ios" */;
-			productName = RiveRuntime;
-		};
-		99B9194A28C508A8008E7D6F /* SwiftProtobuf */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			package = 99B31E8D28E9F7BE00B4F5D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
 		};
-		99B9194C28C508BE008E7D6F /* SwiftProtobuf */ = {
+		99B31E9128E9F7ED00B4F5D5 /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 99B9194928C508A8008E7D6F /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			package = 99B31E9028E9F7ED00B4F5D5 /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			productName = SwiftOTP;
+		};
+		99B31E9428E9F86D00B4F5D5 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		99B31E9628E9F86D00B4F5D5 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		99B31E9828E9F87800B4F5D5 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E8D28E9F7BE00B4F5D5 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
+		};
+		99B31E9A28E9F88000B4F5D5 /* SwiftOTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E9028E9F7ED00B4F5D5 /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			productName = SwiftOTP;
+		};
+		99B31E9C28E9F88400B4F5D5 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		99B31E9E28E9F88800B4F5D5 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99B31E9328E9F86D00B4F5D5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,19 +6,20 @@
 //
 
 import SwiftUI
+#if os(iOS)
 import RiveRuntime
+#endif
 
 struct LoadingView: View {
 
+    #if os(iOS)
     @State private var animation = RiveViewModel(fileName: "lock", animationName: "Animation 1", fit: .contain, alignment: .center, autoPlay: false)
-    private var lockSize: Double {
-        size*0.3672
-    }
-
     @State private var blur = 0.0
+    #endif
 
     var body: some View {
         VStack {
+            #if os(iOS)
             ZStack {
                 Image("lockShadow")
                     .resizable()
@@ -36,19 +37,28 @@ struct LoadingView: View {
 
                 animation
                         .view()
-                        .frame(width: lockSize)
-                        .offset(x: 0, y: -size*0.05)
+                        .frame(width: 0.3672*size)
+                        .offset(x: 0, y: -0.05*size)
             }
+            #elseif os(macOS)
+            Image("noBackgroundIcon")
+                .resizable()
+                .scaledToFit()
+                .frame(width: size)
+            #endif
         }
+        #if os(iOS)
         .task {
             animation.play(loop: .pingPong)
             withAnimation(.easeOut(duration: 0.8).delay(0.2).repeatForever()) {
                 blur = 30
             }
         }
+        #endif
     }
 
     private var size: Double {
+        #if os(iOS)
         switch UIDevice.current.orientation {
         case .landscapeLeft: fallthrough
         case .landscapeRight: return UIScreen.main.bounds.size.height * 0.6
@@ -59,6 +69,9 @@ struct LoadingView: View {
         case .unknown: fallthrough
         @unknown default: return UIScreen.main.bounds.size.width * 0.4
         }
+        #elseif os(macOS)
+        100
+        #endif
     }
 }
 

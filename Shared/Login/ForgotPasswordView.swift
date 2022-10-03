@@ -32,12 +32,16 @@ struct ForgotPasswordView: View {
     }
 
     var body: some View {
+        #if os(iOS)
         if #available(iOS 16.0, *) {
             content
                 .presentationDetents([.fraction(0.45)])
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 
     private var content: some View {

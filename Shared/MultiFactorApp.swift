@@ -18,6 +18,8 @@ struct MultiFactorApp: App {
 
     let persistenceController = PersistenceController.shared
 
+    @StateObject private var authenticationViewModel = AuthenticationViewModel()
+
     var body: some Scene {
         WindowGroup {
             ZStack {
@@ -29,10 +31,18 @@ struct MultiFactorApp: App {
 
                 // Actual content
                 ContentView()
+                    .environmentObject(authenticationViewModel)
             }
             #if os(macOS)
-                .frame(minWidth: 400, idealWidth: 400)
+                .frame(minWidth: 400, idealWidth: 400, maxWidth: 400)
                 .buttonStyle(.plain)
+                .onAppear {
+                    DispatchQueue.main.async {
+                        NSApplication.shared.windows.forEach({ window in
+                            window.standardWindowButton(.zoomButton)?.isHidden = true
+                        })
+                    }
+                }
             #endif
                 
         }

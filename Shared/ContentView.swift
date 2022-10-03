@@ -12,7 +12,7 @@ struct ContentView: View {
 
     @Environment(\.scenePhase) private var scenePhase
 
-    @StateObject private var authenticationViewModel = AuthenticationViewModel()
+    @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     var body: some View {
         ZStack {
@@ -29,7 +29,6 @@ struct ContentView: View {
         }
         .animation(.default, value: authenticationViewModel.state)
         .mfStyle()
-        .environmentObject(authenticationViewModel)
         .environment(\.managedObjectContext, PersistenceController.shared.context)
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {

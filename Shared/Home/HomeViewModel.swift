@@ -90,7 +90,13 @@ class HomeViewModel: ObservableObject {
     }
 
     func copyCode(_ code: String) {
+        #if os(iOS)
         UIPasteboard.general.string = code
+        #elseif os(macOS)
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.writeObjects([code as NSString])
+        #endif
         showCopy = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.showCopy = false

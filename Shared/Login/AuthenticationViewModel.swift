@@ -46,16 +46,21 @@ class AuthenticationViewModel: ObservableObject {
         switch method {
         case .username(let username, let password):
             if username.trimmingCharacters(in: .whitespaces).isEmpty {
-                signInError = "Provided username is empty"
+                await MainActor.run {
+                    signInError = "Provided username is empty"
+                }
                 return .usernameEmpty
             } else if password.isEmpty {
-                signInError = "Provided password is empty"
+                await MainActor.run {
+                    signInError = "Provided password is empty"
+                }
                 return .passwordEmpty
             }
         }
 
         // Actual sign in
-        switch await CloudProvider.shared.signIn(method: method) {
+        let result = await CloudProvider.shared.signIn(method: method)
+        switch result {
         case .success: return nil
         case .failure(let error):
             await MainActor.run {

@@ -23,12 +23,16 @@ struct SignUpView: View {
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
+        #if os(iOS)
         if #available(iOS 16, *) {
             content
                 .presentationDetents([.medium])
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 
     private var content: some View {
@@ -48,11 +52,11 @@ struct SignUpView: View {
                 }
                 .disableAutocorrection(true)
                 .padding(.vertical)
-//            #if os(iOS)
+            #if os(iOS)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
                 .textInputAutocapitalization(.never)
-//            #endif
+            #endif
 
             SecureField("Password", text: $password)
                 .textContentType(.password)

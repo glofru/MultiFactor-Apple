@@ -45,7 +45,9 @@ private struct CodesViewContent: View {
 
     @State private var searched = ""
 
+    #if os(iOS)
     @State private var editMode = EditMode.inactive
+    #endif
     @State private var selected: Set<EncryptedOTP>?
 
     var body: some View {
@@ -74,16 +76,18 @@ private struct CodesViewContent: View {
                     .onMove(perform: moveOTPs)
                     .onDelete(perform: deleteOTPs)
 
+                    #if os(iOS)
                     Spacer(minLength: 100)
-                        #if os(iOS)
                         .listRowSeparator(.hidden)
-                        #endif
+                    #else
+                    Spacer(minLength: 5)
+                    #endif
                 }
-                .id(editMode)
-                .environment(\.editMode, $editMode)
+//                .id(editMode)
                 .listStyle(.plain)
                 .searchable(text: $searched)
                 #if os(iOS)
+                .environment(\.editMode, $editMode)
                 .navigationTitle("MultiFactor")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -102,7 +106,9 @@ private struct CodesViewContent: View {
             }
         }
         .animation(.default, value: encryptedOTPs.isEmpty)
+        #if os(iOS)
         .animation(.default, value: editMode)
+        #endif
     }
 
     private func moveOTPs(from source: IndexSet, to destination: Int) {
