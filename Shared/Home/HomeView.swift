@@ -47,19 +47,6 @@ struct HomeView: View {
                 authenticationViewModel.showSignOut = false
             }
         }
-        .sheet(item: $homeViewModel.sheet, onDismiss: {
-            // Without this SwiftUI seems to be a bit buggy:
-            homeViewModel.sheet = nil
-        }) { type in
-            switch type {
-            case .addQr:
-                AddOTPView(onFillManually: {
-                    homeViewModel.sheet = .addManual
-                })
-            case .addManual:
-                AddOTPManuallyView()
-            }
-        }
 //        .alert(homeViewModel.error ?? "", isPresented: Binding(get: { homeViewModel.error != nil }, set: { _, _ in homeViewModel.error = nil })) { }
         .environmentObject(homeViewModel)
     }
@@ -80,7 +67,6 @@ private struct MFTabBar: View {
                 Image(systemName: "lock")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.label)
             })
             .background(selectedLight(.codes))
 
@@ -98,6 +84,7 @@ private struct MFTabBar: View {
             .frame(width: 50, height: 50)
             .background(.blue)
             .clipShape(Circle())
+            .shadow(color: .blue.opacity(0.5), radius: 10, x: 0, y: 0)
             .contextMenu {
                 Button(action: {
                     homeViewModel.sheet = .addQr
@@ -120,7 +107,6 @@ private struct MFTabBar: View {
                 Image(systemName: "person")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.label)
             })
             .background(selectedLight(.account))
             .contextMenu {
@@ -131,13 +117,17 @@ private struct MFTabBar: View {
                 })
             }
         }
+        .foregroundColor(.label)
         .frame(height: 24)
         .padding()
         .background(.ultraThinMaterial)
         .cornerRadius(20)
-        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 0)
+        .shadow(color: .label.opacity(0.2), radius: 20, x: 0, y: 0)
         .padding(.horizontal, 70)
         .padding(.vertical)
+        .sheet(isPresented: Binding(get: { homeViewModel.sheet != nil }, set: { _, _ in homeViewModel.sheet = nil })) {
+            AddOTPView()
+        }
     }
 
     private func selectedLight(_ tab: Tab) -> some View {

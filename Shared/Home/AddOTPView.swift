@@ -1,5 +1,5 @@
 //
-//  AddOTPView.swift
+//  AddOTPCameraView.swift
 //  MultiFactor
 //
 //  Created by Gianluca Lofrumento on 12/08/22.
@@ -10,7 +10,22 @@ import AVKit
 
 struct AddOTPView: View {
 
-    let onFillManually: () -> Void
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+
+    var body: some View {
+        Group {
+            switch homeViewModel.sheet {
+            case .addQr, .none:
+                AddOTPCameraView()
+            case .addManual:
+                AddOTPManuallyView()
+            }
+        }
+        .animation(.easeIn, value: homeViewModel.sheet)
+    }
+}
+
+private struct AddOTPCameraView: View {
 
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var homeViewModel: HomeViewModel
@@ -69,8 +84,7 @@ struct AddOTPView: View {
             .animation(.default, value: error)
 
             Button(action: {
-                dismiss()
-                onFillManually()
+                homeViewModel.sheet = .addManual
             }, label: {
                 Label("Fill manually", systemImage: "rectangle.and.pencil.and.ellipsis")
                     .gradientBackground(.login)
@@ -81,7 +95,7 @@ struct AddOTPView: View {
     }
 }
 
-struct AddOTPManuallyView: View {
+private struct AddOTPManuallyView: View {
 
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var homeViewModel: HomeViewModel
@@ -525,15 +539,15 @@ private struct MaskedBlur: ViewModifier {
     }
 }
 
-extension View {
-    fileprivate func maskedBlur(qrCode: Binding<DetectedQrCode?>) -> some View {
+private extension View {
+    func maskedBlur(qrCode: Binding<DetectedQrCode?>) -> some View {
         self.modifier(MaskedBlur(qrCode: qrCode))
     }
 }
 #endif
 
-struct AddOTPView_Previews: PreviewProvider {
+struct AddOTPCameraView_Previews: PreviewProvider {
     static var previews: some View {
-        AddOTPView(onFillManually: {})
+        AddOTPView()
     }
 }

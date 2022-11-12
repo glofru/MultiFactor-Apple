@@ -81,8 +81,6 @@
 		99AEFDB228CA33A10019D9FC /* lock.riv in Resources */ = {isa = PBXBuildFile; fileRef = 99AEFDAE28CA33A10019D9FC /* lock.riv */; };
 		99AEFDB528CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
 		99AEFDB628CA482F0019D9FC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEFDB428CA482F0019D9FC /* LoadingView.swift */; };
-		99B2E14628EAFF4F00596479 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B2E14528EAFF4F00596479 /* Bool.swift */; };
-		99B2E14728EAFF4F00596479 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B2E14528EAFF4F00596479 /* Bool.swift */; };
 		99B31E8A28E9F7A900B4F5D5 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E8928E9F7A900B4F5D5 /* RiveRuntime */; };
 		99B31E8F28E9F7BE00B4F5D5 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E8E28E9F7BE00B4F5D5 /* SwiftProtobuf */; };
 		99B31E9228E9F7ED00B4F5D5 /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 99B31E9128E9F7ED00B4F5D5 /* SwiftOTP */; };
@@ -165,7 +163,6 @@
 		999B022528A6D72200F97C69 /* AddOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOTPView.swift; sourceTree = "<group>"; };
 		99AEFDAE28CA33A10019D9FC /* lock.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = lock.riv; sourceTree = "<group>"; };
 		99AEFDB428CA482F0019D9FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		99B2E14528EAFF4F00596479 /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		99B9195128C50F99008E7D6F /* OTPMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPMigration.swift; sourceTree = "<group>"; };
 		99C10D6D28AE85790022324A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		99E875CE28AE7286006931F3 /* Playfair.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Playfair.ttf; sourceTree = "<group>"; };
@@ -249,7 +246,6 @@
 		373408A3288C986800ABB9C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				99B2E14528EAFF4F00596479 /* Bool.swift */,
 				373408AE288CB44700ABB9C4 /* Bundle.swift */,
 				373408A7288C9FDE00ABB9C4 /* Color.swift */,
 				3736911C289BC6160093336E /* SHA256Digest.swift */,
@@ -600,7 +596,6 @@
 				37369117289B1C880093336E /* MFCipher.swift in Sources */,
 				999B022028A6CC1900F97C69 /* AccountView.swift in Sources */,
 				3705873A288A0E7B00E6048C /* LoginView.swift in Sources */,
-				99B2E14628EAFF4F00596479 /* Bool.swift in Sources */,
 				373544E5289C45890052115A /* BiometryType.swift in Sources */,
 				992C961B28AFD3C1004923D5 /* SignUpView.swift in Sources */,
 				3736B214288DA26800C7AEAF /* HomeViewModel.swift in Sources */,
@@ -627,7 +622,6 @@
 				99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */,
 				37C0C21828862CC000553B73 /* MultiFactor.xcdatamodeld in Sources */,
 				378D9F232889DDDA007BDFB6 /* VisualEffectiveView.swift in Sources */,
-				99B2E14728EAFF4F00596479 /* Bool.swift in Sources */,
 				3737A68D2888C9CF007F8DFD /* HomeView.swift in Sources */,
 				999B021E28A6CBF700F97C69 /* CodesView.swift in Sources */,
 				990F0ACF28C7934F00512DC5 /* NSTableView.swift in Sources */,

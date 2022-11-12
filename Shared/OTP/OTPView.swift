@@ -77,6 +77,12 @@ struct OTPView: View {
             })
 
             Button(action: {
+                
+            }, label: {
+                Label("Edit", systemImage: "pencil")
+            })
+
+            Button(action: {
                 print("Share")
             }, label: {
                 Label("Share", systemImage: "square.and.arrow.up")
