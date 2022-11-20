@@ -13,8 +13,9 @@ struct AccountView: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
-    @AppStorage("biometryUnlock") private var biometryUnlock: Bool = false
-    @AppStorage("biometryType") private var biometryType: BiometryType?
+    @AppStorage(MFKeys.biometryType) private var biometryType: BiometryType?
+    @AppStorage(MFKeys.biometryUnlock) private var biometryUnlock: Bool = false
+    @AppStorage(MFKeys.authenticationFrequency) private var authenticationFrequency = AuthenticationFrequency.always
 
     init() {
         if biometryType == nil {
@@ -31,7 +32,14 @@ struct AccountView: View {
                 Section(header: Text("PROFILE")) {
                     Text(PersistenceController.shared.user?.username ?? "")
 
+                    Picker("Authentication frequency", selection: $authenticationFrequency) {
+                        ForEach(AuthenticationFrequency.allCases, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+
                     Toggle("Unlock with \(biometryType!.name)", isOn: $biometryUnlock)
+                        .disabled(authenticationFrequency == .never)
                 }
 
                 Section(header: Text("ABOUT")) {

@@ -83,28 +83,27 @@ private struct CodesViewContent: View {
                     Spacer(minLength: 5)
                     #endif
                 }
-//                .id(editMode)
-                .listStyle(.plain)
-                .searchable(text: $searched)
-                #if os(iOS)
-                .environment(\.editMode, $editMode)
-                .navigationTitle("MultiFactor")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            if editMode == .active {
-                                editMode = .inactive
-                            } else {
-                                editMode = .active
-                            }
-                        }, label: {
-                            Text(editMode == .active ? "Done" : "Edit")
-                        })
-                    }
-                }
-                #endif
             }
         }
+        .listStyle(.plain)
+        .searchable(text: $searched)
+        #if os(iOS)
+        .environment(\.editMode, $editMode)
+        .navigationTitle("MultiFactor")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    if editMode == .active {
+                        editMode = .inactive
+                    } else {
+                        editMode = .active
+                    }
+                }, label: {
+                    Text(editMode == .active ? "Done" : "Edit")
+                })
+            }
+        }
+        #endif
         .animation(.default, value: encryptedOTPs.isEmpty)
         #if os(iOS)
         .animation(.default, value: editMode)

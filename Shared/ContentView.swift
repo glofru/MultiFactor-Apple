@@ -14,6 +14,8 @@ struct ContentView: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
+    @AppStorage(MFKeys.authenticationFrequency) private var authenticationFrequency = AuthenticationFrequency.always
+
     var body: some View {
         ZStack {
             switch authenticationViewModel.state {
@@ -33,7 +35,7 @@ struct ContentView: View {
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .background:
-                authenticationViewModel.onBackground()
+                authenticationViewModel.onBackground(reset: authenticationFrequency == .always)
             case .inactive:
                 return
             case .active:

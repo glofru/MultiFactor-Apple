@@ -26,16 +26,41 @@ class AuthenticationViewModel: ObservableObject {
 
     @Published var showSignOut = false
 
+    @Published private(set) var biometryFailed = false
+    private var authenticationFrequency: AuthenticationFrequency? {
+        AuthenticationFrequency(rawValue: UserDefaults.standard.string(forKey: MFKeys.authenticationFrequency) ?? "")
+    }
+    private var biometryUnlock: Bool {
+        UserDefaults.standard.bool(forKey: MFKeys.biometryUnlock)
+    }
+
     init() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             CloudProvider.shared.addUserDidChangeListener({ user in
                 if user != nil {
                     if self.state == .unknown || self.state == .signedOut {
-                        self.state = .signedInCloud
+                        if self.authenticationFrequency == .never {
+                            Task {
+                                let result = await self.signInMaster(method: .none)
+                                if result == false {
+                                    self.state = .signedInCloud
+                                }
+                            }
+                        } else if self.biometryUnlock {
+                            Task {
+                                let result = await self.signInMaster(method: .biometric)
+                                if result == false {
+                                    self.state = .signedInCloud
+                                }
+                            }
+                        } else {
+                            self.state = .signedInCloud
+                        }
                     }
                 } else {
                     self.state = .signedOut
                 }
+
                 self.user = user
             })
         }
@@ -80,12 +105,15 @@ class AuthenticationViewModel: ObservableObject {
                 let reason = "We need to unlock your data."
 
                 guard let success = try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason), success else {
+                    biometryFailed = true
                     return false
                 }
             } else {
                 return false
             }
         }
+
+        biometryFailed = false
 
         do {
             // Retrieve key from cloud or persistance
@@ -105,7 +133,8 @@ class AuthenticationViewModel: ObservableObject {
                     throw AuthenticationError.passwordEmpty
                 }
                 MFCipher.setKeyFrom(password: password)
-            case .biometric:
+            case .biometric: fallthrough
+            case .none:
                 guard let masterPassword = PersistenceController.shared.masterPassword else {
                     throw CloudError.keyNotFound
                 }
@@ -179,11 +208,14 @@ class AuthenticationViewModel: ObservableObject {
         MFClock.shared.start()
     }
 
-    func onBackground() {
+    func onBackground(reset: Bool = true) {
         if state == .signedInMaster {
             MFClock.shared.stop()
-            TOTPViewModel.reset()
-            state = .signedInCloud
+
+            if reset {
+                TOTPViewModel.reset()
+                state = .signedInCloud
+            }
         }
     }
 }
@@ -206,10 +238,20 @@ enum CloudAuthenticationMethod {
 enum MasterAuthenticationMethod {
     case password(String)
     case biometric
+    case none
 }
 
 enum AuthenticationState {
-    case signedInCloud, signedInMaster, signedOut, unknown
+    case signedInCloud
+    case signedInMaster
+    case signedOut
+    case unknown
+}
+
+enum AuthenticationFrequency: String, CaseIterable {
+    case always = "Always"
+    case onlyTheFirstTime = "Only first time"
+    case never = "Never"
 }
 
 enum AuthenticationError: LocalizedError {

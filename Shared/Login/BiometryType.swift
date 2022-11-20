@@ -8,7 +8,9 @@
 import LocalAuthentication
 
 enum BiometryType: String {
-    case faceID, touchID, none
+    case faceID
+    case touchID
+    case none
 
     init(from biometry: LABiometryType) {
         switch biometry {

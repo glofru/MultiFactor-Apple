@@ -10,6 +10,8 @@ import SwiftUI
 struct OTPView: View {
     static private let cornerRadius = 12.0
 
+    @Environment(\.scenePhase) private var scenePhase
+
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject private var totpViewModel: TOTPViewModel
 
@@ -106,6 +108,11 @@ struct OTPView: View {
             case .edit: Text(String(describing: type))
             case .share: ShareOTPView(totpViewModel: totpViewModel)
             case .delete: Text(String(describing: type))
+            }
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                totpViewModel.generateCode(for: .now)
             }
         }
     }
@@ -223,7 +230,8 @@ private struct LoadingSpinner: View {
 
     static private let lineWidth = 3
 
-    @AppStorage("loadingSpinner") private var isTime = false
+    @AppStorage(MFKeys.loadingSpinner) private var isTime = false
+
     @ObservedObject private var clock = MFClock.shared
 
     init(period: DecryptedOTP.Period) {

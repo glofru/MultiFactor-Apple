@@ -220,3 +220,11 @@ extension EncryptedOTP {
         self.id?.isEmpty == false && self.secret?.isEmpty == false
     }
 }
+
+//MARK: UserDefaults keys
+class MFKeys {
+    static let authenticationFrequency = "authenticationFrequency"
+    static let biometryType = "biometryType"
+    static let biometryUnlock = "biometryUnlock"
+    static let loadingSpinner = "loadingSpinner"
+}

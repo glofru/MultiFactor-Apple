@@ -149,8 +149,10 @@ struct MasterLoginView: View {
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
-    @AppStorage("biometryUnlock") private var biometryUnlock: Bool?
-    @AppStorage("biometryType") private var biometryType: BiometryType?
+    @Environment(\.scenePhase) private var scenePhase
+
+    @AppStorage(MFKeys.biometryType) private var biometryType = BiometryType.none
+    @AppStorage(MFKeys.biometryUnlock) private var biometryUnlock = false
 
     @State private var isSigningIn = false
     @State private var password = ""
@@ -202,11 +204,11 @@ struct MasterLoginView: View {
         .padding()
         .animation(.default, value: isSigningIn)
         .disabled(isSigningIn)
-        .task(id: "biometryUnlock", priority: .userInitiated) {
-            if biometryUnlock == true {
-                await signInBiometric()
-            } else {
-                focusPassword = true
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active && biometryUnlock && !authenticationViewModel.biometryFailed {
+                Task {
+                    await authenticationViewModel.signInMaster(method: .biometric)
+                }
             }
         }
     }
