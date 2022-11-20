@@ -122,7 +122,7 @@ private struct MFTabBar: View {
         .padding()
         .background(.ultraThinMaterial)
         .cornerRadius(20)
-        .shadow(color: .label.opacity(0.2), radius: 20, x: 0, y: 0)
+        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 0)
         .padding(.horizontal, 70)
         .padding(.vertical)
         .sheet(isPresented: Binding(get: { homeViewModel.sheet != nil }, set: { _, _ in homeViewModel.sheet = nil })) {

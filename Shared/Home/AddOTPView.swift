@@ -476,7 +476,9 @@ private class QrScanViewController: UIViewController, AVCaptureMetadataOutputObj
         videoPreviewLayer!.frame = view.layer.bounds
         view.layer.addSublayer(videoPreviewLayer!)
 
-        captureSession.startRunning()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.captureSession.startRunning()
+        }
 
         qrCodeFrameView = UIView()
         if let qrCodeFrameView = qrCodeFrameView {

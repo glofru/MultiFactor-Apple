@@ -103,7 +103,7 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    enum AddOTPError: Error, LocalizedError {
+    private enum AddOTPError: Error, LocalizedError {
         case urlInvalid
         case secretInvalid
         case encryptionFailed
@@ -177,7 +177,10 @@ private extension DecryptedOTP {
             }
 
             var labelPath = components.path
-            labelPath.removeFirst() // remove leading slash
+            if !labelPath.isEmpty {
+                labelPath.removeFirst() // remove leading slash
+                labelPath = labelPath.split(separator: ":").last?.description ?? ""
+            }
 
             return [DecryptedOTP(secret: secret, issuer: issuer, label: labelPath, algorithm: algorithm, digits: digits, period: period)]
         case "otpauth-migration":

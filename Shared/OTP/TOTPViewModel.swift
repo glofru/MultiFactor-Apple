@@ -41,8 +41,25 @@ class TOTPViewModel: ObservableObject, Identifiable {
             self.code = totp.generate(time: date) ?? ""
         }
     }
+
+    func encode() -> String? {
+        if let totp {
+            return "otpauth://totp/\(label ?? "")?secret=\(totp.secret.base32EncodedString)&issuer=\(issuer ?? "")&period=\(period.rawValue)&digits=\(totp.digits)&algorithm=\(totp.algorithm)"
+        } else {
+            return nil
+        }
+    }
+
+    func saveQRCodeInLibrary(onCompleted: @escaping (ImageSaver.Result) -> Void) {
+        if let url = encode() {
+            ImageSaver().saveQRInLibrary(text: url, onCompleted: onCompleted)
+        } else {
+            onCompleted(.qrGenerationFailed)
+        }
+    }
 }
 
+// Instances handling
 extension TOTPViewModel {
     static private var instancesMappings = [OTPIdentifier: TOTPViewModel]()
     static func getInstance(otp: EncryptedOTP) -> TOTPViewModel {

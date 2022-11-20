@@ -13,6 +13,8 @@ struct OTPView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject private var totpViewModel: TOTPViewModel
 
+    @State private var presentedActionSheet: PresentedActionSheet? = nil
+
     init(viewModel: TOTPViewModel) {
         _totpViewModel = StateObject(wrappedValue: viewModel)
     }
@@ -53,7 +55,10 @@ struct OTPView: View {
                 Text(totpViewModel.code)
                     .font(.custom("Poppins", size: 20).monospaced())
                     .onReceive(MFClock.shared.$time) { time in
-                        totpViewModel.generateCode(for: time)
+                        // Avoid the sheet to reload if the code is updated
+                        if presentedActionSheet == nil {
+                            totpViewModel.generateCode(for: time)
+                        }
                     }
                     .onAppear {
                         totpViewModel.generateCode(for: .now)
@@ -77,34 +82,142 @@ struct OTPView: View {
             })
 
             Button(action: {
-                
+                presentedActionSheet = .edit
             }, label: {
                 Label("Edit", systemImage: "pencil")
             })
 
             Button(action: {
-                print("Share")
+                presentedActionSheet = .share
             }, label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             })
 
             Button(role: .destructive, action: {
-                Task {
-                    try? await Task.sleep(nanoseconds: 400_000)
-                    await homeViewModel.deleteOTP(totpViewModel.id)
-                }
+                presentedActionSheet = .delete
             }, label: {
                 Label("Delete", systemImage: "trash")
             })
+        }
+        .sheet(item: $presentedActionSheet, onDismiss: {
+            totpViewModel.generateCode(for: .now)
+        }) { type in
+            switch type {
+            case .edit: Text(String(describing: type))
+            case .share: ShareOTPView(totpViewModel: totpViewModel)
+            case .delete: Text(String(describing: type))
+            }
         }
     }
 
     private func copyCode() {
         homeViewModel.copyCode(totpViewModel.code)
     }
+
+    private enum PresentedActionSheet: Identifiable {
+        case edit, share, delete
+
+        var id: UUID {
+            UUID()
+        }
+    }
 }
 
-struct LoadingSpinner: View {
+private struct ShareOTPView: View {
+
+    @ObservedObject var totpViewModel: TOTPViewModel
+
+    @State private var showQrCode = false
+    @State private var resultQRCode: ImageSaver.Result?
+
+    @State private var showDownload = false
+
+    private var size: CGFloat {
+        UIScreen.main.bounds.size.width - 32
+    }
+
+    var body: some View {
+        NavigationView {
+            VStack(alignment: .center) {
+                Button(action: {
+                    showQrCode.toggle()
+                }, label: {
+                    Group {
+                        if showQrCode {
+                            if let qrCode = totpViewModel.encode()?.qrCode {
+                                Image(uiImage: qrCode)
+                                    .resizable()
+                                    .padding()
+                                    .background(.white)
+                                    .id("qrCode")
+                            } else {
+                                Text("There was an error generating the QR code.")
+                            }
+                        } else {
+                            Image(systemName: "lock.shield")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.label)
+                                .id("lock")
+                        }
+                    }
+                    .frame(width: size, height: size)
+                    .background(Color.label.opacity(0.2))
+                    .cornerRadius(30)
+                    .animation(.default, value: showQrCode)
+                })
+                .padding(.bottom)
+
+                Button(action: {
+                    showQrCode.toggle()
+                }, label: {
+                    Label(showQrCode ? "Hide QR code" : "Show QR code", systemImage: showQrCode ? "eye.slash" : "eye")
+                        .gradientBackground(.login)
+                })
+            }
+            .padding()
+            .navigationTitle(totpViewModel.issuer ?? "Share")
+            .toolbar {
+                Button(action: {
+                    showDownload = true
+                }, label: {
+                    Image(systemName: "square.and.arrow.down")
+                })
+            }
+        }
+        .confirmationDialog("Save on gallery", isPresented: $showDownload, actions: {
+            Button(role: .destructive, action: {
+                totpViewModel.saveQRCodeInLibrary(onCompleted: { result in
+                    self.resultQRCode = result
+                })
+            }, label: {
+                Text("Save")
+            })
+        }, message: {
+            Text("Are you sure do you want to save the QR code in your gallery? This is not a safe choice to protect your sensitive data.")
+        })
+        .alert(item: $resultQRCode) { result in
+            let title: String
+            let message: String
+            switch result {
+            case .success:
+                title = "Info"
+                message = "QR code successfully saved."
+            case .qrGenerationFailed:
+                title = "Error"
+                message = "There was an error generating the QR code."
+            case .savingFailed: fallthrough
+            default:
+                title = "Error"
+                message = "There was an error saving the image. Be sure to give the permissions under Settings > MultiFactor."
+            }
+            return Alert(title: Text(title), message: Text(message), dismissButton: .default(Text("Ok")))
+        }
+    }
+}
+
+private struct LoadingSpinner: View {
 
     private let period: Double
 
@@ -160,8 +273,9 @@ struct LoadingSpinner: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        return OTPView(viewModel: TOTPViewModel.getInstance(otp: .init(entity: .init(), insertInto: .none)))
-            .padding()
+//        return OTPView(viewModel: TOTPViewModel.getInstance(otp: .init(entity: .init(), insertInto: .none)))
+//            .padding()
+        return ShareOTPView(totpViewModel: .getInstance(otp: .init(entity: .init(), insertInto: .none)))
     }
 }
 
