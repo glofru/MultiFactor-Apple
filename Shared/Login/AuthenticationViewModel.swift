@@ -105,7 +105,9 @@ class AuthenticationViewModel: ObservableObject {
                 let reason = "We need to unlock your data."
 
                 guard let success = try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason), success else {
-                    biometryFailed = true
+                    await MainActor.run {
+                        biometryFailed = true
+                    }
                     return false
                 }
             } else {
@@ -113,7 +115,9 @@ class AuthenticationViewModel: ObservableObject {
             }
         }
 
-        biometryFailed = false
+        await MainActor.run {
+            biometryFailed = false
+        }
 
         do {
             // Retrieve key from cloud or persistance

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MultiFactor (iOS).xcscheme_^#shared#^_</key>
+		<key>MultiFactor (iOS).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -17,21 +17,21 @@
 		<key>Promises (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<false />
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
 		<key>Promises (Playground) 2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<false />
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 		<key>Promises (Playground).xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<false />
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>

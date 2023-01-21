@@ -7,6 +7,11 @@
 
 import Foundation
 
+class CloudProvider {
+    private init() { }
+    static let shared: MFCloudProvider = FirebaseCloudProvider.shared
+}
+
 protocol MFCloudProvider {
 
     static var shared: Self { get }
@@ -53,9 +58,4 @@ enum CloudError: Error, LocalizedError {
             return "Key fail: \(string)"
         }
     }
-}
-
-class CloudProvider {
-    private init() { }
-    static let shared: MFCloudProvider = FirebaseCloudProvider.shared
 }

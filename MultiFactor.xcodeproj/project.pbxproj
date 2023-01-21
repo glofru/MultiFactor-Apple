@@ -92,10 +92,10 @@
 		99B9195328C50F99008E7D6F /* OTPMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B9195128C50F99008E7D6F /* OTPMigration.swift */; };
 		99C10D6E28AE85790022324A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C10D6D28AE85790022324A /* Text.swift */; };
 		99C10D6F28AE85790022324A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C10D6D28AE85790022324A /* Text.swift */; };
+		99CD5E1D2954169C00451A88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99CD5E1C2954169C00451A88 /* GoogleService-Info.plist */; };
+		99CD5E1E2954169C00451A88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99CD5E1C2954169C00451A88 /* GoogleService-Info.plist */; };
 		99E875CF28AE7286006931F3 /* Playfair.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99E875CE28AE7286006931F3 /* Playfair.ttf */; };
 		99E875D028AE7286006931F3 /* Playfair.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99E875CE28AE7286006931F3 /* Playfair.ttf */; };
-		99E966CD292A01A500ECDF96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99E966CC292A01A500ECDF96 /* GoogleService-Info.plist */; };
-		99E966CE292A01A500ECDF96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99E966CC292A01A500ECDF96 /* GoogleService-Info.plist */; };
 		99E966D0292A076B00ECDF96 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E966CF292A076B00ECDF96 /* ImageSaver.swift */; };
 		99E966D1292A076B00ECDF96 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E966CF292A076B00ECDF96 /* ImageSaver.swift */; };
 /* End PBXBuildFile section */
@@ -166,8 +166,8 @@
 		99AEFDB428CA482F0019D9FC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		99B9195128C50F99008E7D6F /* OTPMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPMigration.swift; sourceTree = "<group>"; };
 		99C10D6D28AE85790022324A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		99CD5E1C2954169C00451A88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99E875CE28AE7286006931F3 /* Playfair.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Playfair.ttf; sourceTree = "<group>"; };
-		99E966CC292A01A500ECDF96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99E966CF292A076B00ECDF96 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -319,8 +319,8 @@
 				37058723288A023100E6048C /* AppDelegate.swift */,
 				37C0C1EE28862CBD00553B73 /* MultiFactorApp.swift */,
 				37C0C1EF28862CBD00553B73 /* ContentView.swift */,
+				99CD5E1C2954169C00451A88 /* GoogleService-Info.plist */,
 				37C0C1F128862CBF00553B73 /* Assets.xcassets */,
-				99E966CC292A01A500ECDF96 /* GoogleService-Info.plist */,
 				37C0C1EC28862CBD00553B73 /* MultiFactor.xcdatamodeld */,
 			);
 			path = Shared;
@@ -535,9 +535,9 @@
 			files = (
 				37C0C21F28862CC000553B73 /* Assets.xcassets in Resources */,
 				990F0ACA28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
+				99CD5E1D2954169C00451A88 /* GoogleService-Info.plist in Resources */,
 				99E875CF28AE7286006931F3 /* Playfair.ttf in Resources */,
 				99AEFDB128CA33A10019D9FC /* lock.riv in Resources */,
-				99E966CD292A01A500ECDF96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,9 +547,9 @@
 			files = (
 				37C0C22028862CC000553B73 /* Assets.xcassets in Resources */,
 				990F0ACB28C7822200512DC5 /* Poppins-Bold.ttf in Resources */,
+				99CD5E1E2954169C00451A88 /* GoogleService-Info.plist in Resources */,
 				99E875D028AE7286006931F3 /* Playfair.ttf in Resources */,
 				99AEFDB228CA33A10019D9FC /* lock.riv in Resources */,
-				99E966CE292A01A500ECDF96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -105,9 +105,9 @@ struct OTPView: View {
             totpViewModel.generateCode(for: .now)
         }) { type in
             switch type {
-            case .edit: Text(String(describing: type))
+            case .edit: EditOTPView(totpViewModel: totpViewModel)
             case .share: ShareOTPView(totpViewModel: totpViewModel)
-            case .delete: Text(String(describing: type))
+            case .delete: DeleteOTPView(totpViewModel: totpViewModel)
             }
         }
         .onChange(of: scenePhase) { newPhase in
@@ -126,6 +126,103 @@ struct OTPView: View {
 
         var id: UUID {
             UUID()
+        }
+    }
+}
+
+private struct EditOTPView: View {
+
+    @Environment(\.dismiss) private var dismiss
+
+    @ObservedObject var totpViewModel: TOTPViewModel
+
+    @State private var hideSecret = true
+
+    static private let placeholderSecret = "••••••••••"
+
+    @State private var issuer: String
+    @State private var label: String
+    @State private var algorithm: DecryptedOTP.Algorithm
+    @State private var digits: DecryptedOTP.Digits
+    @State private var period: DecryptedOTP.Period
+
+    init(totpViewModel: TOTPViewModel) {
+        self.totpViewModel = totpViewModel
+
+        self._issuer = State(initialValue: totpViewModel.issuer ?? "")
+        self._label = State(initialValue: totpViewModel.label ?? "")
+        self._algorithm = State(initialValue: totpViewModel.algorithm)
+        self._digits = State(initialValue: totpViewModel.digits)
+        self._period = State(initialValue: totpViewModel.period)
+    }
+
+    var body: some View {
+        Group {
+            Form {
+                Section(header: Text("Secret"), footer: Text("Click to reveal")) {
+                    Button(hideSecret ? EditOTPView.placeholderSecret : totpViewModel.secret) {
+                        hideSecret.toggle()
+                    }
+                            .foregroundColor(.label)
+                }
+
+                Section("Issuer") {
+                    TextField("Name", text: self.$issuer)
+                }
+
+                Section("Label") {
+                    TextField("Name", text: self.$label)
+                }
+
+                Section("Algorithm") {
+                    Picker("Algorithm", selection: self.$algorithm) {
+                        ForEach(DecryptedOTP.Algorithm.allCases, id: \.self) { algorithm in
+                            Text(algorithm.rawValue.uppercased())
+                                    .tag(algorithm)
+                        }
+                    }
+                            .pickerStyle(.segmented)
+                }
+
+                Section("Digits") {
+                    Picker("Digits", selection: self.$digits) {
+                        ForEach(DecryptedOTP.Digits.allCases, id: \.self) { digit in
+                            Text("\(digit.rawValue)")
+                                    .tag(digit)
+                        }
+                    }
+                            .pickerStyle(.segmented)
+                }
+
+                Section("Period") {
+                    Picker("Period", selection: self.$period) {
+                        ForEach(DecryptedOTP.Period.allCases, id: \.self) { period in
+                            Text("\(period.rawValue)")
+                                    .tag(period)
+                        }
+                    }
+                            .pickerStyle(.segmented)
+                }
+            }
+                    .textFieldStyle(.plain)
+
+            Button(action: {
+                totpViewModel.issuer = issuer
+                totpViewModel.label = label
+                totpViewModel.algorithm = algorithm
+                totpViewModel.digits = digits
+                totpViewModel.period = period
+
+                Task {
+                    try? await totpViewModel.update()
+                }
+
+                dismiss()
+            }, label: {
+                Label("Save", systemImage: "pencil.line")
+                        .gradientBackground(.login)
+            })
+                    .padding()
         }
     }
 }
@@ -224,13 +321,22 @@ private struct ShareOTPView: View {
     }
 }
 
+private struct DeleteOTPView: View {
+
+    @ObservedObject var totpViewModel: TOTPViewModel
+
+    var body: some View {
+        Text("Delete")
+    }
+}
+
 private struct LoadingSpinner: View {
 
     private let period: Double
 
     static private let lineWidth = 3
 
-    @AppStorage(MFKeys.loadingSpinner) private var isTime = false
+    @AppStorage(MFKeys.loadingSpinner) private var showTime = true
 
     @ObservedObject private var clock = MFClock.shared
 
@@ -239,7 +345,7 @@ private struct LoadingSpinner: View {
     }
 
     private var loadingColor: Color {
-        if isTime {
+        if showTime {
             return clock.loaded > 0.16 ? .green : .red
         } else {
             return clock.loaded > 0.3 ? .green : clock.loaded > 0.1 ? .yellow : .red
@@ -248,7 +354,7 @@ private struct LoadingSpinner: View {
 
     var body: some View {
         ZStack {
-            if isTime {
+            if showTime {
                 Text("0:\(String(format: "%02d", Int(self.period * clock.loaded)))")
                     .font(.custom("Poppins", size: 16).monospaced())
                     .padding(4)
@@ -269,11 +375,11 @@ private struct LoadingSpinner: View {
             }
         }
         .animation(.linear(duration: 1), value: clock.loaded)
-        .animation(.default, value: isTime)
+        .animation(.default, value: showTime)
         .highPriorityGesture(
             TapGesture()
                 .onEnded {
-                    isTime.toggle()
+                    showTime.toggle()
                 }
         )
     }

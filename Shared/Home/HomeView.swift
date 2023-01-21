@@ -39,7 +39,7 @@ struct HomeView: View {
             #endif
         }
         .confirmationDialog("Do you want to sign out?", isPresented: $authenticationViewModel.showSignOut, titleVisibility: .visible) {
-            Button("Sign out", role: .destructive) {
+            Button("Yes", role: .destructive) {
                 authenticationViewModel.signOut()
             }
 
