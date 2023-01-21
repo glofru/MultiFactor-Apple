@@ -50,6 +50,8 @@ private struct CodesViewContent: View {
     #endif
     @State private var selected: Set<EncryptedOTP>?
 
+    @State private var beingDeleted: TOTPViewModel?
+
     var body: some View {
         ZStack {
             if encryptedOTPs.isEmpty {
@@ -59,26 +61,26 @@ private struct CodesViewContent: View {
                     ForEach(encryptedOTPs, id: \.id) { otp in
                         Group {
                             if otp.isValid &&
-                                (searched.isEmpty ||
-                                 TOTPViewModel.getInstance(otp: otp).issuer?.lowercased().contains(searched.lowercased()) == true ||
-                                 TOTPViewModel.getInstance(otp: otp).label?.lowercased().contains(searched.lowercased()) == true) {
+                                       (searched.isEmpty ||
+                                               TOTPViewModel.getInstance(otp: otp).issuer?.lowercased().contains(searched.lowercased()) == true ||
+                                               TOTPViewModel.getInstance(otp: otp).label?.lowercased().contains(searched.lowercased()) == true) {
                                 OTPView(viewModel: TOTPViewModel.getInstance(otp: otp))
-                                    .padding(.vertical, 5)
+                                        .padding(.vertical, 5)
                             } else {
                                 EmptyView()
                             }
                         }
-                        #if os(iOS)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(.init(top: 5, leading: 16, bottom: 5, trailing: 16))
-                        #endif
+                                #if os(iOS)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(.init(top: 5, leading: 16, bottom: 5, trailing: 16))
+                                #endif
                     }
-                    .onMove(perform: moveOTPs)
-                    .onDelete(perform: deleteOTPs)
+                            .onMove(perform: moveOTPs)
+                            .onDelete(perform: deleteOTPs)
 
                     #if os(iOS)
                     Spacer(minLength: 100)
-                        .listRowSeparator(.hidden)
+                            .listRowSeparator(.hidden)
                     #else
                     Spacer(minLength: 5)
                     #endif
@@ -87,6 +89,9 @@ private struct CodesViewContent: View {
         }
         .listStyle(.plain)
         .searchable(text: $searched)
+        .sheet(item: $beingDeleted) { totpViewModel in
+            DeleteOTPView(totpViewModel: totpViewModel)
+        }
         #if os(iOS)
         .environment(\.editMode, $editMode)
         .navigationTitle("MultiFactor")
@@ -125,12 +130,8 @@ private struct CodesViewContent: View {
     }
 
     private func deleteOTPs(at offset: IndexSet) {
-        var ids = [OTPIdentifier]()
-        offset.forEach { i in
-            ids.append(encryptedOTPs[i].id!)
-        }
-        Task(priority: .userInitiated) {
-            await homeViewModel.deleteOTPs(ids)
+        if let first = offset.first {
+            self.beingDeleted = TOTPViewModel.getInstance(otp: encryptedOTPs[first])
         }
     }
 }

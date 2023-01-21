@@ -83,12 +83,6 @@ class HomeViewModel: ObservableObject {
         try? await CloudProvider.shared.deleteOTP(otp)
     }
 
-    func deleteOTPs(_ otps: [OTPIdentifier]) async {
-        for otp in otps {
-            await deleteOTP(otp)
-        }
-    }
-
     func copyCode(_ code: String) {
         #if os(iOS)
         UIPasteboard.general.string = code

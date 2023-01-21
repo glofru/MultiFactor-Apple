@@ -321,12 +321,58 @@ private struct ShareOTPView: View {
     }
 }
 
-private struct DeleteOTPView: View {
+struct DeleteOTPView: View {
+
+    @Environment(\.dismiss) private var dismiss
+
+    @EnvironmentObject private var homeViewModel: HomeViewModel
 
     @ObservedObject var totpViewModel: TOTPViewModel
 
+    @State private var showConfirmation = false
+
     var body: some View {
-        Text("Delete")
+        NavigationView {
+            VStack {
+                Text(totpViewModel.issuer?.isEmpty == false ? "Are you sure you want to delete \"\(totpViewModel.issuer!)\"?" : "Are you sure you want to delete this OTP?")
+                        .font(.largeTitle)
+                        .bold()
+
+                Spacer()
+
+                Text("This OTP will be deleted from all of your devices. Once deleted, it cannot be recovered in any way.")
+                        .multilineTextAlignment(.center)
+
+                Button(action: {
+                    showConfirmation = true
+                }, label: {
+                    Label("Delete", systemImage: "trash")
+                            .gradientBackground(.signUp)
+                })
+
+                Spacer()
+            }
+                    .padding()
+                    .toolbar {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Text("Cancel")
+                        })
+                    }
+                    .confirmationDialog("Deleting this OTP is an IRREVERSIBLE action. Are you sure you want to proceed?", isPresented: $showConfirmation, titleVisibility: .visible) {
+                        Button("Yes", role: .destructive) {
+                            Task(priority: .userInitiated) {
+                                await homeViewModel.deleteOTP(totpViewModel.id)
+                            }
+                            dismiss()
+                        }
+
+                        Button("Cancel", role: .cancel) {
+                            dismiss()
+                        }
+                    }
+        }
     }
 }
 
