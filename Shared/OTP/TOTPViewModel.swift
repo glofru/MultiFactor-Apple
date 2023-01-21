@@ -75,7 +75,7 @@ class TOTPViewModel: ObservableObject, Identifiable {
                 DecryptedOTP.CodingKeys.label.rawValue: encrypted.label,
                 DecryptedOTP.CodingKeys.algorithm.rawValue: encrypted.algorithm.rawValue,
                 DecryptedOTP.CodingKeys.digits.rawValue: encrypted.digits.rawValue,
-                DecryptedOTP.CodingKeys.period.rawValue: encrypted.period.rawValue,
+                DecryptedOTP.CodingKeys.period.rawValue: encrypted.period.rawValue
             ])
         }
     }

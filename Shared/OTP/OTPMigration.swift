@@ -15,7 +15,7 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+private struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
@@ -172,7 +172,7 @@ extension MigrationPayload.Algorithm: CaseIterable {
     .sha1,
     .sha256,
     .sha512,
-    .md5,
+    .md5
   ]
 }
 
@@ -181,7 +181,7 @@ extension MigrationPayload.DigitCount: CaseIterable {
   static var allCases: [MigrationPayload.DigitCount] = [
     .unspecified,
     .six,
-    .eight,
+    .eight
   ]
 }
 
@@ -190,7 +190,7 @@ extension MigrationPayload.OtpType: CaseIterable {
   static var allCases: [MigrationPayload.OtpType] = [
     .unspecified,
     .hotp,
-    .totp,
+    .totp
   ]
 }
 
@@ -213,7 +213,7 @@ extension MigrationPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     2: .same(proto: "version"),
     3: .standard(proto: "batch_size"),
     4: .standard(proto: "batch_index"),
-    5: .standard(proto: "batch_id"),
+    5: .standard(proto: "batch_id")
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -268,7 +268,7 @@ extension MigrationPayload.Algorithm: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "ALGORITHM_SHA1"),
     2: .same(proto: "ALGORITHM_SHA256"),
     3: .same(proto: "ALGORITHM_SHA512"),
-    4: .same(proto: "ALGORITHM_MD5"),
+    4: .same(proto: "ALGORITHM_MD5")
   ]
 }
 
@@ -276,7 +276,7 @@ extension MigrationPayload.DigitCount: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "DIGIT_COUNT_UNSPECIFIED"),
     1: .same(proto: "DIGIT_COUNT_SIX"),
-    2: .same(proto: "DIGIT_COUNT_EIGHT"),
+    2: .same(proto: "DIGIT_COUNT_EIGHT")
   ]
 }
 
@@ -284,7 +284,7 @@ extension MigrationPayload.OtpType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "OTP_TYPE_UNSPECIFIED"),
     1: .same(proto: "OTP_TYPE_HOTP"),
-    2: .same(proto: "OTP_TYPE_TOTP"),
+    2: .same(proto: "OTP_TYPE_TOTP")
   ]
 }
 
@@ -297,7 +297,7 @@ extension MigrationPayload.OtpParameters: SwiftProtobuf.Message, SwiftProtobuf._
     4: .same(proto: "algorithm"),
     5: .same(proto: "digits"),
     6: .same(proto: "type"),
-    7: .same(proto: "counter"),
+    7: .same(proto: "counter")
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {

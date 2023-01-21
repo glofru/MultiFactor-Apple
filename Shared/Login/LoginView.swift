@@ -121,7 +121,7 @@ struct LoginView: View {
                     case .passwordIncorrect: fallthrough
                     case .passwordsDoNotMatch:
                         focusedField = .password
-                    case .unknown(_):
+                    case .unknown:
                         focusedField = nil
                     }
                 }
@@ -229,7 +229,7 @@ struct MasterLoginView: View {
     private func signInBiometric() async {
         password = "******"
         isSigningIn = true
-        let _ = await authenticationViewModel.signInMaster(method: .biometric)
+        _ = await authenticationViewModel.signInMaster(method: .biometric)
         isSigningIn = false
     }
 }

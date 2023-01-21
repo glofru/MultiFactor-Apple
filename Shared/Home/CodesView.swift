@@ -32,7 +32,7 @@ struct CodesView: View {
         }
     }
 }
-    
+
 private struct CodesViewContent: View {
 
     @EnvironmentObject private var homeViewModel: HomeViewModel

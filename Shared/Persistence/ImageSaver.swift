@@ -9,7 +9,7 @@ import SwiftUI
 
 class ImageSaver: NSObject {
 
-    private var onCompleted: ((Result) -> Void)? = nil
+    private var onCompleted: ((Result) -> Void)?
 
     func saveQRInLibrary(text: String, onCompleted: @escaping (Result) -> Void) {
         if let image = text.qrCode {

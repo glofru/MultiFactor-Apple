@@ -25,7 +25,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
     private var handle: AuthStateDidChangeListenerHandle?
     private var otpListenerRegistration: ListenerRegistration?
 
-    //MARK: Authentication
+    // MARK: Authentication
     func signIn(method: CloudAuthenticationMethod) async -> Result<MFUser, AuthenticationError> {
         switch method {
         case .username(let username, let password):
@@ -67,7 +67,7 @@ final class FirebaseCloudProvider: MFCloudProvider {
         })
     }
 
-    //MARK: OTP
+    // MARK: OTP
     func addOTP(_ otp: CloudEncryptedOTP) async throws {
         guard let user = firebaseUser else {
             throw CloudError.userNotLogged
@@ -201,7 +201,7 @@ extension MFUser {
         guard let user = firebaseUser else {
             return nil
         }
-        
+
         self.id = user.uid
         self.username = user.email ?? ""
     }

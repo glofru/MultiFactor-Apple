@@ -52,7 +52,7 @@ struct DecryptedOTP: Codable, Identifiable {
         static let standard = Period.thirty
     }
 
-    //MARK: CodingKeys needed to update
+    // MARK: CodingKeys needed to update
     enum CodingKeys: String, CodingKey {
         case id
         case secret

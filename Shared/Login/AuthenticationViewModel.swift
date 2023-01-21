@@ -10,7 +10,7 @@ import LocalAuthentication
 
 class AuthenticationViewModel: ObservableObject {
 
-    @Published private(set) var user: MFUser? = nil {
+    @Published private(set) var user: MFUser? {
         didSet {
             PersistenceController.shared.user = user
         }
@@ -183,7 +183,6 @@ class AuthenticationViewModel: ObservableObject {
             throw AuthenticationError.passwordEmpty
         }
 
-        
     }
 
     func signOut() {

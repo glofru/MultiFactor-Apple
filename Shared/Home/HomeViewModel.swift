@@ -56,7 +56,7 @@ class HomeViewModel: ObservableObject {
                     return
                 }
 
-                let _ = group.addTaskUnlessCancelled(priority: .userInitiated) {
+                _ = group.addTaskUnlessCancelled(priority: .userInitiated) {
                     try await CloudProvider.shared.addOTP(encrypted)
                 }
             }
@@ -67,7 +67,7 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    func moveOTPs(_ otps: [EncryptedOTP]) async{
+    func moveOTPs(_ otps: [EncryptedOTP]) async {
         await withTaskGroup(of: Void.self) { group in
             for otp in otps {
                 group.addTask(priority: .userInitiated) {

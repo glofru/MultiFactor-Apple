@@ -18,14 +18,14 @@ protocol MFCloudProvider {
 
     func initialize()
 
-    //MARK: Authentication
+    // MARK: Authentication
     func signIn(method: CloudAuthenticationMethod) async -> Result<MFUser, AuthenticationError>
     func signOut()
     func sendResetPasswordLink(to email: String) async -> Result<Bool, AuthenticationError>
 
     func addUserDidChangeListener(_ listener: @escaping (MFUser?) -> Void)
 
-    //MARK: OTP
+    // MARK: OTP
     func addOTP(_ otp: CloudEncryptedOTP) async throws
     func updateOTP(id: OTPIdentifier, data: [AnyHashable: Any]) async throws
     func deleteOTP(_ otp: OTPIdentifier) async throws

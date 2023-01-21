@@ -100,7 +100,7 @@ class PersistenceController {
     }
 }
 
-//MARK: UserEntity
+// MARK: UserEntity
 extension PersistenceController {
     var user: MFUser? {
         set {
@@ -155,7 +155,7 @@ extension PersistenceController {
     }
 }
 
-//MARK: MFCloudKey
+// MARK: MFCloudKey
 extension PersistenceController {
     var cloudKey: String? {
         set {
@@ -184,7 +184,7 @@ extension PersistenceController {
     }
 }
 
-//MARK: MFUser extensions
+// MARK: MFUser extensions
 extension MFUser {
     init?(entity: MFUserEntity?) {
         if let entity {
@@ -203,7 +203,7 @@ extension MFUserEntity {
     }
 }
 
-//MARK: EncryptedOTP extension
+// MARK: EncryptedOTP extension
 extension EncryptedOTP {
     func copy(_ cloudEncryptedOTP: CloudEncryptedOTP) {
         self.id = cloudEncryptedOTP.id
@@ -221,7 +221,7 @@ extension EncryptedOTP {
     }
 }
 
-//MARK: UserDefaults keys
+// MARK: UserDefaults keys
 class MFKeys {
     static let authenticationFrequency = "authenticationFrequency"
     static let biometryType = "biometryType"

@@ -311,7 +311,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                     let cos2Angle = cos(angle*2)
                     let cos2AngleAnimationValue = cos2Angle*animationValue
                     Group {
-                        Path() { path in
+                        Path { path in
                             let center = detectedQr.corners[0]
                             let startAngle = Double.pi+angle
                             let endAngle = Double.pi*1.5+angle
@@ -329,7 +329,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                         .stroke(pathColor, lineWidth: pathLineWidth)
                         .offset(x: -abs(cos2Angle)*animationValue, y: -cos2AngleAnimationValue)
 
-                        Path() { path in
+                        Path { path in
                             let center = detectedQr.corners[1]
                             let startAngle = Double.pi/2+angle
                             let endAngle = Double.pi+angle
@@ -347,7 +347,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                         .stroke(pathColor, lineWidth: pathLineWidth)
                         .offset(x: -cos2AngleAnimationValue, y: animationValue)
 
-                        Path() { path in
+                        Path { path in
                             let center = detectedQr.corners[2]
                             let startAngle = angle
                             let endAngle = Double.pi/2+angle
@@ -365,7 +365,7 @@ private struct QrScanView: View, QrScanViewControllerDelegate {
                         .stroke(pathColor, lineWidth: pathLineWidth)
                         .offset(x: animationValue, y: cos2AngleAnimationValue)
 
-                        Path() { path in
+                        Path { path in
                             let center = detectedQr.corners[3]
                             let startAngle = angle
                             let endAngle = Double.pi*1.5+angle
@@ -528,7 +528,7 @@ private struct MaskedBlur: ViewModifier {
                 Color.black
                     .opacity(0.4)
                     .mask(
-                        Path() { path in
+                        Path { path in
                             path.addRect(UIScreen.main.bounds)
                             path.move(to: qrCode.corners[0])
                             path.addLines([qrCode.corners[1], qrCode.corners[2], qrCode.corners[3], qrCode.corners[0]])

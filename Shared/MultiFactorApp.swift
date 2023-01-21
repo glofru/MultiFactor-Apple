@@ -44,7 +44,7 @@ struct MultiFactorApp: App {
                     }
                 }
             #endif
-                
+
         }
         #if os(macOS)
         .windowStyle(.hiddenTitleBar)

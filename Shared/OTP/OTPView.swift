@@ -15,7 +15,7 @@ struct OTPView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @StateObject private var totpViewModel: TOTPViewModel
 
-    @State private var presentedActionSheet: PresentedActionSheet? = nil
+    @State private var presentedActionSheet: PresentedActionSheet?
 
     init(viewModel: TOTPViewModel) {
         _totpViewModel = StateObject(wrappedValue: viewModel)
@@ -355,7 +355,7 @@ private struct LoadingSpinner: View {
     var body: some View {
         ZStack {
             if showTime {
-                Text("0:\(String(format: "%02d", Int(self.period * clock.loaded)))")
+                Text("0:\(String(format: "%02d", Int(period * clock.loaded)))")
                     .font(.custom("Poppins", size: 16).monospaced())
                     .padding(4)
                     .background(loadingColor)
