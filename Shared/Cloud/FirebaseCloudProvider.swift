@@ -28,9 +28,19 @@ final class FirebaseCloudProvider: MFCloudProvider {
     // MARK: Authentication
     func signIn(method: CloudAuthenticationMethod) async -> Result<MFUser, AuthenticationError> {
         switch method {
-        case .username(let username, let password):
+        case .password(let username, let password):
             do {
                 let result = try await Auth.auth().signIn(withEmail: username, password: password)
+                return .success(MFUser(firebaseUser: result.user)!)
+            } catch let error as AuthErrorCode {
+                return .failure(handleAuthErrorCode(error))
+            } catch {
+                return .failure(.unknown(error.localizedDescription))
+            }
+        case .apple(let token, let nonce):
+            do {
+                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: token, rawNonce: nonce)
+                let result = try await Auth.auth().signIn(with: credential)
                 return .success(MFUser(firebaseUser: result.user)!)
             } catch let error as AuthErrorCode {
                 return .failure(handleAuthErrorCode(error))
@@ -204,5 +214,6 @@ extension MFUser {
 
         self.id = user.uid
         self.username = user.email ?? ""
+        self.loginProvider = .init(rawValue: user.providerData.first?.providerID ?? "") ?? .password
     }
 }

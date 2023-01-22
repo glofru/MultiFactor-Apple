@@ -21,8 +21,8 @@ class AuthenticationViewModel: ObservableObject {
             signUpError = nil
         }
     }
-    @Published private(set) var signInError: String?
-    @Published private(set) var signUpError: String?
+    @Published var signInError: String?
+    @Published var signUpError: String?
 
     @Published var showSignOut = false
 
@@ -69,7 +69,7 @@ class AuthenticationViewModel: ObservableObject {
     func signInCloud(method: CloudAuthenticationMethod) async -> AuthenticationError? {
         // Input validation
         switch method {
-        case .username(let username, let password):
+        case .password(let username, let password):
             if username.trimmingCharacters(in: .whitespaces).isEmpty {
                 await MainActor.run {
                     signInError = "Provided username is empty"
@@ -81,6 +81,7 @@ class AuthenticationViewModel: ObservableObject {
                 }
                 return .passwordEmpty
             }
+        default: break
         }
 
         // Actual sign in
@@ -232,10 +233,12 @@ extension AuthenticationViewModel {
 struct MFUser {
     let id: String
     let username: String
-}
-
-enum CloudAuthenticationMethod {
-    case username(String, String) // Username, password
+    let loginProvider: LoginProvider
+    
+    enum LoginProvider: String {
+        case password = "password"
+        case apple = "apple.com"
+    }
 }
 
 enum MasterAuthenticationMethod {

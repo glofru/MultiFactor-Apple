@@ -6,21 +6,26 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct LoginView: View {
+
+    @Environment(\.colorScheme) var colorScheme
 
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
 
     @State private var username = ""
     @State private var password = ""
     @State private var isSigningIn = false
+    
+    @State private var appleNonce: String?
 
     @State private var sheet: PresentedSheet?
 
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
-        VStack(alignment: .trailing) {
+        VStack(alignment: .center) {
             Text("Login")
                 .mfTitle()
 
@@ -42,7 +47,7 @@ struct LoginView: View {
                 PasswordTextField(text: $password)
                     .submitLabel(.done)
                     .focused($focusedField, equals: .password)
-                    .onSubmit(signIn)
+                    .onSubmit(signInPassword)
                     .disableAutocorrection(true)
                 #if os(iOS)
                     .textContentType(.password)
@@ -63,7 +68,7 @@ struct LoginView: View {
                 })
             }
 
-            Button(action: signIn, label: {
+            Button(action: signInPassword, label: {
                 if isSigningIn {
                     ProgressView()
                         .gradientBackground(.login)
@@ -86,6 +91,22 @@ struct LoginView: View {
                 Text("Sign Up")
                     .gradientBackground(.signUp)
             })
+            
+            SignInWithAppleButton(.continue) { request in
+                request.requestedScopes = [.email]
+                appleNonce = UUID().uuidString
+                request.nonce = MFCipher.hash(appleNonce!)
+            } onCompletion: { result in
+                switch result {
+                case .success(let authorization):
+                    signWithApple(authorization)
+                case .failure(let error):
+                    authenticationViewModel.signInError = error.localizedDescription
+                }
+            }
+            .frame(height: 60, alignment: .center)
+            .cornerRadius(12)
+            .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
 
             Spacer()
         }
@@ -104,11 +125,11 @@ struct LoginView: View {
         }
     }
 
-    private func signIn() {
+    private func signInPassword() {
         focusedField = nil
         isSigningIn = true
         Task {
-            if let error = await authenticationViewModel.signInCloud(method: .username(username, password)) {
+            if let error = await authenticationViewModel.signInCloud(method: .password(username, password)) {
                 await MainActor.run {
                     switch error {
                     case .usernameEmpty: fallthrough
@@ -131,6 +152,16 @@ struct LoginView: View {
             }
         }
     }
+    
+    public func signWithApple(_ authorization: ASAuthorization) {
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let token = String(data: credential.identityToken!, encoding: .utf8)!
+            
+            Task {
+                await authenticationViewModel.signInCloud(method: .apple(token, appleNonce!))
+            }
+        }
+    }
 
     private enum FocusedField {
         case username, password
@@ -138,6 +169,14 @@ struct LoginView: View {
 
     private enum PresentedSheet: Identifiable {
         case signUp, forgotPassword
+
+        var id: UUID {
+            UUID()
+        }
+    }
+    
+    private enum PresentedAlert: Identifiable {
+        case signWithAppleError(String)
 
         var id: UUID {
             UUID()

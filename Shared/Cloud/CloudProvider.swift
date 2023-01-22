@@ -34,6 +34,11 @@ protocol MFCloudProvider {
     var key: String { get async throws }
 }
 
+enum CloudAuthenticationMethod {
+    case password(String, String) // Username, password
+    case apple(String, String) // Token, nonce
+}
+
 enum CloudError: Error, LocalizedError {
     case userNotLogged
     case authenticationFail(String)

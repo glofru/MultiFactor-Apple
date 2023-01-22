@@ -190,6 +190,7 @@ extension MFUser {
         if let entity {
             self.id = entity.id!
             self.username = entity.username!
+            self.loginProvider = LoginProvider(rawValue: entity.loginProvider!)!
         } else {
             return nil
         }
@@ -200,6 +201,7 @@ extension MFUserEntity {
     func copy(_ user: MFUser) {
         self.id = user.id
         self.username = user.username
+        self.loginProvider = user.loginProvider.rawValue
     }
 }
 

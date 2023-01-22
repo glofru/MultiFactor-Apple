@@ -158,6 +158,7 @@
 		990F0ACD28C7934F00512DC5 /* NSTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTableView.swift; sourceTree = "<group>"; };
 		992C961A28AFD3C1004923D5 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		992C961D28AFD41D004923D5 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		997DCBE0297CA42900FAEFB0 /* MultiFactor (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "MultiFactor (iOS).entitlements"; sourceTree = "<group>"; };
 		998B70CB28C3D23700DC1EB7 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		999B021C28A6CBF700F97C69 /* CodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesView.swift; sourceTree = "<group>"; };
 		999B021F28A6CC1900F97C69 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -294,6 +295,7 @@
 		37C0C1E628862CBD00553B73 = {
 			isa = PBXGroup;
 			children = (
+				997DCBE0297CA42900FAEFB0 /* MultiFactor (iOS).entitlements */,
 				373544F1289D14DA0052115A /* MultiFactor--iOS--Info.plist */,
 				378D9F292889DF1C007BDFB6 /* MultiFactor--macOS--Info.plist */,
 				37C0C1EB28862CBD00553B73 /* Shared */,
@@ -804,8 +806,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MultiFactor (iOS).entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4MJXMYZ3D9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -823,9 +827,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fru.MultiFactor;
 				PRODUCT_NAME = MultiFactor;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -841,8 +846,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MultiFactor (iOS).entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 4MJXMYZ3D9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -860,9 +867,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fru.MultiFactor;
 				PRODUCT_NAME = MultiFactor;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
